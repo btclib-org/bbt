@@ -242,13 +242,16 @@ Dependabot security updates][s11-tokens], and the call answers `enabled`
 to each. What answers `disabled` is plan-gated rather than declined, so
 this call reports the setting and not the request.
 
-There is no `.github/dependabot.yml`, and two things go unwatched for it:
-the actions `lint.yml` pins by SHA have nothing proposing their next one,
-and `uv.lock` has nothing proposing its next resolution — the `uv-lock`
-hook keeps it in step with `pyproject.toml` and does not move what it
-resolves to. The pre-commit revisions do have pre-commit.ci's weekly
-autoupdate, per the `ci:` block of `.pre-commit-config.yaml`. The missing
-file is a gap rather than a choice.
+`.github/dependabot.yml` watches the two things this tree pins and
+nothing else moves: the actions `lint.yml` and `claude-review.yml` pin
+by SHA, and `uv.lock`, which the `uv-lock` hook keeps in step with
+`pyproject.toml` without moving what it resolves to. Weekly on Thursday,
+grouped and with the seven-day cooldown, as [section 11][s11-deps]
+asks; the file's own header says why no sentinel pre-validates what it
+opens. The pre-commit revisions are the third thing pinned here and have
+pre-commit.ci's weekly autoupdate instead, per the `ci:` block of
+`.pre-commit-config.yaml`. The gate runs `check-dependabot` over the
+file, since `check-yaml` alone reads it as yaml and not as what it is.
 
 ## What is not configured, and why
 
@@ -273,6 +276,7 @@ file is a gap rather than a choice.
 [s8]: https://github.com/btclib-org/.github#8-coverage-at-100
 [s10]: https://github.com/btclib-org/.github#what-every-workflow-does
 [s10-check]: https://github.com/btclib-org/.github#the-aggregate-job-and-the-required-check
+[s11-deps]: https://github.com/btclib-org/.github#dependabot-and-pre-commitci
 [s11-merge]: https://github.com/btclib-org/.github#merge-method
 [s11-sigs]: https://github.com/btclib-org/.github#signatures
 [s11-title]: https://github.com/btclib-org/.github#what-a-pull-request-says-it-is

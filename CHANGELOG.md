@@ -14,6 +14,36 @@ behind.
 
 ## Unreleased
 
+### This tree answers the rows the standard's suite held against it
+
+- **`.github/dependabot.yml` exists, watching `github-actions` and
+  `uv`, and `check-dependabot` validates it.** `REPOSITORY.md` recorded
+  the file's absence as a gap: this tree pins its actions to commit SHAs
+  and commits a `uv.lock`, and nothing moved either. Weekly on Thursday
+  with the seven-day cooldown, grouped, as section 11 asks; the file's
+  header says why no sentinel pre-validates what it opens. The gate runs
+  section 4's `check-dependabot` over it, `check-yaml` alone reading the
+  file as yaml and not as what it is. The cell `tests/dependabot_test.py`
+  reported on this repository against btclib-org/.github#107 goes from
+  the backlog.
+
+- **`pretty-format-json` runs, over the hand-written json and not the
+  notebooks.** The hook was declined for what it would do to `ipynb/`,
+  and that reason holds for the notebooks alone: `.claude/settings.json`
+  is json written by hand, which is the hook's subject, and prettier —
+  a yaml and jsonc formatter by its own name — had it for want of the
+  hook that formats json. The cell `tests/hooks_test.py` reported on
+  this repository against btclib-org/.github#130 goes from the backlog.
+
+- **The gate runs `toml-comment-width` and `decoded-subprocess-encoding`.**
+  Section 4 lists both among the local hooks and section 3 names the
+  first as what holds a `pyproject.toml`'s comments to 80 columns, and
+  `.pre-commit-config.yaml` ran neither: the width was kept by hand, and
+  nothing under `py-scripts/` decodes a child process, which is the tree
+  in which the first call that does so without naming its encoding is
+  refused by nothing. The cell `tests/hooks_test.py` reported on this
+  repository against btclib-org/.github#134 goes from the backlog.
+
 ### The repository carries the organization's shape
 
 - **`REVIEWING.md` is the organization's copy.** A review reads the prose

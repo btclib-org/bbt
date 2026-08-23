@@ -56,12 +56,23 @@ repos:
       - id: detect-private-key
       - id: check-yaml
       # the notebooks: a .ipynb is json, so this is what says one is
-      # still readable by jupyter after a hand edit or a merge.
-      # pretty-format-json is deliberately not beside it -- it would
-      # rewrite every notebook in the repository, outputs and embedded
-      # svg included, to settle an indentation nobody reads, and the
-      # question worth asking of those files is the one this hook asks
+      # still readable by jupyter after a hand edit or a merge. The
+      # question worth asking of those files is the one this hook asks,
+      # and the formatter below is kept off them
       - id: check-json
+      # the hand-written json -- .claude/settings.json, which is what
+      # `git ls-files '*.json'` answers beside the notebooks: section 4
+      # lists this hook with the syntax ones, and the hook has a subject
+      # wherever a json is written by hand rather than recorded. The
+      # notebooks are excluded, not declined: jupyter writes them, and
+      # this hook would rewrite every one -- outputs and embedded svg
+      # included -- to settle an indentation nobody reads.
+      # check-hooks-apply is what keeps the exclude honest, the day the
+      # last hand-written json goes
+      - id: pretty-format-json
+        name: pretty-format-json (in place fixes)
+        args: [--autofix]
+        exclude: \.ipynb$
       - id: check-toml
       - id: check-added-large-files
       # there are none, and a submodule is the one dependency that would
@@ -178,8 +189,10 @@ repos:
         # knows, so a types_or entry for it fails the config outright.
         # The notebooks are json and are not here: prettier would reflow
         # every one of them, which is what check-json above declines to
-        # do for the same reason
-        files: ^(.*\.ya?ml|\.markdownlint\.jsonc|\.claude/settings\.json)$
+        # do for the same reason. .claude/settings.json is not here
+        # either, being json and pretty-format-json's above: one
+        # formatter per file, or the two rewrite each other
+        files: ^(.*\.ya?ml|\.markdownlint\.jsonc)$
   # the toml here is configuration and nothing else: .taplo.toml, which
   # carries the formatting choices and the reasoning, and pyproject.toml.
   # One indent for every toml in the organization is the point of having
@@ -192,6 +205,29 @@ repos:
     hooks:
       - id: taplo-format
         name: taplo (toml, in place fixes)
+  # the width of a toml comment, which taplo above does not settle: it
+  # aligns a comment that trails a value and rewraps none. Section 3 of
+  # the standard names this hook as what holds pyproject.toml's comments
+  # to 80 columns. A trailing unbreakable link is exempt, the pattern
+  # asking for whitespace after the eightieth column
+  - repo: local
+    hooks:
+      - id: toml-comment-width
+        name: toml comment width (80 columns, unbreakable links exempt)
+        language: pygrep
+        entry: '^(?=[ \t]*#).{80}\S*[ \t]'
+        files: \.toml$
+      # a decoded child process names its encoding. text=True decodes
+      # with the locale's, which is the defect ruff's unspecified-encoding
+      # catches one layer in and no linter here has an opinion on at this
+      # keyword. `grep -rn subprocess py-scripts ipynb` answers nothing,
+      # so the hook is what refuses the first child process decoded here
+      # without its encoding named
+      - id: decoded-subprocess-encoding
+        name: a decoded subprocess names its encoding, not text=True
+        language: pygrep
+        entry: '\b(text|universal_newlines)=True'
+        files: \.py$
   - repo: https://github.com/adrienverge/yamllint
     rev: v1.38.0
     hooks:
@@ -207,6 +243,17 @@ repos:
     rev: v1.29.0
     hooks:
       - id: zizmor
+  # .github/dependabot.yml is validated by nothing else here: check-yaml
+  # above asks whether it is yaml and nothing reads it as what it is. A
+  # typo in a package-ecosystem or a directory is not an error to GitHub
+  # -- it silently updates nothing, and the evidence is a pull request
+  # that never arrives, which is the one failure a file whose job is to
+  # open them must not have. Section 4's schemas bullet; check-readthedocs
+  # is not beside it, there being no .readthedocs.yaml to read
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.38.0
+    hooks:
+      - id: check-dependabot
   # the selection is pyproject.toml's, and it is small on purpose: what
   # is here is what answers zero over the tree today. ruff-format is not
   # beside it, and that is the one deliberate omission -- it would reflow
@@ -216,9 +263,9 @@ repos:
   # uv.lock against pyproject.toml. It is here because `uv sync` writes
   # that file whether or not anybody asked: without the lock tracked, the
   # first documented command a session runs leaves the tree dirty, and
-  # section 1 asks for it committed anyway. Nothing proposes its next
-  # resolution -- there is no dependabot.yml here, which REPOSITORY.md
-  # records as a gap
+  # section 1 asks for it committed anyway. What proposes its next
+  # resolution is Dependabot's uv ecosystem, per .github/dependabot.yml;
+  # this hook re-locks and does not upgrade
   - repo: https://github.com/astral-sh/uv-pre-commit
     rev: 0.12.5
     hooks:
