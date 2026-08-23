@@ -46,6 +46,15 @@ behind.
   `## This repository in particular`, which is the heading the comparison
   stops at.
 
+- **`.gitattributes` is the organization's copy of itself**
+  (btclib-org/.github#102). Section 14 names it as the same file in every
+  repository, and `tests/verbatim_test.py` there compares the copies it
+  finds; this one differed in the comment's closing sentence, which
+  named `README.md` as where section 9 is without saying whose. It is
+  now byte for byte the copy in `btclib-org/.github`, the two
+  `merge=union` lines unchanged under it, and `git check-attr merge`
+  still answers `union` for both files.
+
 - **`LICENSE` loses its year range and gains its title.** `COPYRIGHT`
   names the holder without a year, so the two would have disagreed the
   first January nobody remembered.
