@@ -226,9 +226,12 @@ them here is what keeps a regenerated baseline the same baseline.
 
 ### What gates a merge, and what only reports
 
-`lint.yml` is the only workflow this repository has, and its `Lint` job
-is the whole of what CI runs. There is no suite, no documentation build
-and no release, so nothing else is asked of a pull request.
+`lint.yml`'s `Lint` job is the whole of what CI runs as a gate.
+`claude-review.yml` runs beside it and reports: its verdict is the ack of
+record the section above names, posted as a comment, and its check is
+red when no ack of the head was posted — which gates nothing, the check
+not being required. There is no suite, no documentation build and no
+release, so nothing else is asked of a pull request.
 
 **It is not a required check yet**, and `REPOSITORY.md` reads that back
 from the endpoint rather than restating it: a red run does not block a

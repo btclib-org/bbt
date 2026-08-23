@@ -1,3 +1,9 @@
+<!-- markdownlint-disable MD022 MD032 -->
+<!-- This file is merge=union, so a rebase joins two sections and drops
+     the blank line between them without a conflict: the rule is off
+     here for the duration of btclib-org/.github#33, and goes back on
+     when that queue is empty. btclib-org/.github#138 is the record. -->
+
 # Changelog
 
 What changed in this repository, and why. Nothing here is released —
@@ -118,3 +124,29 @@ are grouped by subject rather than by version.
   so an untracked lock is a dirty tree after the first documented command
   a session runs. Section 1 asks for it committed anyway, and the
   `uv-lock` hook is what keeps it in step with `pyproject.toml`.
+
+### What the organization keeps once, this tree stops keeping twice
+
+- **`claude-review.yml`.** The file every sibling carries, taken from
+  btclib-org/.github and differing only where this tree does — there is
+  no package, no suite and one gating workflow — so a pull request here
+  gets the ack of record a landing reads instead of its author's own,
+  which was [btclib-org/bbt#29](https://github.com/btclib-org/bbt/issues/29).
+  Its check is red when no ack names the head, and it is not required:
+  `REPOSITORY.md` says why it must not become one.
+
+- **`CODE_OF_CONDUCT.md` is gone.** It was a pointer to the PSF code of
+  conduct, byte for byte the copy btclib-org/.github keeps, and GitHub
+  shows that copy for a public repository that carries none; section 14
+  of the standard stopped listing it for that reason
+  ([btclib-org/.github#123](https://github.com/btclib-org/.github/issues/123)).
+
+- **`SECURITY.md` is gone, and its limitations are in `README.md`.** The
+  policy is conditional on publishing and this tree publishes nothing,
+  so what is shown at `security/policy` is the organization's. What an
+  inherited file cannot state — the private key `lab-tutorial/01.md`
+  publishes on purpose, the scanner that does not see it, the seeded
+  `random` in the `speedup_*` scripts — is under *Limitations, not
+  vulnerabilities* in `README.md`, where somebody about to follow the
+  material reads, rather than behind a reporting form
+  ([btclib-org/.github#116](https://github.com/btclib-org/.github/issues/116)).

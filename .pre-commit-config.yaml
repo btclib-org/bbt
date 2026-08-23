@@ -91,7 +91,7 @@ repos:
   # What neither setting reaches is a key written into prose --
   # `detect-secrets scan lab-tutorial/01.md` with every plugin enabled
   # reports nothing, and that page publishes a WIF key on purpose.
-  # SECURITY.md is where that is said, because it is a fact about the
+  # README.md is where that is said, because it is a fact about the
   # material rather than about the scanner.
   # Not gitleaks: every one of its hook ids passes --staged, so under
   # --all-files it scans nothing and passes

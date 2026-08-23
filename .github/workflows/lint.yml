@@ -5,8 +5,9 @@ name: lint
 # second list of the same tools: a commit and CI then enforce one thing,
 # and a hook added to that file needs no edit here.
 #
-# It is the only workflow this repository has, and the reason it is the
-# one is that without it the hook config gates nothing at all: a
+# It is the only workflow here that gates, claude-review.yml beside it
+# reporting a verdict rather than a check, and the reason it is the one
+# is that without it the hook config gates nothing at all: a
 # contributor who does not run the gate by hand is refused by nothing,
 # and the tree this repository ships is prose and notebooks that only a
 # reader ever opens. What the standard would otherwise ask for -- a test

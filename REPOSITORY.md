@@ -32,10 +32,12 @@ gh api repos/btclib-org/bbt/branches/main/protection \
 # false
 ```
 
-`lint.yml` is the only workflow this repository has, and its `Lint` job
-is the context a rule would name — one job, so that job is the context,
-the [aggregate a required check needs][s10-check] being what a matrix
-needs. Until the rule exists, a red run reports and does not block.
+`lint.yml` is the workflow that gates, and its `Lint` job is the context
+a rule would name — one job, so that job is the context, the [aggregate a
+required check needs][s10-check] being what a matrix needs. Until the
+rule exists, a red run reports and does not block. `claude-review.yml`'s
+job is not a candidate: it is the ack of record and must not become a
+branch rule, for the reason its own header gives.
 
 The order is not an oversight and cannot be shortened: a check context
 cannot be bound before a workflow has produced it, so the rule is created
@@ -206,14 +208,16 @@ gh api repos/btclib-org/bbt/actions/permissions/workflow
 
 `read`, which is what `lint.yml` needs: it checks the tree out and runs
 hooks over it, and nothing here publishes, attests or writes back.
+`claude-review.yml` posts a comment, and the `pull-requests: write` that
+takes is elevated in that job alone rather than in this default.
 
 ```shell
 gh api repos/btclib-org/bbt/actions/permissions
 # {"enabled":true,"allowed_actions":"all","sha_pinning_required":false}
 ```
 
-`sha_pinning_required` is false and every action `lint.yml` uses is
-pinned to a SHA anyway, which is [what the standard asks of the
+`sha_pinning_required` is false and every action the two workflows use
+is pinned to a SHA anyway, which is [what the standard asks of the
 workflow][s10] rather than of the setting. The setting would refuse a tag
 outright; leaving it off is the sibling repositories' answer too, so this
 is not a divergence.
@@ -253,11 +257,10 @@ file is a gap rather than a choice.
   environment and no trusted publisher:
   `gh api repos/btclib-org/bbt/environments --jq .total_count` answers
   `0`.
-- **No `claude-review.yml`, no `links.yml`.** Neither gates anything
-  anywhere, and neither exists here. `links.yml` would have a subject —
-  this tree's markdown points at a course page, a wallet, a block
-  explorer and a key generator, and one of those links rotting is a step
-  a reader cannot follow.
+- **No `links.yml`.** It gates nothing anywhere, and it does not exist
+  here. It would have a subject — this tree's markdown points at a
+  course page, a wallet, a block explorer and a key generator, and one
+  of those links rotting is a step a reader cannot follow.
 - **No Pages and no Read the Docs.** There is no documentation build:
   what this repository ships is read on github.com or cloned.
 - **No suite and no coverage.** [Section 8's ratchet][s8] is a claim
