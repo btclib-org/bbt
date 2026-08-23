@@ -76,4 +76,4 @@ print("     bytes:", dersig)
 print("hex-string:", dersig.hex().upper())
 sig3 = Sig.parse(dersig)
 if sig2.r == sig3.r and sig2.s == sig3.s:
-    print("Succesfully parsed!")
+    print("Successfully parsed!")

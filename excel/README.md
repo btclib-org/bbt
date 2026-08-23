@@ -10,4 +10,4 @@ Fp the finite field,
 (x,y) the generator point,
 and X the cardinality of the EC(Fp) group.
 
-Calc equivalent speadsheet might be ready soon... feel free to contribute them.
+Calc equivalent spreadsheet might be ready soon... feel free to contribute them.

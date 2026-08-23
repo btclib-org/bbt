@@ -1,0 +1,131 @@
+---
+name: lint
+
+# what this workflow runs is .pre-commit-config.yaml itself, never a
+# second list of the same tools: a commit and CI then enforce one thing,
+# and a hook added to that file needs no edit here.
+#
+# It is the only workflow this repository has, and the reason it is the
+# one is that without it the hook config gates nothing at all: a
+# contributor who does not run the gate by hand is refused by nothing,
+# and the tree this repository ships is prose and notebooks that only a
+# reader ever opens. What the standard would otherwise ask for -- a test
+# workflow, a docs build, a release -- has no subject here: there is no
+# suite, no documentation build and nothing published.
+#
+# **This job is not yet a required check.** `gh api
+# repos/btclib-org/bbt/branches/main/protection` answers with no
+# `required_status_checks` key at all, so a red run here does not block
+# a merge today. REPOSITORY.md records that, and says why the rule has
+# to be created after this workflow has produced its context rather than
+# in the same pull request.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    # closed too, though the job below declines the real work on it: a
+    # merge or a close is neither a push nor a synchronize, so a run this
+    # pull request's own concurrency group is still holding survives
+    # either unless the closed event lands in that same group -- which
+    # this type is what makes it do, cancel-in-progress below turning the
+    # landing into the cancellation
+    types: [opened, reopened, synchronize, ready_for_review, closed]
+  # the gates included: a branch whose pull request is not open yet has
+  # no other way to ask
+  workflow_dispatch:
+
+# least privilege for the GITHUB_TOKEN. Nothing here writes anything --
+# the hooks that fix in place fix a checkout that is thrown away, the
+# `ci:` block refusing an autofix commit for the same reason -- so no job
+# elevates it
+permissions:
+  contents: read
+
+concurrency:
+  # named literally, never through github.workflow: in a called workflow
+  # that expression is the *caller's* name, so two workflows called from
+  # one place would share a group and cancel each other.
+  #
+  # Keyed on the pull request's number rather than on github.head_ref.
+  # What the number survives and head_ref does not is two pull requests
+  # whose head branches carry the same name, two forks each pushing
+  # "patch-1", which share one head_ref group and cancel each other.
+  # This repository is a fork and is forked in turn -- `gh api
+  # repos/btclib-org/bbt --jq .forks_count` -- so a branch name arriving
+  # twice is the ordinary case here rather than the unlucky one.
+  #
+  # A run with no pull request -- a push to main, a dispatch -- has no
+  # number and falls back to github.ref, which is what gives it a group
+  # of its own
+  group: lint-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    # one job, so this job is the context a branch rule would name: the
+    # aggregate job the standard asks for is what a matrix needs, and
+    # there is no matrix here. Not the sibling repositories' "Lint and
+    # type-check", and here that is not a narrowing but the truth --
+    # .pre-commit-config.yaml carries no mypy hook, pyproject.toml's
+    # [tool.mypy] saying what was measured instead
+    name: Lint
+    # a draft pull request is work its author is not asking anyone to
+    # read yet and spends no runner. A closed one spends none either --
+    # the trigger above takes the closed event only to supersede a run
+    # this pull request's own group is still holding
+    if: ${{ !github.event.pull_request.draft && github.event.action != 'closed' }}
+    runs-on: ubuntu-latest
+    # a cold cache builds a node, a rust and a python environment before
+    # a hook runs at all; a job past this is hung rather than working
+    timeout-minutes: 20
+    steps:
+      # every action pinned to a commit SHA with the tag in the comment:
+      # a tag, let alone a branch, is a name its owner can move
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # the hooks read the tree and nothing pushes it back
+          persist-credentials: false
+
+      # uv is the only prerequisite here as everywhere, and this is the
+      # step that supplies it
+      - name: Install uv
+        uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+
+      # the cache key needs the runner image, not only the OS: a
+      # pre-commit environment built on one image is not always usable on
+      # the next one, and a stale hit fails in the hook rather than here
+      - name: Identify the runner image
+        id: image
+        run: echo "os=${ImageOS:-unknown}" >> "$GITHUB_OUTPUT"
+
+      - name: Cache the pre-commit environments
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/pre-commit
+          # the hook config alone, where the sibling repositories hash
+          # .python-version beside it: every environment pre-commit
+          # builds is named by a rev that file pins, and no hook here
+          # resolves anything through uv for .python-version to decide.
+          # uv-lock is the one hook that runs uv, and what it reads is
+          # uv.lock and pyproject.toml rather than an interpreter
+          key: >-
+            pre-commit-${{ runner.os }}-${{ steps.image.outputs.os }}-${{
+            hashFiles('.pre-commit-config.yaml') }}
+          restore-keys: |
+            pre-commit-${{ runner.os }}-${{ steps.image.outputs.os }}-
+
+      # uvx, and not the sibling repositories' "uv run --locked
+      # --only-group lint pre-commit": pre-commit is in no dependency
+      # group here, so there is no project environment to resolve it
+      # from, and this is the command CONTRIBUTING.md's last section
+      # gives an author to run before pushing. Running the same one is
+      # the point -- a workflow invoking pre-commit some other way is the
+      # second declaration section 4 refuses, one version behind the
+      # author's or ahead of it.
+      # --show-diff-on-failure changes no hook's answer: it prints what
+      # an in-place fixer changed, so a red job says what to apply rather
+      # than only that something is unclean
+      - name: Run every hook
+        run: uvx pre-commit run --all-files --show-diff-on-failure

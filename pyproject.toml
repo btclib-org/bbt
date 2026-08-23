@@ -1,0 +1,217 @@
+# The configuration of every tool that can be configured in one file,
+# which is what replaced .flake8, .isort.cfg, mypy.ini, requirements.txt
+# and requirements-dev.txt here.
+#
+# This tree is not a distribution. It is course material -- notebooks,
+# spreadsheets, a regtest walk-through and a directory of scripts that
+# demonstrate one thing each -- so nothing is built, installed, imported
+# by anything, or published. `package = false` below is what says that to
+# uv, and it is also why there is no `[build-system]`: measured, `uv sync`
+# on a `[project]` with that key set and no build backend named creates
+# the environment and installs the dependencies without asking for one.
+#
+# So none of section 3's metadata for a package that ships is here -- no
+# keywords, no classifiers, no urls, no license expression. What a reader
+# of this repository is given instead is README.md, and what an index
+# would be given is nothing, there being no upload.
+
+[project]
+name = "bbt"
+# a placeholder, and the reason is RELEASING.md's: nothing here is
+# released, so there is no version for a tag to agree with. Section 12's
+# calendar versioning applies to what a release publishes
+version = "0"
+# there is no matrix here and no library covering the interpreters still
+# in support: one person builds one environment to run a notebook or a
+# script in. So the rule for an application applies -- the newest the
+# dependencies allow -- and .python-version names it rather than this
+# comment. Measured with `uv pip compile --python-version <v>` over the
+# dependencies below: every version from 3.9 to 3.14 resolves, so the
+# floor is not the dependencies' to set and nothing else here measures one
+requires-python = ">=3.14"
+# what the tree imports, read off the tree rather than off the file this
+# replaces: `grep -rn "^import\|^from" py-scripts/*.py` and the `source`
+# arrays of ipynb/*.ipynb are what the list below answers to.
+#
+# requirements.txt named `matplot`, which is a different project on PyPI
+# from the `matplotlib` that py-scripts/hash_puzzle.py and
+# ipynb/PartialHashInversion.ipynb import -- an environment built from
+# that file had the plotting library it needed only by accident of
+# jupyter pulling one in. It also left out `requests`, which
+# py-scripts/getutxo.py imports
+dependencies = [
+    "btclib",
+    # imported by nothing, and not a mistake: it is the kernel jupyter
+    # starts a notebook in, so an environment without it opens ipynb/ and
+    # cannot run a cell
+    "ipykernel",
+    "matplotlib",
+    "pandas",
+    "requests",
+]
+
+[dependency-groups]
+# what requirements-dev.txt held, minus what uv makes unnecessary and
+# what one tool replaced two of: `pip` and `wheel` are uv's business, and
+# `black`, `flake8` and `isort` are ruff, which is the substitution every
+# repository of the organization has already made. `pylint` is ruff's PL
+# family, selected below.
+#
+# pre-commit is not here: the gate runs through `uvx`, for the reason
+# CONTRIBUTING.md's last section gives, so a group naming it would be a
+# declaration nothing reads
+lint = ["mypy", "ruff"]
+dev = [{ include-group = "lint" }]
+
+[tool.uv]
+# nothing is built here, so nothing installs this directory either
+package = false
+
+[tool.ruff]
+# target-version is inferred from project.requires-python
+
+[tool.ruff.lint]
+# the pair the organization holds every tree to: naming a rule in
+# `ignore` instead of coding it is itself a preview feature, and
+# explicit-preview-rules takes back the rest of preview, so a rule ruff
+# is still designing runs only where this file names it exactly
+preview = true
+explicit-preview-rules = true
+# What this list is *not* is the organization's, and the reason is that
+# no Python here has ever been through ruff: the scripts and the
+# notebooks are teaching material written against btclib's 2020 API and
+# never linted since. So this is every family that answers zero over the
+# tree today, which makes it a gate rather than a list of intentions.
+# `uvx ruff check --preview --select <family> .` is what re-derives each
+# answer below, and `uvx ruff check --statistics .` the whole of it.
+#
+# Left out because the tree trips them, each with the reason and none of
+# it this file's to spend:
+#   T20  a script's output is the whole of what it produces
+#   S    almost all S101, `assert` used to state what a step shows
+#   D    no module, function or notebook cell carries a docstring
+#   ERA  code commented out and kept as an alternative to read
+#   UP   written for an interpreter three releases back
+#   I    import blocks in the order they were typed
+#   CPY  and worse than a count would say: the files under py-scripts
+#        that *do* carry a notice carry btclib's pre-MIT one, with a
+#        year range, which is neither COPYRIGHT's text nor the licence
+#        this repository ships -- `grep -l "No part of btclib"
+#        py-scripts/*.py`
+#   B BLE FIX W PGH SIM  a handful each, and each one a decision about
+#        the script it is in rather than about this file
+#
+# Left out because they cannot fire here, which section 5 asks for
+# separately: PT (no suite), RSE and TRY (no `raise` statement in the
+# tree, `grep -rn "raise " py-scripts`), TID (no package for a relative
+# import to be written in), and the families the organization's own
+# survey rejected.
+select = [
+    "A",    # flake8-builtins: a name that shadows a builtin
+    "C4",   # flake8-comprehensions
+    "C90",  # mccabe, at ruff's default
+    "E",    # pycodestyle errors
+    "F",    # pyflakes
+    "FURB", # refurb
+    "ISC",  # flake8-implicit-str-concat
+    "PIE",  # flake8-pie
+    "PL",   # pylint, which requirements-dev.txt asked for as a tool
+    "RET",  # flake8-return
+    "RUF",  # ruff-specific rules
+]
+ignore = [
+    # what every sibling gets from ruff-format, this tree gets from
+    # nothing: that hook is not in .pre-commit-config.yaml, for the
+    # reason written beside the ruff hooks there. So selecting this rule
+    # would be asking a person to rewrap teaching code by hand rather
+    # than asking a formatter to do it. `uvx ruff check --select E501 .`
+    # is what says how much is owed
+    "line-too-long", # E501
+    # 127 is the byte a BIP32 index is masked against, 2 and 3 are the
+    # SEC prefixes of a compressed point, and 600 and 36000 are ten
+    # minutes and ten hours in seconds -- each is the number a
+    # specification assigns rather than one this code chose and could
+    # have named. `uvx ruff check --preview --select PLR2004 .` lists
+    # them
+    "magic-value-comparison", # PLR2004
+]
+
+[tool.ruff.lint.mccabe]
+# ruff's default, and the number .flake8 already carried -- commented
+# out, so nothing enforced it. The tree answers zero to it today, which
+# is what makes turning it on a gate instead of a backlog
+max-complexity = 10
+
+[tool.ruff.lint.pycodestyle]
+# the 80 columns .flake8 asked for as `max-line-length`, kept where it
+# still holds: the prose. Code width is E501's question and is ignored
+# above; this is the comments and the docstrings, held to the width
+# markdownlint holds the markdown to. W505 is inert without this key,
+# ruff having no default doc length
+max-doc-length = 80
+
+# codespell reads nothing this tree's prose needs relaxed, and this list
+# is the exception that proves it: every word in it is a *key* of the
+# typos table below, which codespell reads as prose because a toml key is
+# text like any other. So the entry exists to let one checker's
+# configuration be written without the other objecting to it, and it is
+# what keeps that table from being the reason codespell has to be
+# excluded from this file.
+[tool.codespell]
+ignore-words-list = "ser,nd,shs,iz"
+
+# typos' configuration, where section 4 says both spell checkers are
+# configured. What is *not* here matters as much: no
+# `files.extend-exclude`. A file the checker never reads is a file nobody
+# is checking, and this tree's vectors sit inside the scripts that
+# demonstrate them rather than in a data directory that could be skipped
+# whole -- so what is named is the token, and the next vector that trips
+# the checker is an edit somebody has to make deliberately.
+#
+# Every entry below was measured by the hook writing the wrong thing:
+# `typos --write-changes` rewrote a BIP32 test vector, turning
+# `...SL39UNdE3BBDu76` into `...SL39UAndE3BBDu76` and `3ND1` into
+# `3AND1` inside a base58 xprv and xpub, and it rewrote a Colab cell id
+# in two notebooks. A base58 string and an opaque identifier are not
+# words and the checker cannot tell; codespell, which matches whole
+# words, reported none of them.
+[tool.typos.default.extend-words]
+# `ser32(i)`, BIP32's serialization function, named in the comment above
+# `child_number` in both bip32_testvector scripts
+ser = "ser"
+# inside the base58 of an xprv and an xpub in bip32_testvector1.py and
+# bip32_testvector3.py, where typos splits the camel case and reads a
+# fragment of the encoding as a word
+nd = "nd"
+# inside the WIF `KwdMAjGmerYanjeui5SHS7JkmpZvVipYvB2LJGU1ZxJwYvP98617`
+# that prvkey2wif_compressed.py asserts against, which is the encoding
+# of the private key on the line above it
+shs = "shs"
+# inside `aecLiCr2dNIz`, the Colab cell id of one cell of DSA.ipynb and
+# of the same cell in SSA.ipynb -- an opaque identifier the notebook
+# format assigns, and the same class of finding as the base58 above
+iz = "iz"
+
+[tool.mypy]
+# mypy.ini's two settings, which are the whole of what survived it, plus
+# the strictness the organization asks for.
+#
+# **No hook runs this**, and that is measured rather than declined:
+# `uv run --locked --group lint mypy py-scripts` exits 1, and most of
+# what it reports is the library having moved rather than a type being
+# wrong -- `import-not-found` for `btclib.ecc.curve`,
+# `btclib.curvegroup`, `btclib.curvegroup2`, `btclib.dh` and
+# `btclib.ecc.number_theory`, which are 2020 names the package no longer
+# has, and `attr-defined` for `b58encode` and `b58decode`, which are
+# names a surviving module no longer exports. That is code that does not
+# run, not a typing gap. A hook wired to it would fail on every commit,
+# which is not a gate but a red light nobody can turn off, and
+# --ignore-missing-imports is what section 6 refuses: it would turn each
+# missing module into `Any` and report a clean run over code that cannot
+# import. What is left is a command a person runs and a configuration
+# saying what it runs at
+strict = true
+warn_unreachable = true
+show_column_numbers = true
+show_error_codes = true
+python_version = "3.14"

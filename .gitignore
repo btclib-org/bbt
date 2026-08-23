@@ -72,8 +72,9 @@ target/
 # Jupyter Notebook
 .ipynb_checkpoints
 
-# pyenv
-.python-version
+# no .python-version here: uv reads that file to choose the interpreter
+# and it is tracked, pyproject.toml's requires-python being the other
+# half of the pair
 
 # celery beat schedule file
 celerybeat-schedule

@@ -1,15 +1,28 @@
 # Bitcoin and Blockchain Technology
 
-University of Milano-Bicocca  
-Politecnico di Milano  
-University of Milano
+The course is taught at:
 
-The latest version of the course slides is available from the course page at <http://www.ametrano.net/bbt/>.
+- University of Milano-Bicocca
+- Politecnico di Milano
+- University of Milano
+
+The latest version of the course slides is available from the course page
+at <http://www.ametrano.net/bbt/>.
 
 Other material available in this repo:
 
-- the _calc_ folder includes LibreOffice Calc spreadsheets illustrating finite fields and elliptic curves
-- the _excel_ folder includes Excel spreadsheets illustrating finite fields and elliptic curves
-- the _ipynb_ folder includes Jupyter notebooks
-- the _py-scripts_ folder includes Python (3.8 or later) scripts: most of them require the [btclib](https://github.com/dginst/btclib) library
-- the _regtest-lab_ folder includes information for a regtest session using Bitcoin Core
+- the *calc* folder includes LibreOffice Calc spreadsheets illustrating
+  finite fields and elliptic curves
+- the *excel* folder includes Excel spreadsheets illustrating finite
+  fields and elliptic curves
+- the *ipynb* folder includes Jupyter notebooks
+- the *py-scripts* folder includes Python scripts: most of them require
+  the [btclib](https://github.com/dginst/btclib) library, and
+  `pyproject.toml` declares which interpreter and which packages the
+  environment is built with
+- the *regtest-lab* folder includes information for a regtest session
+  using Bitcoin Core
+
+Working here: [CONTRIBUTING.md](./CONTRIBUTING.md) for how to,
+[REVIEWING.md](./REVIEWING.md) for what a pull request is answered
+against, [SECURITY.md](./SECURITY.md) for reporting a vulnerability.

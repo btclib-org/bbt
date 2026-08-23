@@ -1,0 +1,231 @@
+---
+# The lint gate of this repository, and the whole of it: lint.yml runs
+# this very file, so what CI enforces is exactly what a commit enforces
+# and there is no second list of tools anywhere.
+#
+# What it is asked to cover is what this tree holds -- markdown, yaml,
+# jsonc, toml, notebooks, and a directory of Python scripts that has
+# never been linted. The Python half is therefore narrower than a
+# sibling's, and pyproject.toml carries the measurement behind every
+# rule left out rather than a claim that the tree is clean.
+#
+# Skip a hook with SKIP=<id>, or all of them with "git commit -n".
+ci:
+  # a bot committing to a branch is at odds with a setup where no
+  # workflow token can write: a failing hook is fixed by its author
+  autofix_prs: false
+  autoupdate_commit_msg: "Update the pinned pre-commit hook revisions"
+  autoupdate_schedule: weekly
+  # no skip: every hook below installs its own environment, none shells
+  # out to uv. The mypy hook that would is not here, and pyproject.toml's
+  # [tool.mypy] says what it measured instead
+
+repos:
+  # this file checking itself, and the only two hooks with no environment
+  # to install. They earn their place here more than anywhere: this is a
+  # tree where several of the hooks a sibling runs match nothing, so a
+  # pattern that has stopped matching -- or never matched -- is the
+  # failure mode the whole configuration is exposed to
+  - repo: meta
+    hooks:
+      - id: check-hooks-apply
+      - id: check-useless-excludes
+  # and checking the two moves "autoupdate" must not make: a rev naming
+  # only a major follows every future release of it, and a prerelease is
+  # not a release. pre-commit says the first half itself, on stderr, on a
+  # run that then exits zero -- which is the difference between a warning
+  # and a gate
+  - repo: local
+    hooks:
+      - id: pinned-rev
+        name: every pre-commit rev names a released version
+        language: pygrep
+        entry: '^ *rev: "?v?([0-9]+|[0-9][0-9.]*(a|b|rc|dev)[0-9]+)"?$'
+        files: ^\.pre-commit-config\.yaml$
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+        args: [--fix=lf]
+      - id: check-case-conflict
+      - id: fix-byte-order-marker
+      - id: check-merge-conflict
+      - id: check-vcs-permalinks
+      - id: detect-private-key
+      - id: check-yaml
+      # the notebooks: a .ipynb is json, so this is what says one is
+      # still readable by jupyter after a hand edit or a merge.
+      # pretty-format-json is deliberately not beside it -- it would
+      # rewrite every notebook in the repository, outputs and embedded
+      # svg included, to settle an indentation nobody reads, and the
+      # question worth asking of those files is the one this hook asks
+      - id: check-json
+      - id: check-toml
+      - id: check-added-large-files
+      # there are none, and a submodule is the one dependency that would
+      # sit in neither an environment file nor anything that watches one
+      - id: forbid-submodules
+      # the .bat files under regtest-lab are scripts and carry no
+      # shebang; nothing tracked here carries the executable bit either.
+      # The hook is the pair: the day a file needs a shebang it also
+      # needs chmod +x
+      - id: check-shebang-scripts-are-executable
+  # what py-scripts is full of is key material by construction -- a
+  # private key printed beside the address it derives is the whole point
+  # of the exercise -- so the interesting question is not whether a
+  # secret-shaped string is present but whether one arrived that nobody
+  # read. A baseline answers that where an exclude would not: an excluded
+  # file is blind for good, a baseline entry is a finding somebody
+  # cleared. CONTRIBUTING.md carries the command that regenerates it.
+  #
+  # The two entropy plugins are off in that baseline, which is the case
+  # section 4 describes: measured, a scan with them on reports the BIP32
+  # test vectors, the WIF keys the scripts derive and the txids in
+  # regtest-lab/README.md, and not one of those is a credential. With
+  # them on, adding a vector means editing the baseline, so the baseline
+  # stops being a list anybody reads. What is left on is what would
+  # matter here and reports nothing today: a PEM key, a `Basic` header,
+  # a token of somebody else's service.
+  # What neither setting reaches is a key written into prose --
+  # `detect-secrets scan lab-tutorial/01.md` with every plugin enabled
+  # reports nothing, and that page publishes a WIF key on purpose.
+  # SECURITY.md is where that is said, because it is a fact about the
+  # material rather than about the scanner.
+  # Not gitleaks: every one of its hook ids passes --staged, so under
+  # --all-files it scans nothing and passes
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets
+        name: detect-secrets (credentials of other systems)
+        args: [--baseline, .secrets.baseline]
+  # a typo in a comment is cosmetic; the same typo in lab-tutorial/01.md
+  # is a step a student follows and cannot complete. Configured in
+  # pyproject.toml where it needs configuring at all
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.4.3
+    hooks:
+      - id: codespell
+        name: codespell (prose and comments)
+        # the "clear" dictionary alone, where codespell's default is
+        # "clear,rare": the other builtins make a hook whose findings are
+        # mostly wrong, and such a hook gets an ignore list long enough
+        # to hide a real typo
+        args: [--builtin, clear]
+  # the second spell checker, and not a replacement for the one above:
+  # codespell matches whole words and keeps the hyphen inside the token,
+  # while typos splits hyphens, snake_case and camelCase.
+  # A release tag, not the `v1` beside it: that one is a major-version
+  # alias upstream moves onto each release, so `pre-commit autoupdate`
+  # picks it as the newest tag and the pin stops being one
+  - repo: https://github.com/crate-ci/typos
+    rev: v1.49.0
+    hooks:
+      - id: typos
+        name: typos (identifiers and hyphenated words, in place fixes)
+        # what the hook declares, restated rather than inherited: both
+        # flags are choices this repository has to keep making. Dropping
+        # --write-changes would make it a report where every other fixing
+        # hook here corrects; dropping --force-exclude would make
+        # [tool.typos.files] silent, because pre-commit passes filenames
+        # and typos honours its own exclude list only under that flag
+        args: [--write-changes, --force-exclude]
+  # MD013 at 80 columns, tables included, and the shared configuration is
+  # the one every repository of the organization carries: prose moves
+  # between them, and a paragraph that lints in one has to lint here
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.23.2
+    hooks:
+      - id: markdownlint-cli2
+        name: markdownlint-cli2 (in place fixes)
+        args: [--fix]
+  # how a link destination is spelled, which markdownlint has no rule
+  # for. Section 4 of the standard is the rule, why the prefix and not
+  # the extension, why a badge needed the link text to step over an
+  # image, and what this cannot see; there is no shared hook repository
+  # to write it in once, so it is the same hook in each repository,
+  # `pinned-rev` above being that arrangement already
+  - repo: local
+    hooks:
+      - id: local-link-prefix
+        name: a local markdown link destination begins with ./
+        language: pygrep
+        # one line, and no literal space in it -- "\x20" is the space the
+        # reference branch allows -- so yamllint reads the value as a
+        # single unbreakable word and its 100-column rule exempts it. A
+        # block scalar rather than a quoted one for the same reason a
+        # folded scalar was rejected: folding joins lines with a space,
+        # which would land inside the regex
+        entry: |-
+          (?<![`!\[])(?:!?\[(?:[^]]|\]\([^)]*\))*\]\(|^\x20{0,3}\[[^]]+\]:\s*)(?!\./|#|[A-Za-z][A-Za-z0-9+.-]*:)[^)\s]
+        types: [markdown]
+      # a line that ends inside a word, at that word's own hyphen.
+      # Section 4 of the standard is the rule: what such a line renders
+      # as, why nothing else here catches it, and what this cannot see
+      - id: no-hyphen-at-end-of-line
+        name: a word is not wrapped at its own hyphen
+        language: pygrep
+        entry: "[A-Za-z0-9]-$"
+        types: [markdown]
+  - repo: https://github.com/rbubley/mirrors-prettier
+    rev: v3.9.6
+    hooks:
+      - id: prettier
+        name: prettier (yaml and jsonc, in place fixes)
+        # named by path rather than by type: `jsonc` is not a tag identify
+        # knows, so a types_or entry for it fails the config outright.
+        # The notebooks are json and are not here: prettier would reflow
+        # every one of them, which is what check-json above declines to
+        # do for the same reason
+        files: ^(.*\.ya?ml|\.markdownlint\.jsonc|\.claude/settings\.json)$
+  # the toml here is configuration and nothing else: .taplo.toml, which
+  # carries the formatting choices and the reasoning, and pyproject.toml.
+  # One indent for every toml in the organization is the point of having
+  # a formatter at all. Naming them here is what .taplo.toml asks of the
+  # repository that carries it, that file being shared and so unable to
+  # say which toml any one tree holds; git ls-files '*.toml' is what says
+  # whether this comment has gone stale
+  - repo: https://github.com/ComPWA/taplo-pre-commit
+    rev: v0.9.3
+    hooks:
+      - id: taplo-format
+        name: taplo (toml, in place fixes)
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.38.0
+    hooks:
+      - id: yamllint
+  - repo: https://github.com/Mateusz-Grzelinski/actionlint-py
+    rev: v1.7.12.24
+    hooks:
+      # actionlint through its Python packaging: the upstream hook's only
+      # non-docker id wants a go toolchain on every machine that runs the
+      # gate
+      - id: actionlint
+  - repo: https://github.com/zizmorcore/zizmor-pre-commit
+    rev: v1.29.0
+    hooks:
+      - id: zizmor
+  # the selection is pyproject.toml's, and it is small on purpose: what
+  # is here is what answers zero over the tree today. ruff-format is not
+  # beside it, and that is the one deliberate omission -- it would reflow
+  # every script and every notebook cell in the repository, which is a
+  # rewrite of the material the course is taught from and not a lint fix.
+  # What that costs is recorded where E501 is ignored
+  # uv.lock against pyproject.toml. It is here because `uv sync` writes
+  # that file whether or not anybody asked: without the lock tracked, the
+  # first documented command a session runs leaves the tree dirty, and
+  # section 1 asks for it committed anyway. Nothing proposes its next
+  # resolution -- there is no dependabot.yml here, which REPOSITORY.md
+  # records as a gap
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.12.5
+    hooks:
+      - id: uv-lock
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.3
+    hooks:
+      - id: ruff-check
+        name: ruff check (in place fixes)
+        args: [--fix]
