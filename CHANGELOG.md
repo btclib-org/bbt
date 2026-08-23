@@ -16,6 +16,11 @@ behind.
 
 ### This tree answers the rows the standard's suite held against it
 
+- **`REVIEWING.md` says the reviewer runs the whole suite, every time.**
+  The organization's copy, shared half byte for byte (section 14): the
+  test suite is run whole on the sha under review, never a subset and
+  never relied on from the author's run.
+
 - **`.github/dependabot.yml` exists, watching `github-actions` and
   `uv`, and `check-dependabot` validates it.** `REPOSITORY.md` recorded
   the file's absence as a gap: this tree pins its actions to commit SHAs
