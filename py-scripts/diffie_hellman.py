@@ -4,10 +4,10 @@
 
 from hashlib import sha256 as hf
 
-from btclib import dsa
-from btclib.ecc.curve import mult
-from btclib.ecc.curve import secp256k1 as ec
-from btclib.dh import ansi_x9_63_kdf
+from btclib.curves.curve import mult
+from btclib.curves.curve import secp256k1 as ec
+from btclib.ecc import dsa
+from btclib.kdf import ansi_x9_63_kdf
 
 # Diffie-Hellman
 print("\n Diffie-Hellman")
@@ -26,7 +26,7 @@ print("as expected:", shared_secret_a == mult(a * b, ec.G))
 
 # hash the shared secret to remove weak bits
 shared_secret_field_element = shared_secret_a[0]
-z = shared_secret_field_element.to_bytes(ec.psize, "big")
+z = shared_secret_field_element.to_bytes(ec.p_size, "big")
 shared_info = None
 shared_key = ansi_x9_63_kdf(z, 32, hf, shared_info)
 print("shared key:", shared_key.hex())

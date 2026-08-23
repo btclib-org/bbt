@@ -4,8 +4,8 @@
 
 from hashlib import sha256
 
-from btclib.ecc.curve import mult
-from btclib.ecc.curve import secp256k1 as ec
+from btclib.curves.curve import mult
+from btclib.curves.curve import secp256k1 as ec
 from btclib.ecc.ssa import sign, verify, Sig
 
 print("\n*** EC:")

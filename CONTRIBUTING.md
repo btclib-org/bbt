@@ -203,17 +203,22 @@ into the common git directory, which every worktree of this repository
 shares, so one session installing it installs it for every other. Run the
 gate by hand before committing.
 
-Two commands are not gates and are here because nothing else names them.
-The first is the type check:
+The type check is a hook like the rest, and running it alone is running
+that hook:
 
 ```shell
-uv run --locked --group lint mypy py-scripts
+uvx pre-commit run --all-files mypy
+uv run --locked --no-default-groups --group lint mypy py-scripts
 ```
 
-No hook runs it, and `[tool.mypy]` in `pyproject.toml` carries what it
-answers today and why that is a fact about the scripts rather than about
-the configuration. The second regenerates the secret-scanning baseline
-after a finding has been read:
+The second line is the hook's own entry, and it is what to reach for
+while fixing an error, taking mypy's flags where the first takes
+pre-commit's. What neither is, is `mypy` off the PATH: the strictness
+here is only as good as the environment it reads btclib's types from,
+and that environment is the one `uv sync --locked` builds.
+
+One command is not a gate and is here because nothing else names it. It
+regenerates the secret-scanning baseline after a finding has been read:
 
 ```shell
 uvx detect-secrets scan --baseline .secrets.baseline \
@@ -259,8 +264,7 @@ git tag                                              # nothing
 
 A release would first need something to publish — the tree is notebooks,
 spreadsheets, a walk-through and scripts run from a checkout, none of it
-imported, so a wheel of it would be a wheel nobody installs; scripts that
-run, which `[tool.mypy]` in `pyproject.toml` measures they do not; and a
+imported, so a wheel of it would be a wheel nobody installs; and a
 version that means something, where course material is dated by the
 course and <http://www.ametrano.net/bbt/> is where the current slides
 are. The day one arrives it arrives with `release.yml`, which is the day

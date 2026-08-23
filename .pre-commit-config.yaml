@@ -16,9 +16,10 @@ ci:
   autofix_prs: false
   autoupdate_commit_msg: "Update the pinned pre-commit hook revisions"
   autoupdate_schedule: weekly
-  # no skip: every hook below installs its own environment, none shells
-  # out to uv. The mypy hook that would is not here, and pyproject.toml's
-  # [tool.mypy] says what it measured instead
+  # it shells out to uv, which pre-commit.ci does not have, and
+  # lint.yml covers it there. Every other hook here runs on
+  # pre-commit.ci, which is what the weekly revision bump needs
+  skip: [mypy]
 
 repos:
   # this file checking itself, and the only two hooks with no environment
@@ -254,6 +255,27 @@ repos:
     rev: 0.38.0
     hooks:
       - id: check-dependabot
+  # not the mirrors-mypy hook: it injects --ignore-missing-imports, which
+  # turns an unresolved or misspelled import into Any -- a clean run over
+  # code that cannot import, which is what section 6 refuses. It also
+  # type checks in an environment of its own, where btclib would have to
+  # be pinned a second time beside uv.lock; this entry is the command
+  # CONTRIBUTING.md documents, run against the environment `uv sync
+  # --locked` builds, so what mypy reads is the library the scripts
+  # import. --locked and not --frozen: a dependency added to
+  # pyproject.toml without a re-lock would otherwise be type checked
+  # against a stale environment in silence
+  - repo: local
+    hooks:
+      - id: mypy
+        name: mypy (strict, in the project environment)
+        entry: >
+          uv run --locked --no-default-groups --group lint
+          mypy py-scripts
+        language: system
+        types: [python]
+        pass_filenames: false
+        require_serial: true
   # the selection is pyproject.toml's, and it is small on purpose: what
   # is here is what answers zero over the tree today. ruff-format is not
   # beside it, and that is the one deliberate omission -- it would reflow

@@ -2,10 +2,9 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
-from btclib.ecc.curve import mult
-from btclib.ecc.curve import secp256k1 as ec
-from btclib.ecc.dsa import recover_pub_keys, sign, verify
-from btclib.ecc.der import Sig
+from btclib.curves.curve import mult
+from btclib.curves.curve import secp256k1 as ec
+from btclib.ecc.dsa import Sig, recover_pub_keys, sign, verify
 
 print("\n*** EC:")
 print(ec)
@@ -41,9 +40,16 @@ sm = ec.n - sig1.s
 print(f"    r1:    {hex(sig1.r).upper()}")
 print(f"    sm:    {hex(sm).upper()}")
 
+# what tells the two apart is which half of the order the s falls in:
+# sign()'s lower_s argument defaults to True, and n - s is the other root
+# of the same signature
+print(f" s1 low:    {sig1.s < ec.n // 2}")
+print(f" sm low:    {sm < ec.n // 2}")
+
 print("** Verify malleated signature")
+# and it verifies: verify() has no low-s argument, that rule being a
+# policy of whoever signs
 print(verify(msg1, Q, Sig(sig1.r, sm)))
-print(verify(msg1, Q, Sig(sig1.r, sm), False))
 
 
 print("\n1. Another message to sign")

@@ -2,10 +2,10 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
-from btclib.ecc.number_theory import mod_sqrt
+from btclib.number_theory import mod_sqrt_var
 
 
-def isprime(n):
+def isprime(n: int) -> bool:
     """Returns True if n is prime."""
     if n == 2:
         return True
@@ -106,7 +106,7 @@ for prime in primes:
                     # print("#", order+1, " ", x, ", ", 0, "  #####", sep="")
                     continue
                 try:
-                    y = mod_sqrt(y2, prime)
+                    y = mod_sqrt_var(y2, prime)
                     assert (y * y) % prime == y2
                     # print("#", order+1, " ", x, ",", y, sep="")
                     # print("#", order+2, " ", x, ",", prime-y, sep="")
@@ -133,7 +133,7 @@ for prime in primes:
                 (gx ** 2 + maxorderlessthanprimea) * gx + maxorderlessthanprimeb
             ) % prime
             try:
-                y = mod_sqrt(y2, prime)
+                y = mod_sqrt_var(y2, prime)
                 assert (y * y) % prime == y2
                 gy = y
             except Exception:
@@ -167,7 +167,7 @@ for prime in primes:
         while gy == -1:
             y2 = ((gx ** 2 + maxordera) * gx + maxorderb) % prime
             try:
-                y = mod_sqrt(y2, prime)
+                y = mod_sqrt_var(y2, prime)
                 assert (y * y) % prime == y2
                 gy = y
             except Exception:

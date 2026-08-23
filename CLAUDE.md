@@ -73,14 +73,12 @@ Do not use Fable unless explicitly instructed.
 
 ## Non-obvious facts that will otherwise waste a session
 
-- **The scripts do not run against the btclib on PyPI.** They import
-  `btclib.ecc.curve`, `btclib.curvegroup`, `btclib.curvegroup2` and
-  `btclib.dh`, which are names from its 2020 layout and are not names the
-  library answers to now. So a script is source to read, not a command to
-  run, until somebody migrates it — and a session that "verifies" one by
-  running it will report an ImportError as its own doing.
-  `pyproject.toml`'s `[tool.mypy]` carries the measurement and the
-  command.
+- **A script that imports is not a script that runs, and the gate only
+  asks the first question.** mypy resolves the names; whether the
+  demonstration still prints what the lecture shows is answered by
+  `uv run python py-scripts/<name>.py` and by reading the output.
+  `py-scripts/README.md` names what a script wants before it will run at
+  all: a line on stdin, a display, or the network.
 - **`pyproject.toml` is not a distribution's.** `package = false`, no
   build backend and no wheel, so the standard's section 3 describes a
   file this one is not. Its ruff `select` is short *on purpose* and every

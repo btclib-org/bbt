@@ -2,7 +2,7 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
-from btclib.ecc.curve import Curve
+from btclib.curves.curve import Curve
 
 # low cardinality curves p<100
 ec11_7 = Curve(11, 2, 7, (6, 9), 7, 2, False)

@@ -4,8 +4,8 @@
 
 from hashlib import sha256
 
-from btclib.ecc.curve import double_mult, mult
-from btclib.ecc.curve import secp256k1 as ec
+from btclib.curves.curve import double_mult_var, mult
+from btclib.curves.curve import secp256k1 as ec
 from btclib.ecc.ssa import challenge_
 from btclib.utils import int_from_bits
 
@@ -55,7 +55,7 @@ print(f"   s1: {hex(s1).upper()}")
 
 
 print("3. Verify signature")
-K = double_mult(-c1, Q, s1, ec.G)
+K = double_mult_var(-c1, Q, s1, ec.G)
 print(K[0] == r1)
 
 
@@ -83,5 +83,5 @@ print(f"   s2: {hex(s2).upper()}")
 
 
 print("3. Verify signature")
-K = double_mult(-c2, Q, s2, ec.G)
+K = double_mult_var(-c2, Q, s2, ec.G)
 print(K[0] == r2)

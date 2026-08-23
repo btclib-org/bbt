@@ -14,6 +14,44 @@ behind.
 
 ## Unreleased
 
+### The material runs, and mypy is the gate that says the names resolve
+
+- **Every script under `py-scripts/` and every notebook under `ipynb/`
+  imports what btclib exports.** `btclib.ecc.curve` is
+  `btclib.curves.curve`, `btclib.curvegroup` and `btclib.curvegroup2` are
+  `btclib.curves.curve_group` and `btclib.curves.curve_group_2`,
+  `btclib.ecc.number_theory` is `btclib.number_theory`, `ansi_x9_63_kdf`
+  moved from `btclib.dh` to `btclib.kdf`, `b58encode` and `b58decode` are
+  `base58.encode` and `base58.decode`, and many of the group-law
+  helpers a benchmark reaches into carry a `_var` suffix. An import that resolves
+  is not a demonstration that works, so each script was run and its
+  output read: `uv run python py-scripts/<name>.py`. `curves.py` and
+  `rfc6979.py` exit 1 still, writing as they do into a checkout of btclib
+  at paths it does not have, which is btclib-org/bbt#17.
+
+- **The `mypy` hook runs the type check `[tool.mypy]` configures.** The
+  strictness was declared and read by nothing, which is the finding
+  section 15 of the standard names on its own. The hook is section 4's
+  local shape — `uv run --locked --no-default-groups --group lint mypy
+  py-scripts`, against the environment the scripts import btclib from —
+  rather than the mirror, whose `--ignore-missing-imports` would have
+  turned every moved module into `Any` and reported a clean run over code
+  that could not import. `ci:`'s `skip:` names it, uv being absent on
+  pre-commit.ci.
+
+- **The annotations strict mode asks for are at the `def` that needs
+  one**, in `ec_explorer.py` and `pubkey2address.py`. `hash_puzzle.py`'s
+  `# type: ignore` on the matplotlib import is gone: matplotlib ships a
+  `py.typed`, so the ignore silenced nothing and strict mode reported it.
+
+- **`PartialHashInversion.ipynb` passes `base` to `yscale`, not
+  `basey`.** matplotlib answers the second with a `TypeError` naming the
+  first, which is the one failure in `ipynb/` that was not btclib's.
+
+- **The notebooks' committed outputs were not re-run.** They are what the
+  lecture produced, and what re-running them would change is
+  btclib-org/bbt#19.
+
 ### This tree answers the rows the standard's suite held against it
 
 - **`REVIEWING.md`'s *The gates are the evidence* excepts no gate from
@@ -130,12 +168,6 @@ behind.
   Python here had ever been through ruff, and closing those counts is a
   rewrite of the material the course is taught from rather than a lint
   fix. `ruff-format` is left out for the same reason.
-
-- **No mypy hook.** `uv run --group lint mypy py-scripts` answers with
-  errors that are mostly `import-not-found` against modules current
-  btclib does not have: the scripts were written against its 2020 layout.
-  That is code that no longer runs, not a typing gap, so the
-  configuration records it and no hook fails on every commit over it.
 
 ### A gate that runs on a pull request
 

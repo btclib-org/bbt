@@ -4,9 +4,9 @@
 
 from hashlib import sha256
 
-from btclib.ecc.curve import mult
-from btclib.ecc.curve import secp256k1 as ec
-from btclib.ecc.number_theory import mod_inv
+from btclib.curves.curve import mult
+from btclib.curves.curve import secp256k1 as ec
+from btclib.number_theory import mod_inv
 from btclib.utils import int_from_bits
 
 # note: no import from btclib.ecc.dsa
@@ -64,7 +64,7 @@ assert u != 0
 assert v != 0
 U = mult(u, ec.G)
 V = mult(v, Q)
-x, y = ec.add(U, V)
+x, y = ec.add_var(U, V)
 print(r1 == x % ec.n)
 
 
@@ -81,7 +81,7 @@ assert u != 0
 assert v != 0
 U = mult(u, ec.G)
 V = mult(v, Q)
-x, y = ec.add(U, V)
+x, y = ec.add_var(U, V)
 print(r1 == x % ec.n)
 
 
@@ -119,5 +119,5 @@ assert u != 0
 assert v != 0
 U = mult(u, ec.G)
 V = mult(v, Q)
-x, y = ec.add(U, V)
+x, y = ec.add_var(U, V)
 print(r2 == x % ec.n)

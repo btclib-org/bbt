@@ -7,8 +7,8 @@
 import secrets
 from hashlib import sha256 as hf
 
-from btclib.ecc.curve import mult
-from btclib.ecc.curve import secp256k1 as ec
+from btclib.curves.curve import mult
+from btclib.curves.curve import secp256k1 as ec
 from btclib.utils import int_from_bits
 
 # master prvkey in [1, n-1]
@@ -23,10 +23,10 @@ print(f"               {hex(mpubkey[1]).upper()}")
 r = secrets.randbits(ec.nlen)
 print(f"\npublic random number: {hex(r).upper()}")
 
-rbytes = r.to_bytes(ec.nsize, "big")
+rbytes = r.to_bytes(ec.n_size, "big")
 nKeys = 3
 for i in range(nKeys):
-    ibytes = i.to_bytes(ec.nsize, "big")
+    ibytes = i.to_bytes(ec.n_size, "big")
     hd = hf(ibytes + rbytes).digest()
     offset = int_from_bits(hd, ec.nlen) % ec.n
     q = (mprvkey + offset) % ec.n
@@ -37,8 +37,8 @@ for i in range(nKeys):
 
 # Pubkeys could also be calculated without using prvkeys
 for i in range(nKeys):
-    ibytes = i.to_bytes(ec.nsize, "big")
+    ibytes = i.to_bytes(ec.n_size, "big")
     hd = hf(ibytes + rbytes).digest()
     offset = int_from_bits(hd, ec.nlen) % ec.n
-    Q = ec.add(mpubkey, mult(offset, ec.G, ec))
+    Q = ec.add_var(mpubkey, mult(offset, ec.G, ec))
     assert Q == mult((mprvkey + offset) % ec.n, ec.G, ec)

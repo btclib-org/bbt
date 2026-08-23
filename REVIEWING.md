@@ -454,14 +454,12 @@ this heading.
 Each of these is a question, and the document that answers it is named
 because that document, and not this one, is where the rule lives.
 
-- **Does a script still import a module btclib has?** The scripts were
-  written against btclib's 2020 layout, and the names they import —
-  `btclib.ecc.curve`, `btclib.curvegroup`, `btclib.curvegroup2`,
-  `btclib.dh` — are not names the installed library answers to.
-  `uv run --group lint mypy py-scripts` is what says so, and
-  `pyproject.toml`'s `[tool.mypy]` is where the state of that is
-  recorded. A diff touching a script does not owe the migration; a diff
-  claiming a script runs does.
+- **Did the diff run the script it touched?** The `mypy` hook resolves
+  the names a script imports and says nothing about what it computes,
+  and there is no suite here that would: a script is verified by
+  `uv run python py-scripts/<name>.py` and by reading what it prints
+  against what the material says it prints. `py-scripts/README.md` names
+  what a script needs before it will run at all.
 - **Does a notebook's committed output belong to the code beside it?**
   The `.ipynb` files under `ipynb/` carry their outputs, embedded images
   included, so a cell edited without a re-run leaves a figure that

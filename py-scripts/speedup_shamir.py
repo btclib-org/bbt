@@ -5,8 +5,8 @@
 import random
 import time
 
-from btclib.ecc.curve import secp256k1 as ec
-from btclib.curvegroup import _double_mult, _mult
+from btclib.curves.curve import secp256k1 as ec
+from btclib.curves.curve_group import _double_mult_var, _mult
 
 random.seed(42)
 
@@ -22,19 +22,19 @@ for _ in range(500):
 
 """
 for u, v, QJ in zip(us, vs, QJs):
-    t1 = ec._add_jac(_mult(u, ec.GJ, ec), _mult(v, QJ, ec))
-    t2 = _double_mult(u, ec.GJ, v, QJ, ec)
-    assert ec._jac_equality(t1, t2)
+    t1 = ec.add_jac(_mult(u, ec.GJ, ec), _mult(v, QJ, ec))
+    t2 = _double_mult_var(u, ec.GJ, v, QJ, ec)
+    assert ec.is_jac_equal(t1, t2)
 """
 
 start = time.time()
 for u, v, QJ in zip(us, vs, QJs):
-    ec._add_jac(_mult(u, ec.GJ, ec), _mult(v, QJ, ec))
+    ec.add_jac(_mult(u, ec.GJ, ec), _mult(v, QJ, ec))
 elapsed1 = time.time() - start
 
 start = time.time()
 for u, v, QJ in zip(us, vs, QJs):
-    _double_mult(u, ec.GJ, v, QJ, ec)
+    _double_mult_var(u, ec.GJ, v, QJ, ec)
 elapsed2 = time.time() - start
 
 print(f"{elapsed2 / elapsed1:.0%}")

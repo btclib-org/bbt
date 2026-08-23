@@ -4,10 +4,10 @@
 
 import hmac
 
-from btclib.base58 import b58encode
-from btclib.ecc.curve import mult
-from btclib.ecc.curve import secp256k1 as ec
-from btclib.ecc.sec_point import bytes_from_point
+from btclib import base58
+from btclib.curves.curve import mult
+from btclib.curves.curve import secp256k1 as ec
+from btclib.curves.sec_point import bytes_from_point
 from btclib.hashes import hash160
 
 # https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki
@@ -44,10 +44,10 @@ Qbytes = bytes_from_point(Q)
 chain_code = hd[32:]
 
 # extended keys
-ext_prv = b58encode(xprv + idf + chain_code + qbytes)
+ext_prv = base58.encode(xprv + idf + chain_code + qbytes)
 print("\nm")
 print(ext_prv)
-ext_pub = b58encode(xpub + idf + chain_code + Qbytes)
+ext_pub = base58.encode(xpub + idf + chain_code + Qbytes)
 print("M")
 print(ext_pub)
 assert (
@@ -75,10 +75,10 @@ qbytes = b"\x00" + q.to_bytes(32, byteorder="big")
 Qbytes = bytes_from_point(Q)
 chain_code = hd[32:]
 
-ext_prv = b58encode(xprv + idf + chain_code + qbytes)
+ext_prv = base58.encode(xprv + idf + chain_code + qbytes)
 print("\nm/0'")
 print(ext_prv)
-ext_pub = b58encode(xpub + idf + chain_code + Qbytes)
+ext_pub = base58.encode(xpub + idf + chain_code + Qbytes)
 print("M/0'")
 print(ext_pub)
 assert (
@@ -106,10 +106,10 @@ qbytes = b"\x00" + q.to_bytes(32, byteorder="big")
 Qbytes = bytes_from_point(Q)
 chain_code = hd[32:]
 
-ext_prv = b58encode(xprv + idf + chain_code + qbytes)
+ext_prv = base58.encode(xprv + idf + chain_code + qbytes)
 print("\nm/0'/1")
 print(ext_prv)
-ext_pub = b58encode(xpub + idf + chain_code + Qbytes)
+ext_pub = base58.encode(xpub + idf + chain_code + Qbytes)
 print("M/0'/1")
 print(ext_pub)
 assert (
@@ -137,10 +137,10 @@ qbytes = b"\x00" + q.to_bytes(32, byteorder="big")
 Qbytes = bytes_from_point(Q)
 chain_code = hd[32:]
 
-ext_prv = b58encode(xprv + idf + chain_code + qbytes)
+ext_prv = base58.encode(xprv + idf + chain_code + qbytes)
 print("\nm/0'/1/2'")
 print(ext_prv)
-ext_pub = b58encode(xpub + idf + chain_code + Qbytes)
+ext_pub = base58.encode(xpub + idf + chain_code + Qbytes)
 print("M/0'/1/2'")
 print(ext_pub)
 assert (
@@ -168,10 +168,10 @@ qbytes = b"\x00" + q.to_bytes(32, byteorder="big")
 Qbytes = bytes_from_point(Q)
 chain_code = hd[32:]
 
-ext_prv = b58encode(xprv + idf + chain_code + qbytes)
+ext_prv = base58.encode(xprv + idf + chain_code + qbytes)
 print("\nm/0'/1/2'/2")
 print(ext_prv)
-ext_pub = b58encode(xpub + idf + chain_code + Qbytes)
+ext_pub = base58.encode(xpub + idf + chain_code + Qbytes)
 print("M/0'/1/2'/2")
 print(ext_pub)
 assert (
@@ -199,10 +199,10 @@ qbytes = b"\x00" + q.to_bytes(32, byteorder="big")
 Qbytes = bytes_from_point(Q)
 chain_code = hd[32:]
 
-ext_prv = b58encode(xprv + idf + chain_code + qbytes)
+ext_prv = base58.encode(xprv + idf + chain_code + qbytes)
 print("\nm/0'/1/2'/2/1000000000")
 print(ext_prv)
-ext_pub = b58encode(xpub + idf + chain_code + Qbytes)
+ext_pub = base58.encode(xpub + idf + chain_code + Qbytes)
 print("M/0'/1/2'/2/1000000000")
 print(ext_pub)
 assert (

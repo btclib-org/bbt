@@ -6,9 +6,9 @@ import random
 import time
 from hashlib import sha256 as hf
 
-from btclib.ecc.curve import mult
-from btclib.ecc.curve import secp256k1 as ec
-from btclib.ecc.ssa import _batch_verify, _sign, _verify
+from btclib.curves.curve import mult
+from btclib.curves.curve import secp256k1 as ec
+from btclib.ecc.ssa import batch_verify_, sign_, verify_
 
 random.seed(42)
 
@@ -19,7 +19,7 @@ hlen = hsize * 8
 n_sig = [4, 8, 16, 32, 64, 128, 256, 512]
 m = [random.getrandbits(hlen).to_bytes(hsize, "big") for _ in range(max(n_sig))]
 q = [random.getrandbits(ec.nlen) % ec.n for _ in m]
-sig = [_sign(msg, qq) for msg, qq in zip(m, q)]
+sig = [sign_(msg, qq) for msg, qq in zip(m, q)]
 Q = [mult(qq, ec.G)[0] for qq in q]
 
 for n in n_sig:
@@ -27,7 +27,7 @@ for n in n_sig:
     # no batch
     start = time.time()
     for j in range(n):
-        assert _verify(m[j], Q[j], sig[j])
+        assert verify_(m[j], Q[j], sig[j])
     elapsed1 = time.time() - start
 
     # batch
@@ -35,7 +35,7 @@ for n in n_sig:
     Qs = Q[:n]
     sigs = sig[:n]
     start = time.time()
-    assert _batch_verify(ms, Qs, sigs), n
+    assert batch_verify_(ms, Qs, sigs), n
     elapsed2 = time.time() - start
 
     print(n, elapsed2 / elapsed1)

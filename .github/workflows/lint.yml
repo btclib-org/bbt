@@ -66,10 +66,12 @@ jobs:
   lint:
     # one job, so this job is the context a branch rule would name: the
     # aggregate job the standard asks for is what a matrix needs, and
-    # there is no matrix here. Not the sibling repositories' "Lint and
-    # type-check", and here that is not a narrowing but the truth --
-    # .pre-commit-config.yaml carries no mypy hook, pyproject.toml's
-    # [tool.mypy] saying what was measured instead
+    # there is no matrix here. The name is shorter than the sibling
+    # repositories' "Lint and type-check" while the gate type-checks
+    # too, and it stays that way because a rule already names it: `gh
+    # api repos/btclib-org/bbt/branches/main/protection` answers with
+    # `Lint` as the required context, and a renamed job leaves that
+    # context reporting nothing, which blocks every pull request
     name: Lint
     # a draft pull request is work its author is not asking anyone to
     # read yet and spends no runner. A closed one spends none either --
@@ -107,10 +109,10 @@ jobs:
           path: ~/.cache/pre-commit
           # the hook config alone, where the sibling repositories hash
           # .python-version beside it: every environment pre-commit
-          # builds is named by a rev that file pins, and no hook here
-          # resolves anything through uv for .python-version to decide.
-          # uv-lock is the one hook that runs uv, and what it reads is
-          # uv.lock and pyproject.toml rather than an interpreter
+          # builds is named by a rev that file pins, and the hook that
+          # shells out to uv is language: system -- pre-commit builds
+          # nothing for it, so nothing under this path depends on the
+          # interpreter uv resolves
           key: >-
             pre-commit-${{ runner.os }}-${{ steps.image.outputs.os }}-${{
             hashFiles('.pre-commit-config.yaml') }}
