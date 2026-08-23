@@ -16,7 +16,8 @@ address = "1Dorian4RoXcnBv9hnQ4Y2C1an6NJ4UrjX"
 # containing UTXO, like this:
 # {	"unspent_outputs":[
 #   {
-#     "tx_hash":"ebadfaa92f1fd29e2fe296eda702c48bd11ffd52313e986e99ddad9084062167",
+#     "tx_hash":
+#         "ebadfaa92f1fd29e2fe296eda702c48bd11ffd52313e986e99ddad9084062167",
 #     "tx_index":51919767,
 #     "tx_output_n": 1,
 #     "script":"76a9148c7e252f8d64b0b6e313985915110fcfefcf4a2d88ac",

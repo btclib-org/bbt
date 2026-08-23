@@ -27,7 +27,8 @@ print("Seed:", hex(seed), "\nbytes:", seed_bytes)
 # ==master ext private key==
 # depth: 0x00 for master nodes, 0x01 for level-1 derived keys, ...
 depth = b"\x00"
-# This is ser32(i) for i in xi = xpar/i, with xi the key being serialized. (0x00000000 if master key)
+# This is ser32(i) for i in xi = xpar/i, with xi the key being serialized.
+# (0x00000000 if master key)
 child_number = b"\x00\x00\x00\x00"
 # the fingerprint of the parent's public key (0x00000000 if master key)
 fingerprint = b"\x00\x00\x00\x00"

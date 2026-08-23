@@ -94,7 +94,7 @@ explicit-preview-rules = true
 #   ERA  code commented out and kept as an alternative to read
 #   UP   written for an interpreter three releases back
 #   I    import blocks in the order they were typed
-#   B BLE FIX W PGH SIM  a handful each, and each one a decision about
+#   B BLE FIX PGH SIM  a handful each, and each one a decision about
 #        the script it is in rather than about this file
 #
 # Left out because they cannot fire here, which section 5 asks for
@@ -122,6 +122,7 @@ select = [
     "PL",   # pylint, which requirements-dev.txt asked for as a tool
     "RET",  # flake8-return
     "RUF",  # ruff-specific rules
+    "W",    # pycodestyle warnings, W505 the one max-doc-length configures
 ]
 ignore = [
     # what every sibling gets from ruff-format, this tree gets from
@@ -239,8 +240,13 @@ iz = "iz"
 CPY = "CPY"
 
 [tool.mypy]
-# mypy.ini's two settings, which are the whole of what survived it, plus
-# the strictness the organization asks for.
+# mypy.ini's show_column_numbers, the one of its two settings that
+# survives it, plus the strictness the organization asks for.
+# show_error_codes is not the other: mypy 2.3.1, the version this
+# tree's uv.lock pins, already reports a code on every error --
+# `hide_error_codes` defaults to `False` -- so the key bought no check
+# and btclib-org/.github#191 is why it is gone rather than carried
+# forward.
 #
 # The `mypy` hook in .pre-commit-config.yaml is what runs this, and it
 # names py-scripts, where every tracked Python file of this tree is:
@@ -250,7 +256,6 @@ CPY = "CPY"
 strict = true
 warn_unreachable = true
 show_column_numbers = true
-show_error_codes = true
 python_version = "3.14"
 # the optional error codes strict does not turn on: the list
 # btclib-org/.github#165 decides for the organization, which is where it

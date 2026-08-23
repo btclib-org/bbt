@@ -270,3 +270,24 @@ behind.
   vulnerabilities* in `README.md`, where somebody about to follow the
   material reads, rather than behind a reporting form
   ([btclib-org/.github#116](https://github.com/btclib-org/.github/issues/116)).
+
+### Three settings that read as checks this tree did not run
+
+- **`[tool.mypy]`'s `show_error_codes` is gone.** mypy 2.3.1, the
+  version `uv.lock` pins, already reports a code on every error —
+  `hide_error_codes` defaults to `False` before a config file is read —
+  so the key bought no check while reading as though it did
+  ([btclib-org/.github#191](https://github.com/btclib-org/.github/issues/191)).
+
+- **`.gitattributes` carries the standard's sentence on the two
+  `merge=union` lines matching a tree that holds neither file.** This
+  tree has no `RELEASE_NOTES.md`, and the copy here now says why that
+  is not a mismatch, byte for byte with `btclib-org/.github`'s
+  ([btclib-org/.github#192](https://github.com/btclib-org/.github/issues/192)).
+
+- **`select` in `[tool.ruff.lint]` gains `W`, so `max-doc-length = 80`
+  gates something.** W505 was configured and never selected; the four
+  lines it now catches are rewrapped, and one notebook cell's
+  blank-line whitespace, which the wider `W` family also refused, is
+  stripped alongside them
+  ([btclib-org/.github#176](https://github.com/btclib-org/.github/issues/176)).
