@@ -252,3 +252,26 @@ warn_unreachable = true
 show_column_numbers = true
 show_error_codes = true
 python_version = "3.14"
+# the optional error codes strict does not turn on: the list
+# btclib-org/.github#165 decides for the organization, which is where it
+# is written down until section 6 of the standard carries it. Of the
+# codes it adds, `possibly-undefined` is the one that answered over
+# `py-scripts/`: it refused hash_puzzle.py, where the report at the end
+# of the script read two names only the loop above it bound. They are
+# bound before the loop now, so nothing on the list reports today, which
+# is what a ratchet is for -- the line written next is the one they are
+# here to meet
+enable_error_code = [
+    "deprecated",
+    "exhaustive-match",
+    "explicit-override",
+    "ignore-without-code",
+    "mutable-override",
+    "possibly-undefined",
+    "redundant-expr",
+    "redundant-self",
+    "truthy-bool",
+    "truthy-iterable",
+    "unimported-reveal",
+    "unused-awaitable",
+]

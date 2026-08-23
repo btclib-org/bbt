@@ -23,6 +23,10 @@ print(f"{zeros} required zeros")
 n: List[int] = []
 maxEval = pow(16, zeros + 1)
 i = j = nonce = 0
+# the loop below binds these, and the report at the end reads them: what
+# says the loop runs is that maxEval is at least 256, which is arithmetic
+# rather than control flow, so bind them here and let the report be safe
+string = hashValue = ""
 start = time.time()
 while i < maxEval and nonce == 0:
     string = msg + str(i)

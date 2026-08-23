@@ -91,6 +91,18 @@ behind.
 
 ### The repository carries the organization's shape
 
+- **`[tool.mypy]` enables the organization's optional error codes, and
+  one of them answered.** The list is the one btclib-org/.github#165
+  decides for section 6 of the standard, the same in every repository
+  that carries the table. The hook runs mypy since btclib-org/bbt#24, so
+  what the codes report is measured rather than deferred:
+  `possibly-undefined` refused `py-scripts/hash_puzzle.py`, where the
+  report at the end of the script read two names bound only inside the
+  loop above it. They are bound before the loop now — what said the loop
+  runs was the size of `maxEval`, which is arithmetic and not control
+  flow. The rest of the list answers nothing today, which is the point
+  of a ratchet.
+
 - **`REVIEWING.md` is the organization's copy.** A review reads the prose
   that stays in the tree, treats a commit message or a pull request's
   body as a finding only where it decides something, and asks a stated
