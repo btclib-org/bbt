@@ -81,12 +81,29 @@ are grouped by subject rather than by version.
   requires. No step and no command changed; what changed is where the
   lines break.
 
-- **A script that opens with a shebang carries the bit that makes one
-  mean anything.** `check-shebang-scripts-are-executable` reads the pair,
-  and this tree had the line without the bit on every script that has
-  one. Whether `#!/usr/bin/env python3` is the right interpreter to
-  declare, when the environment `uv sync` builds is where btclib lives,
-  is a separate question and is left open.
+- **The scripts open with the notice `COPYRIGHT` holds, and with nothing
+  above it.** They carried btclib's pre-MIT header instead: a restriction
+  `LICENSE` does not impose, a year range neither licence file carries,
+  and a claim that the file is part of a package this tree is not. `CPY`
+  is selected now, with the `notice-rgx` the siblings carry, so the
+  header is checked rather than copied from a neighbour.
+
+  What the rule's anchor costs is the shebang, no pattern anchored at
+  byte zero matching a file that keeps one — and the interpreter it
+  declared is not one these scripts run under. `#!/usr/bin/env python3`
+  resolves off PATH, where `python3 -c "import btclib"` fails, while
+  `py-scripts/README.md` documents `uv run python
+  py-scripts/<name>.py`, which consults no shebang. So the shebang goes,
+  and the executable bit `check-shebang-scripts-are-executable` pairs
+  with it. What that costs is measured rather than assumed:
+  `./py-scripts/conversions.py` ran and does not any more, while a script
+  importing btclib never ran that way to begin with.
+
+- **The notebooks are ignored for that rule.** Where a notice belongs in
+  a `.ipynb`, or whether one does, is a question of its own —
+  btclib-org/bbt#27 — and `ipynb/field_table.ipynb` is the only notebook
+  ruff reads at all — btclib-org/bbt#26 — so selecting the rule over
+  them would settle the first by accident of the second.
 
 - **`typos` corrupted a vector before it was configured**, and that
   is why `[tool.typos]` exists: run with `--write-changes` it rewrote a

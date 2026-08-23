@@ -93,11 +93,6 @@ explicit-preview-rules = true
 #   ERA  code commented out and kept as an alternative to read
 #   UP   written for an interpreter three releases back
 #   I    import blocks in the order they were typed
-#   CPY  and worse than a count would say: the files under py-scripts
-#        that *do* carry a notice carry btclib's pre-MIT one, with a
-#        year range, which is neither COPYRIGHT's text nor the licence
-#        this repository ships -- `grep -l "No part of btclib"
-#        py-scripts/*.py`
 #   B BLE FIX W PGH SIM  a handful each, and each one a decision about
 #        the script it is in rather than about this file
 #
@@ -107,9 +102,17 @@ explicit-preview-rules = true
 # import to be written in), and the families the organization's own
 # survey rejected.
 select = [
-    "A",    # flake8-builtins: a name that shadows a builtin
-    "C4",   # flake8-comprehensions
-    "C90",  # mccabe, at ruff's default
+    "A",   # flake8-builtins: a name that shadows a builtin
+    "C4",  # flake8-comprehensions
+    "C90", # mccabe, at ruff's default
+    # flake8-copyright, reading the notice out of COPYRIGHT the way
+    # section 5 asks and every sibling writes it. The scripts opened
+    # with btclib's pre-MIT header instead -- a restriction LICENSE does
+    # not impose, a year range neither licence file carries, and a claim
+    # that the file is part of a package this tree is not -- so this
+    # family is here on the same terms as the rest of the list: the tree
+    # answers zero to it
+    "CPY",
     "E",    # pycodestyle errors
     "F",    # pyflakes
     "FURB", # refurb
@@ -135,6 +138,41 @@ ignore = [
     # them
     "magic-value-comparison", # PLR2004
 ]
+
+[tool.ruff.lint.per-file-ignores]
+# the notebooks, until somebody decides where a notice belongs in one.
+# Measured, ipynb/field_table.ipynb is the only notebook ruff reads at
+# all -- the others declare no language in their metadata and are
+# skipped as files, which is btclib-org/bbt#26 -- so without this line
+# selecting CPY would ask a notice of exactly one notebook, and ask it
+# because of that notebook's metadata rather than because anything was
+# decided about notebooks. btclib-org/bbt#27 is where the decision is,
+# and it is the issue this line comes off with
+"*.ipynb" = ["missing-copyright-notice"]
+
+[tool.ruff.lint.flake8-copyright]
+# COPYRIGHT is the one place the notice text is written down; this is
+# all three of its lines as one regex, and byte for byte the string
+# btclib, btclib-secp256k1, btclib-benchmarks and btclib-node carry.
+# Anchored with `^`, which section 5 asks for: unanchored, CPY001 is a
+# search over the first 4096 bytes and not a check that the notice opens
+# the file, and an `import` written above the notice passes it -- run
+# against a file shaped that way, the same pattern without the `^`
+# reports nothing.
+#
+# What the anchor cost here is the shebang the scripts opened with, no
+# pattern anchored at byte zero being able to match a file that keeps
+# one. Putting the notice above the shebang was measured and is worse
+# than the finding: with no `#!` at byte zero the kernel hands the file
+# to the shell, which reads the first `print(...)` as a syntax error. So
+# the shebang went, and the executable bit that
+# `check-shebang-scripts-are-executable` pairs with it, because what it
+# declared was an interpreter that cannot run these scripts anyway --
+# `#!/usr/bin/env python3` resolves off PATH and not to the environment
+# `uv sync` builds, where btclib is (`python3 -c "import btclib"`), and
+# py-scripts/README.md documents `uv run python py-scripts/<name>.py`,
+# which consults no shebang
+notice-rgx = "^# Copyright \\(c\\) The btclib developers\\n# Distributed under the MIT software license, see the accompanying\\n# LICENSE file or https://opensource\\.org/license/mit for the full text\\."
 
 [tool.ruff.lint.mccabe]
 # ruff's default, and the number .flake8 already carried -- commented
@@ -191,6 +229,13 @@ shs = "shs"
 # of the same cell in SSA.ipynb -- an opaque identifier the notebook
 # format assigns, and the same class of finding as the base58 above
 iz = "iz"
+# ruff's name for the copyright rule, selected above and named in
+# CHANGELOG.md, rather than the `COPY` or `CPU` this checker offers for
+# it. The occurrences in this file need no entry and are not what asks
+# for one: typos does not read the file its own configuration lives in,
+# so `uvx typos --force-exclude pyproject.toml` reports nothing while
+# the same command on CHANGELOG.md reports the word
+CPY = "CPY"
 
 [tool.mypy]
 # mypy.ini's two settings, which are the whole of what survived it, plus
