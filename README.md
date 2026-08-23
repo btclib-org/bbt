@@ -23,6 +23,11 @@ Other material available in this repo:
 - the *regtest-lab* folder includes information for a regtest session
   using Bitcoin Core
 
+There is no release: nothing here is published to an index or cut as a
+GitHub release, the material ships by being read here and by being
+cloned, and [CONTRIBUTING.md](./CONTRIBUTING.md)'s *A version, and no
+release* is what the placeholder version in `pyproject.toml` is for.
+
 ## Limitations, not vulnerabilities
 
 These are known and inherent, and each is what the material is *for*.

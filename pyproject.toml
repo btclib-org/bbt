@@ -17,9 +17,10 @@
 
 [project]
 name = "bbt"
-# a placeholder, and the reason is RELEASING.md's: nothing here is
-# released, so there is no version for a tag to agree with. Section 12's
-# calendar versioning applies to what a release publishes
+# a placeholder, and the reason is CONTRIBUTING.md's "A version, and no
+# release": nothing here is released, so there is no version for a tag to
+# agree with. Section 12's calendar versioning applies to what a release
+# publishes
 version = "0"
 # there is no matrix here and no library covering the interpreters still
 # in support: one person builds one environment to run a notebook or a

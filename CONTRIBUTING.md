@@ -237,3 +237,41 @@ release, so nothing else is asked of a pull request.
 from the endpoint rather than restating it: a red run does not block a
 merge today, and until the rule exists the gate binds an author who runs
 it and nobody else.
+
+### A version, and no release
+
+Nothing here is released. This repository publishes to no index and cuts
+no GitHub release: what it ships, it ships by being read on github.com
+and by being cloned, and there is no artifact for a version to name,
+which is why `pyproject.toml` declares `package = false` and a
+placeholder version. So this tree carries no `RELEASING.md` and no
+`RELEASE_NOTES.md` — section 2 of [the
+standard](https://github.com/btclib-org/.github/blob/main/README.md) has
+why a tier-2 repository carries neither — and a file whose content is its
+own absence is this section instead. Measured rather than asserted, and
+re-derivable:
+
+```shell
+gh api repos/btclib-org/bbt/releases --jq 'length'   # 0
+gh api repos/btclib-org/bbt/tags --jq 'length'       # 0
+git tag                                              # nothing
+```
+
+A release would first need something to publish — the tree is notebooks,
+spreadsheets, a walk-through and scripts run from a checkout, none of it
+imported, so a wheel of it would be a wheel nobody installs; scripts that
+run, which `[tool.mypy]` in `pyproject.toml` measures they do not; and a
+version that means something, where course material is dated by the
+course and <http://www.ametrano.net/bbt/> is where the current slides
+are. The day one arrives it arrives with `release.yml`, which is the day
+the two files above come with it. Until then `CHANGELOG.md` is grouped by
+subject rather than by version, there being no version to group by.
+
+`main` is not the only thing a ruleset covers here: `tag-integrity`
+requires a signature on `refs/tags/v*` and has no bypass actor, and
+`REPOSITORY.md` carries the call that reads it back. There is no such
+tag, so it enforces nothing today, and that is not a defect to remove: it
+is the rule being in place before the first tag rather than after it,
+which is the order the required-check rule in `REPOSITORY.md` could not
+take. Whoever cuts a first tag here signs it — `git tag -s` — and finds
+that out from the push rather than from this section.

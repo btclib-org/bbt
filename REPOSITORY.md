@@ -115,8 +115,8 @@ gh api repos/btclib-org/bbt/rulesets --jq '.[].id' \
   design: `always` would mean a direct push to `main` had become
   possible, which is the drift the `bypass` field above is read for.
 - `tag-integrity` — required signatures on `refs/tags/v*`, and there is
-  no such tag. `RELEASING.md` is where that is explained rather than
-  removed.
+  no such tag. `CONTRIBUTING.md`'s *A version, and no release* is where
+  that is explained rather than removed.
 
 ```shell
 gh api repos/btclib-org/bbt/rulesets --jq '.[].id' \
@@ -252,9 +252,10 @@ file is a gap rather than a choice.
 
 ## What is not configured, and why
 
-- **No publishing and no release workflow.** `RELEASING.md` is the whole
-  of that answer and carries the commands behind it. There is no `pypi`
-  environment and no trusted publisher:
+- **No publishing and no release workflow.** `CONTRIBUTING.md`'s *A
+  version, and no release* is the whole of that answer and carries the
+  commands behind it. There is no `pypi` environment and no trusted
+  publisher:
   `gh api repos/btclib-org/bbt/environments --jq .total_count` answers
   `0`.
 - **No `links.yml`.** It gates nothing anywhere, and it does not exist

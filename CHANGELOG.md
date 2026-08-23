@@ -7,12 +7,35 @@
 # Changelog
 
 What changed in this repository, and why. Nothing here is released —
-`RELEASING.md` says what that means and what it costs — so the entries
-are grouped by subject rather than by version.
+`CONTRIBUTING.md`'s *A version, and no release* says what that means and
+what it costs — so the entries are grouped by subject rather than by
+version, and there are no release notes for this file to be the record
+behind.
 
 ## Unreleased
 
 ### The repository carries the organization's shape
+
+- **`RELEASING.md` and `RELEASE_NOTES.md` are gone, and what the first
+  said is a section of `CONTRIBUTING.md`.** Section 2 of the standard
+  says a tier-2 repository carries neither (btclib-org/.github#150): the
+  first opened *Nothing here is released* and the second's one section
+  read *Nothing a user has to act on*, and a file whose content is its
+  own absence tells a reader who has not opened it that there is a
+  procedure here. What the first said — the commands that answer `0`
+  releases and `0` tags, what a release would first need, and that
+  `tag-integrity` is in place before the first tag and refuses one that
+  is not signed — is `CONTRIBUTING.md`'s *A version, and no release*,
+  under *This repository in particular*; nothing of the second is lost.
+  `README.md` says the material is not released and points there,
+  `REPOSITORY.md`'s `tag-integrity` bullet and its *No publishing* bullet
+  cite that section where they cited `RELEASING.md`, `pyproject.toml`'s
+  comment on the placeholder version does the same, and this file's
+  introduction with it. The entry below that lists the two files among
+  those the tree gained describes the tree between that landing and this
+  one. `.gitattributes` keeps `RELEASE_NOTES.md merge=union`: section 14
+  of the standard owes the two `merge=union` entries to every copy, and
+  an attribute on a path the tree does not hold is inert.
 
 - **The files the standard's section 2 names, which this tree had none
   of**: `AUTHORS.md`, `CHANGELOG.md`, `CODE_OF_CONDUCT.md`, `COPYRIGHT`,
