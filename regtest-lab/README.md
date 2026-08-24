@@ -24,6 +24,17 @@ the `[...]` part.
   0
   ```
 
+- create a wallet. A node does not make one by itself, so every command
+  below that reaches an address or a balance needs this first; once per
+  node, `loadwallet lab` being what brings it back on a later start
+
+  ```shell
+  $ bitcoin-cli -regtest createwallet lab
+  {
+    "name": "lab"
+  }
+  ```
+
 ## Digital Signature Using `bitcoin-cli`
 
 - get a new *legacy* (non *p2sh-segwit* or *bech32*) address to be used
@@ -197,14 +208,15 @@ the `[...]` part.
 
 ## Further Material
 
-For a [full command list](https://bitcoincore.org/en/doc/0.18.0/):
+For a [full command list](https://bitcoincore.org/en/doc/31.0.0/):
 
 ```shell
 bitcoin-cli help
 ```
 
-For help about a peculiar command (e.g.
-[generatetoaddress](https://bitcoincore.org/en/doc/0.18.0/rpc/generating/generatetoaddress/)):
+For help about a peculiar command (e.g. `generatetoaddress`, which the
+command list above does not carry, the site documenting no `generate`
+RPC):
 
 ```shell
 bitcoin-cli generatetoaddress

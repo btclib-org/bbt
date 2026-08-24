@@ -4,18 +4,18 @@
    <https://bitcoincore.org/en/download/>. You can pick one of the
    following two version:
    - portable version (zip)
-     <https://bitcoincore.org/bin/bitcoin-core-0.18.0/bitcoin-0.18.0-win64.zip>;
+     <https://bitcoincore.org/bin/bitcoin-core-31.1/bitcoin-31.1-win64.zip>;
      unzip it in your favorite location; in the following
-     `C:\your\bitcoinfolder` is where the `bin`, `include`, `lib`, and
-     `share` folders are located
+     `C:\your\bitcoinfolder` is where the `bin`, `libexec` and `share`
+     folders are located
    - regular version (exe)
-     <https://bitcoincore.org/bin/bitcoin-core-0.18.0/bitcoin-0.18.0-win64-setup.exe>;
+     <https://bitcoincore.org/bin/bitcoin-core-31.1/bitcoin-31.1-win64-setup.exe>;
      execute the installer; in the following `C:\your\bitcoinfolder` is
-     where the `bin`, `include`, `lib`, and `share` folders are located
-     (usually it should be `C:\Program Files\Bitcoin\bitcoin-qt.exe`)
+     where the `bin`, `libexec` and `share` folders are located (usually
+     it should be `C:\Program Files\Bitcoin\bitcoin-qt.exe`)
 
 1. add the `C:\your\bitcoinfolder\bin folder` (the one including the
-   `bitcoinqt`, `bitcoind`, and `bitcoin-cli` executables) to your %PATH%
+   `bitcoin-qt`, `bitcoind` and `bitcoin-cli` executables) to your %PATH%
    environment variable, so that whenever you will call the bitcoin
    executables from the command line, Windows will know where to find
    them even if you are not in the `c:\your\bitcoinfolder\bin` folder.
@@ -33,7 +33,8 @@
    augmented PATH) and start the Bitcoin Core GUI+daemon in regtest mode:
 
    ```bat
-   > bitcoinqt -regtest -addresstype=bech32 -walletrbf=1 -server -rpcallowip=127.0.0.1
+   > bitcoin-qt -regtest -addresstype=bech32 -walletrbf=1 -server ^
+       -rpcallowip=127.0.0.1 -fallbackfee=0.0002
    ```
 
    Do not be scared by the alert about >160GB being required. This would

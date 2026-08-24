@@ -5,7 +5,7 @@
 1. export convenience variables (for an easy installation)
 
    ```shell
-   export BITCOIN=bitcoin-core-0.17.0
+   export BITCOIN=bitcoin-core-31.1
    export BITCOINPLAIN=`echo $BITCOIN | sed 's/bitcoin-core/bitcoin/'`
    ```
 
@@ -13,8 +13,8 @@
    below, please replace it with your personal username)
 
    ```shell
-   wget https://bitcoin.org/bin/$BITCOIN/$BITCOINPLAIN-x86_64-linux-gnu.tar.gz \
-     -O ~username/$BITCOINPLAIN-x86_64-linux-gnu.tar.gz
+   wget -O ~username/$BITCOINPLAIN-x86_64-linux-gnu.tar.gz \
+     https://bitcoincore.org/bin/$BITCOIN/$BITCOINPLAIN-x86_64-linux-gnu.tar.gz
    ```
 
 1. install Bitcoin Core
@@ -32,10 +32,11 @@
    /bin/mkdir ~username/.bitcoin
    ```
 
-1. start the Bitcoin Core daemon in regtest mode
+1. start the Bitcoin Core daemon in regtest mode, with a fallback fee —
+   without it a send fails until the node has fee estimates of its own
 
    ```shell
-   bitcoind -regtest -daemon
+   bitcoind -regtest -daemon -fallbackfee=0.0002
    ```
 
 You are now ready to start the regtest lab session.

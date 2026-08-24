@@ -14,6 +14,37 @@ behind.
 
 ## Unreleased
 
+### The regtest lab runs on a current Bitcoin Core
+
+- **`regtest-lab/linux.md` and `mac-os.md` downloaded Core from
+  `bitcoin.org/bin`, which answers 404** (btclib-org/bbt#50), so the
+  first executable step of two of the three setup pages could not be
+  completed and the failure surfaced one step later, at `tar`, as a
+  corrupt archive. The three pages named three different versions
+  besides. They now name one, from the host `windows.md` already used,
+  and `mac-os.md` names the build for the machine, `osx64` having been
+  replaced by an Apple silicon and an Intel archive.
+
+- **`windows.md` described a layout the archive does not have.** The zip
+  holds `bin`, `libexec` and `share`; the page named `include` and `lib`,
+  and called the GUI executable `bitcoinqt`.
+
+- **A node no longer makes a wallet by itself**, so the lab's first
+  command reaching an address failed with *A default wallet is no longer
+  automatically created*. `regtest-lab/README.md` gains the
+  `createwallet` step, and names `loadwallet` for a later start.
+
+- **`sendtoaddress` failed with *Fee estimation failed. Fallbackfee is
+  disabled***, that being Core's regtest default. Every place the lab
+  starts a node passes `-fallbackfee=0.0002` — the three setup pages and
+  the three Windows launchers.
+
+- **The command list linked documentation for a version the site no
+  longer builds that way.** It names the newest the site publishes.
+  `generatetoaddress` loses its link rather than gaining a stale one: no
+  `generate` RPC is documented there, and the command below it is what
+  prints the help.
+
 ### `links.yml` checks the addresses this tree asks a reader to follow
 
 - **Nothing measured whether a link still resolved** (btclib-org/bbt#22),
