@@ -146,13 +146,13 @@ ignore = [
 
 [tool.ruff.lint.per-file-ignores]
 # the notebooks, until somebody decides where a notice belongs in one.
-# Measured, ipynb/field_table.ipynb is the only notebook ruff reads at
-# all -- the others declare no language in their metadata and are
-# skipped as files, which is btclib-org/bbt#26 -- so without this line
-# selecting CPY would ask a notice of exactly one notebook, and ask it
-# because of that notebook's metadata rather than because anything was
-# decided about notebooks. btclib-org/bbt#27 is where the decision is,
-# and it is the issue this line comes off with
+# All four are read now that each declares a language in its metadata,
+# so without this line selecting CPY would ask a notice of every one of
+# them rather than of the one whose metadata happened to name a
+# language: `uvx ruff check --preview --select CPY --config
+# 'lint.per-file-ignores = {}' ipynb/*.ipynb` reports four.
+# btclib-org/bbt#27 is where the decision is, and it is the issue this
+# line comes off with
 "*.ipynb" = ["missing-copyright-notice"]
 
 [tool.ruff.lint.flake8-copyright]

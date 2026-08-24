@@ -14,6 +14,40 @@ behind.
 
 ## Unreleased
 
+### ruff reads every notebook, and every notebook answers zero
+
+- **`DSA.ipynb`, `SSA.ipynb` and `PartialHashInversion.ipynb` declared no
+  language, so ruff skipped them as files** (btclib-org/bbt#26). Asked
+  for every rule ruff has, three of the four notebooks answered nothing
+  at all and `field_table.ipynb` answered, and the difference was in the
+  metadata rather than in the cells: only `field_table.ipynb` carried
+  `language_info`. A skipped file and a clean file both print
+  nothing, so every family `pyproject.toml`'s `select` names was inert on
+  three of the four and nothing in the configuration said so. Each of the
+  three now declares `"language_info": {"name": "python"}` — which is
+  what Jupyter writes whenever it saves a notebook, so the day one of
+  them was opened and saved those rules would have started reporting
+  anyway, against cells nobody had edited.
+
+- **What ruff found once it could read them is fixed in the same
+  change**: two trailing spaces in `DSA.ipynb`'s exercise cell, two
+  statements written after the colon of their `if`, and four comments
+  past the 80 columns `max-doc-length` sets. Whitespace, comment wrapping
+  and two statements moved onto their own line — nothing computed
+  changes, `ast.parse` giving the same tree before and after each split,
+  so the outputs these notebooks carry still answer the cells above them.
+  `uvx ruff check .` exits 0. One of the rewrapped comments named an `s1`
+  that `SSA.ipynb` does not have and never had, its variable being `s`;
+  the word is corrected on the line being rewrapped rather than filed.
+
+- **`pyproject.toml`'s per-file `missing-copyright-notice` ignore
+  described a tree where one notebook was read.** All four are read now,
+  so without that line selecting `CPY` would ask a notice of every one of
+  them rather than of the one whose metadata happened to name a language;
+  the comment says that, and names the command that counts four. The line
+  itself still comes off with btclib-org/bbt#27, the issue that decides
+  where a notice belongs in a notebook.
+
 ### The gate's comments sit beside what they explain, and name what it found
 
 - **`pyproject.toml`'s `PLR2004` comment called `2` and `3` the SEC
