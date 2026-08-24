@@ -132,6 +132,25 @@ Do not use Fable unless explicitly instructed.
 - **A notebook carries its outputs**, so a cell edited without a re-run
   leaves a figure answering an earlier question. `check-json` asks only
   that the file still parses, and nothing here asks the other question.
+- **Nor is a notebook a file a diff answers.** `pretty-format-json`
+  carries `exclude: \.ipynb$`, so nothing normalises these and they are
+  not written alike: `SSA.ipynb` is one line of JSON, and the indent of
+  a `source` element is not the same in the others. Each round-trips
+  through `json.dumps` losslessly at its own settings, which are not the
+  same settings for all of them, so a safe round-trip is one whose
+  settings you measured first — more work than a targeted text
+  replacement, and silent when you get it wrong. What the replacement
+  did is established by parsing both versions and comparing cell by
+  cell, which is also how you see that no `outputs` array moved.
+- **A rebase conflict on the one-line notebook is the whole file**, and
+  markers inside a single line of JSON are not resolvable by anybody.
+  Take the new base's copy and re-apply the change to it.
+- **`grep` does not measure `ipynb/`.** `grep -c` counts lines, so on a
+  notebook written on one line it answers at most 1 however many
+  occurrences there are, and cannot say that it could not. An unanchored
+  pattern matches the base64 of a committed image as readily as it
+  matches code, which is the half that has already produced a wrong
+  answer here. Parse the document.
 - **`calc/` and `excel/` are binaries** and a diff of one says nothing.
   A change to a spreadsheet is verified by opening it.
 - **This repository is a fork**, so its history reaches back past the

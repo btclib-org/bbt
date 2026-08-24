@@ -14,6 +14,33 @@ behind.
 
 ## Unreleased
 
+### `CLAUDE.md` says how a notebook is edited, not only what it carries
+
+- **The section that names this tree's failure modes said one thing
+  about `ipynb/`, and it was the thing a session needs after it has
+  managed to edit a notebook** (btclib-org/bbt#64). Editing one is the
+  part that costs the session: `pretty-format-json` carries
+  `exclude: \.ipynb$`, so nothing normalises these files and they are
+  not written alike, `SSA.ipynb` being one line of JSON. Each of them
+  round-trips through `json.dumps` losslessly at its own settings, which
+  are not the same settings for all of them, so a round-trip is safe
+  only where those settings were measured first and silent where they
+  were not — more work than the targeted replacement it would replace.
+  A diff of the result answers nothing either way, which leaves the
+  parse as what establishes that no `outputs` array moved. The bullet
+  divides into the shape of an edit that works, the parse that verifies
+  it, and the rebase conflict on the one-line notebook, which is the
+  entire file.
+
+- **`grep` was worth its own bullet beside it.** An unanchored pattern
+  reaches the base64 of a committed image, which is how a `grep` of
+  `ipynb/` came to report a match in a notebook whose cells had none
+  during btclib-org/bbt#26; the conclusion drawn from it was published
+  before it was caught. `grep -c` counting lines is the second half and
+  the quieter one: on a notebook written on one line it cannot answer
+  more than 1 however many occurrences there are, and cannot say that it
+  could not.
+
 ### Every notebook carries the licence this repository ships
 
 - **`ipynb/PartialHashInversion.ipynb`'s first code cell opened with
