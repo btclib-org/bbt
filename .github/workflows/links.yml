@@ -73,10 +73,13 @@ jobs:
       - name: Check the links
         uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
         with:
-          # the two globs are what `lychee --dump-inputs` resolves to the
-          # markdown this tree ships -- the root files, and the README of
-          # every directory that has one, and the three regtest-lab
-          # pages, and lab-tutorial/01.md. A hidden directory is skipped
+          # one glob, because `**/` matches zero directories as well as
+          # any number of them: `lychee --dump-inputs "**/*.md"`
+          # resolves the markdown this tree ships -- the root files, and
+          # the README of every directory that has one, and the three
+          # regtest-lab pages, and lab-tutorial/01.md -- and adding
+          # `"*.md"` beside it names the root files a second time, which
+          # lychee reads a second time. A hidden directory is skipped
           # unless --hidden is passed, which leaves .claude/ out: those
           # are a session's instructions rather than prose a reader is
           # invited to follow, and their links are local, which
@@ -101,7 +104,7 @@ jobs:
             --no-progress
             --retry-wait-time 10
             --accept 100..=103,200..=299,429
-            "*.md" "**/*.md"
+            "**/*.md"
           # fail the job rather than only summarizing: a green run that
           # found a dead link is the state this workflow exists to end
           fail: true

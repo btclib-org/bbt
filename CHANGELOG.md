@@ -14,6 +14,16 @@ behind.
 
 ## Unreleased
 
+### `links.yml` reads each page once
+
+- **It passed lychee `"*.md"` and `"**/*.md"`, and the second already
+  resolves everything the first does** (btclib-org/bbt#55), `**/` matching
+  zero directories as well as any number of them, so every root file was
+  read twice. The report counted each occurrence in one twice and printed
+  each failure in one twice, at the same `file:line` — which invites the
+  question of whether there are two problems. The workflow gates nothing,
+  so being readable is the whole of what it is for.
+
 ### The command that builds the environment is `uv sync --locked`
 
 - **`py-scripts/README.md` told a reader to build it with a bare
