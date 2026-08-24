@@ -2,6 +2,8 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
+"""Benchmark fixed-window and Montgomery-ladder against double-and-add."""
+
 import random
 import time
 

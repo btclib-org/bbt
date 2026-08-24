@@ -2,6 +2,8 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
+"""Sign and verify a message under each btclib message-signing address type."""
+
 from btclib.b58 import p2pkh, p2wpkh_p2sh
 from btclib.b58 import wif_from_prv_key
 from btclib.b32 import p2wpkh

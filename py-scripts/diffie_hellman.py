@@ -2,6 +2,12 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
+"""Compute an elliptic-curve Diffie-Hellman shared secret.
+
+Alice and Bob each derive it from their own private key and the other's public
+key, then a KDF hashes away the weak bits.
+"""
+
 from hashlib import sha256 as hf
 
 from btclib.curves.curve import mult

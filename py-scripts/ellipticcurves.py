@@ -2,6 +2,12 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
+"""List the low-cardinality curves ec_explorer.py finds.
+
+Kept here for hand-checking curve arithmetic against a field small enough to
+enumerate by hand.
+"""
+
 from btclib.curves.curve import Curve
 
 # low cardinality curves p<100

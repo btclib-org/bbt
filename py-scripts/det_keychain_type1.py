@@ -2,7 +2,7 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
-""" Deterministic Key Sequence (Type-1)"""
+"""Derive a Type-1 key sequence needing the master private key each time."""
 
 import secrets
 from hashlib import sha256 as hf

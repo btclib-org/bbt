@@ -2,6 +2,12 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
+"""Walk a public key through the legacy P2PKH address encoding.
+
+Repeats it a second time through the helper functions the second half of the
+file defines.
+"""
+
 import hashlib
 
 from btclib import base58
@@ -60,6 +66,10 @@ print("\n** steps [5]-[9] are also known as Base58Check b58encode")
 
 
 def hash_160_from_address(addr: bytes) -> bytes:
+    """Recover the HASH160 step [3] above computed.
+
+    Undoes the version byte and checksum steps [4]-[9] added.
+    """
     return base58.decode(addr)[1:21]
 
 
@@ -68,6 +78,7 @@ print(hash_160_from_address(address).hex())
 
 
 def pubkey_bytes_from_prvkey(prvkey: int, compressed: bool = True) -> bytes:
+    """Redo steps [0]-[1] above as a function, compressed or not."""
     PubKey = mult(prvkey)
     if compressed:
         prefix = b"\x02" if (PubKey[1] % 2 == 0) else b"\x03"
@@ -85,11 +96,13 @@ print(PubKey_bytes.hex())
 
 
 def hash160(inp: bytes) -> bytes:
+    """Fold steps [2]-[3] above into the one hash Bitcoin calls HASH160."""
     h1 = hashlib.sha256(inp).digest()
     return hashlib.new("ripemd160", h1).digest()
 
 
 def address_from_pubkey_bytes(inp: bytes, version: bytes = b"\x00") -> bytes:
+    """Fold steps [4]-[9] above into the Base58Check base58.encode does."""
     vh160 = version + hash160(inp)
     return base58.encode(vh160)
 

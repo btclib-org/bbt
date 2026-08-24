@@ -2,6 +2,11 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
+"""Search increasing nonces for a sha256 hash with a run of leading zeros.
+
+Times how long each extra zero takes to find, and plots the counts.
+"""
+
 import hashlib
 import time
 from typing import List

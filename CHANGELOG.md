@@ -291,3 +291,24 @@ behind.
   blank-line whitespace, which the wider `W` family also refused, is
   stripped alongside them
   ([btclib-org/.github#176](https://github.com/btclib-org/.github/issues/176)).
+
+### `D` is selected, and every public name now carries a docstring
+
+- **`select` in `[tool.ruff.lint]` gains `D`, and
+  `[tool.ruff.lint.pydocstyle]` declares `convention = "pep257"`.**
+  Neither was there, so section 5's docstring family reached nothing;
+  the convention is what settles ruff's D203/D211 and D212/D213
+  incompatible-pair warnings, printed until one is chosen. Measured
+  against the tree this declares, every public module under
+  `py-scripts/`, `ipynb/field_table.ipynb`'s one function and the four
+  public functions `pubkey2address.py` defines now carry one, and the
+  five other pydocstyle findings — a summary wrapped in whitespace, two
+  missing terminal periods, one non-imperative mood — are fixed at the
+  line
+  ([btclib-org/.github#177](https://github.com/btclib-org/.github/issues/177)).
+
+- **`det_keychain_type2.py`'s one-line docstring named Type-1.** The
+  script derives a Type-2 sequence — a public random number lets each
+  child's public key come from the master public key alone, which
+  `det_keychain_type1.py` cannot do — and its docstring named the wrong
+  one, copied from its sibling and never corrected.

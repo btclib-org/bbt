@@ -2,6 +2,11 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
+"""Benchmark ECSSA batch verification against verifying each signature alone.
+
+Repeats the comparison at increasing batch sizes.
+"""
+
 import random
 import time
 from hashlib import sha256 as hf

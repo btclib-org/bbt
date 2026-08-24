@@ -2,6 +2,11 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
+"""Derive a BIP39 and an Electrum seed phrase from one entropy.
+
+Prints both phrases and the first hardened child key each one yields.
+"""
+
 import secrets
 
 from btclib import bip32

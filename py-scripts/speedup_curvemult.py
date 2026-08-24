@@ -2,6 +2,11 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
+"""Benchmark every scalar-multiplication strategy against plain double-and-add.
+
+The strategies come from curve_group.py and curve_group_2.py.
+"""
+
 import random
 import time
 

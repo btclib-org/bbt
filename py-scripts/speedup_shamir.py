@@ -2,6 +2,12 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
+"""Benchmark Shamir's trick against two separate multiplications.
+
+The two multiplications are added together afterwards; Shamir's trick combines
+them into one pass.
+"""
+
 import random
 import time
 

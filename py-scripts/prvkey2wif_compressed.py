@@ -2,6 +2,8 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
+"""Walk a private key through the WIF encoding for a compressed public key."""
+
 from hashlib import sha256
 
 from btclib import base58

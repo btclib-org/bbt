@@ -2,6 +2,11 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
+"""Collect RFC 6979's deterministic-nonce test vectors.
+
+Writes them into btclib's own test-data JSON file.
+"""
+
 import json
 from os import path
 

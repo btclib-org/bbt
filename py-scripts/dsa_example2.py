@@ -2,6 +2,12 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
+"""Sign and verify ECDSA by hand, from btclib's number-theory primitives.
+
+Shows that a signature's s can be malleated into another valid one, and what
+reusing an ephemeral key across two messages exposes.
+"""
+
 from hashlib import sha256
 
 from btclib.curves.curve import mult

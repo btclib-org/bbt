@@ -2,11 +2,17 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
+"""Search each listed prime for the curve ellipticcurves.py lists.
+
+For every prime, searches (a, b) for the curve of highest order below that
+prime, and prints the Curve() call that builds it.
+"""
+
 from btclib.number_theory import mod_sqrt_var
 
 
 def isprime(n: int) -> bool:
-    """Returns True if n is prime."""
+    """Return True if n is prime."""
     if n == 2:
         return True
     if n == 3:

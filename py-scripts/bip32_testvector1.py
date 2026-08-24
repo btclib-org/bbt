@@ -2,6 +2,12 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
+"""Walk BIP32 test vector 1 through each derivation step.
+
+Prints every intermediate value BIP32 defines, from the master extended
+private key down to its grand-grand-grand-grandchild.
+"""
+
 import hmac
 
 from btclib import base58

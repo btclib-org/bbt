@@ -2,6 +2,11 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
+"""Sign and verify one message with each of btclib's three signature schemes.
+
+ECDSA, ECSSA and Bitcoin Message Signing, in turn.
+"""
+
 from btclib.ecc import bms, dsa, ssa
 
 msg = "Hello, I'm Alice!".encode()

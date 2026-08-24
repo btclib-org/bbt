@@ -2,7 +2,7 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
-# get unspent outputs from blockchain API
+"""Query blockchain.info for one address's unspent outputs."""
 
 import json
 

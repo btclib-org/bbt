@@ -2,6 +2,11 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
+"""Benchmark recursive double-and-add against the iterative form.
+
+Compares both in affine and in Jacobian coordinates.
+"""
+
 import random
 import time
 

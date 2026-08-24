@@ -2,6 +2,12 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
+"""Round-trip a value between hex string, int and bytes.
+
+Prints what each direction needs to know in advance: how many hex digits or
+bytes a value needs before it can be read back.
+"""
+
 print("\nfrom hexstring to bytes, then back:")
 xhexstr = "000f"
 print("hexstring", xhexstr)

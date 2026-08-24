@@ -106,6 +106,7 @@ select = [
     "A",   # flake8-builtins: a name that shadows a builtin
     "C4",  # flake8-comprehensions
     "C90", # mccabe, at ruff's default
+    "D",   # pydocstyle, at the pep257 convention below
     # flake8-copyright, reading the notice out of COPYRIGHT the way
     # section 5 asks and every sibling writes it. The scripts opened
     # with btclib's pre-MIT header instead -- a restriction LICENSE does
@@ -189,6 +190,13 @@ max-complexity = 10
 # markdownlint holds the markdown to. W505 is inert without this key,
 # ruff having no default doc length
 max-doc-length = 80
+
+[tool.ruff.lint.pydocstyle]
+# section 5's own convention, and what D needs to run without printing
+# its two incompatible-pair warnings: D203 against D211 and D212 against
+# D213 are each a pair ruff refuses to settle on its own, and pep257 is
+# what settles both
+convention = "pep257"
 
 # codespell reads nothing this tree's prose needs relaxed, and this list
 # is the exception that proves it: every word in it is a *key* of the
