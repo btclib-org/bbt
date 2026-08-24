@@ -14,6 +14,25 @@ behind.
 
 ## Unreleased
 
+### `CONTRIBUTING.md`'s shared half is the organization's copy
+
+- **Everything above `## This repository in particular` is
+  `btclib-org/.github`'s copy of it, byte for byte** (btclib-org/bbt#61).
+  Section 14 of the standard names this file as the same in every
+  repository up to that heading, and `tests/verbatim_test.py` there
+  compares the copies over what precedes that marker. What arrives with
+  the port is *The landing queue*, under *Pull requests*: which of
+  several already open pull requests is carried to `main` next, CI
+  throughput as the reason rather than the ack a waiting pull request
+  keeps, cheapest and least contended first, and the bounded exception
+  the maintainer may declare. The `[s9]` and `[s11]` link definitions
+  live in that half and come with it. Everything below the marker is
+  this tree's own and the port does not reach it.
+
+- **The paragraph in *Documentation and comments* on a commit message
+  cites the rule that fixes the merge method** rather than restating it,
+  and says the message is read on `main` as the landing commit's body.
+
 ### `CLAUDE.md` says how a notebook is edited, not only what it carries
 
 - **The section that names this tree's failure modes said one thing
