@@ -133,12 +133,14 @@ ignore = [
     # than asking a formatter to do it. `uvx ruff check --select E501 .`
     # is what says how much is owed
     "line-too-long", # E501
-    # 127 is the byte a BIP32 index is masked against, 2 and 3 are the
-    # SEC prefixes of a compressed point, and 600 and 36000 are ten
-    # minutes and ten hours in seconds -- each is the number a
+    # 127 is the byte a BIP32 index is masked against, and 600 and 36000
+    # are ten minutes and ten hours in seconds: each the number a
     # specification assigns rather than one this code chose and could
-    # have named. `uvx ruff check --preview --select PLR2004 .` lists
-    # them
+    # have named. 2 and 3 are neither -- they are the two primes a
+    # primality test settles before it divides by anything, which is
+    # arithmetic and not a name anybody withheld.
+    # `uvx ruff check --preview --select PLR2004 .` lists them, and puts
+    # the last two in py-scripts/ec_explorer.py's isprime
     "magic-value-comparison", # PLR2004
 ]
 

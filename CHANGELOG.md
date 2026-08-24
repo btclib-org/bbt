@@ -14,6 +14,28 @@ behind.
 
 ## Unreleased
 
+### The gate's comments sit beside what they explain, and name what it found
+
+- **`pyproject.toml`'s `PLR2004` comment called `2` and `3` the SEC
+  prefixes of a compressed point** (btclib-org/bbt#20). The command the
+  comment itself names puts them in `py-scripts/ec_explorer.py`'s
+  `isprime`, where they are the two primes a primality test settles
+  before dividing by anything; no SEC prefix appears in the rule's output
+  at all, `py-scripts/pubkey2address.py` building its prefix from bytes
+  literals, which the rule does not read. The justification an `ignore`
+  entry carries is what decides whether the entry still earns its place,
+  so it now separates the numbers a specification assigns from the two
+  that are arithmetic.
+
+- **`.pre-commit-config.yaml`'s paragraph on the ruff selection sat above
+  the `uv-lock` hook** (btclib-org/bbt#39), two entries before the one it
+  is about, so a reader arriving at `ruff-pre-commit` found no reason
+  beside it and a reader arriving at `uv-pre-commit` found two
+  paragraphs, the first about another tool. It sits above
+  `ruff-pre-commit`, which is where every other comment in the file sits
+  relative to what it explains. No hook is added, removed or
+  reconfigured.
+
 ### Two scripts do what they say when they are run
 
 - **`hash_puzzle.py` raised `IndexError` where it had a sentence

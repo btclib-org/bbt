@@ -276,12 +276,6 @@ repos:
         types: [python]
         pass_filenames: false
         require_serial: true
-  # the selection is pyproject.toml's, and it is small on purpose: what
-  # is here is what answers zero over the tree today. ruff-format is not
-  # beside it, and that is the one deliberate omission -- it would reflow
-  # every script and every notebook cell in the repository, which is a
-  # rewrite of the material the course is taught from and not a lint fix.
-  # What that costs is recorded where E501 is ignored
   # uv.lock against pyproject.toml. It is here because `uv sync` writes
   # that file whether or not anybody asked: without the lock tracked, the
   # first documented command a session runs leaves the tree dirty, and
@@ -292,6 +286,12 @@ repos:
     rev: 0.12.5
     hooks:
       - id: uv-lock
+  # the selection is pyproject.toml's, and it is small on purpose: what
+  # is here is what answers zero over the tree today. ruff-format is not
+  # beside it, and that is the one deliberate omission -- it would reflow
+  # every script and every notebook cell in the repository, which is a
+  # rewrite of the material the course is taught from and not a lint fix.
+  # What that costs is recorded where E501 is ignored
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.16.3
     hooks:
