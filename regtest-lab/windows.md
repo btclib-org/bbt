@@ -68,9 +68,9 @@ clear the regtest data folder* that has been created in the
 ```
 
 For convenience the
-[windows-regtest-18444-start.bat](https://github.com/dginst/BitcoinBlockchainTechnology/blob/master/regtest-lab/windows-regtest-18444-start.bat)
+[regtest-18444-start-Alice.bat](./windowsbat/regtest-18444-start-Alice.bat)
 and
-[windows-regtest-18444-reset.bat](https://github.com/dginst/BitcoinBlockchainTechnology/blob/master/regtest-lab/windows-regtest-18444-reset.bat)
+[regtest-18444-reset-Alice.bat](./windowsbat/regtest-18444-reset-Alice.bat)
 batch files are provided to respectively launch and reset the regtest
 network, without tweaking with the %PATH% environment variable: just put
 the batch files in `c:\your\bitcoinfolder`.
@@ -78,15 +78,15 @@ the batch files in `c:\your\bitcoinfolder`.
 One can start multiple nodes, as separate instances of the bitcoin
 GUI+daemon, on the same machine: each node must use a different p2p port
 and data folder to avoid conflicts. For convenience the
-[windows-regtest-18555-start.bat](https://github.com/dginst/BitcoinBlockchainTechnology/blob/master/regtest-lab/windows-regtest-18555-start.bat)
+[regtest-18555-start-Bob.bat](./windowsbat/regtest-18555-start-Bob.bat)
 and
-[windows-regtest-18555-reset.bat](https://github.com/dginst/BitcoinBlockchainTechnology/blob/master/regtest-lab/windows-regtest-18555-reset.bat)
-batch files are provided to respectively launch and reset Alice's node,
+[regtest-18555-reset-Bob.bat](./windowsbat/regtest-18555-reset-Bob.bat)
+batch files are provided to respectively launch and reset Bob's node,
 while
-[windows-regtest-18666-start.bat](https://github.com/dginst/BitcoinBlockchainTechnology/blob/master/regtest-lab/windows-regtest-18666-start.bat)
+[regtest-18666-start-Carol.bat](./windowsbat/regtest-18666-start-Carol.bat)
 and
-[windows-regtest-18666-reset.bat](https://github.com/dginst/BitcoinBlockchainTechnology/blob/master/regtest-lab/windows-regtest-18666-reset.bat)
-batch files are provided to launch and reset Bob's node. Every node
-(server 18444, Alice 18555, and Bob 18666) has its own wallet and can
+[regtest-18666-reset-Carol.bat](./windowsbat/regtest-18666-reset-Carol.bat)
+batch files are provided to launch and reset Carol's node. Every node
+(Alice 18444, Bob 18555, and Carol 18666) has its own wallet and can
 interact with the other nodes generating blocks which are broadcasted to
 the network and sending/receiving regtest-bitcoins.

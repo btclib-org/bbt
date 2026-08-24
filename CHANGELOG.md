@@ -14,6 +14,29 @@ behind.
 
 ## Unreleased
 
+### `regtest-lab/` and `README.md` link what this tree holds
+
+- **The tree linked itself and btclib under `dginst`, the owner both
+  lived under before `btclib-org`, and `regtest-lab/` linked its own
+  pages under the repository's former names and `master`**
+  (btclib-org/bbt#31). `README.md`'s btclib link now names the owner
+  that answers it, and the pages `regtest-lab/README.md` and
+  `regtest-lab/windows.md` link inside this tree are relative, a
+  redirect through a renamed organization, a renamed repository and a
+  renamed default branch being three redirects where a relative link is
+  none. The Windows launchers were the case where the redirect had
+  already stopped resolving: `dginst/BitcoinBlockchainTechnology` is the
+  name btclib redirects from, not bbt, so those links answered 404 —
+  and the paths they named are not paths this tree has, the launchers
+  living in `regtest-lab/windowsbat/` under
+  `regtest-<port>-<action>-<name>.bat`.
+
+- **`regtest-lab/windows.md` named the nodes one apart from the files it
+  links.** The page called 18444 the server, 18555 Alice's node and
+  18666 Bob's; the batch files pass `-uacomment=Alice` on 18444, `Bob`
+  on 18555 and `Carol` on 18666. The page now names them as the files
+  do.
+
 ### `REPOSITORY.md` names both sources of the landing commit's subject
 
 - **The `COMMIT_OR_PR_TITLE` paragraph named the pull request's title as

@@ -17,7 +17,7 @@ Other material available in this repo:
   fields and elliptic curves
 - the *ipynb* folder includes Jupyter notebooks
 - the *py-scripts* folder includes Python scripts: most of them require
-  the [btclib](https://github.com/dginst/btclib) library, and
+  the [btclib](https://github.com/btclib-org/btclib) library, and
   `pyproject.toml` declares which interpreter and which packages the
   environment is built with
 - the *regtest-lab* folder includes information for a regtest session
