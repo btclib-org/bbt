@@ -2,11 +2,11 @@
 
 The Python scripts in this folder depend on the
 [btclib](https://github.com/btclib-org/btclib) library, and on the other
-packages `pyproject.toml` declares. `uv sync`, run from the repository
-root, is what builds an environment holding all of them:
+packages `pyproject.toml` declares. `uv sync --locked`, run from the
+repository root, is what builds an environment holding all of them:
 
 ```shell
-uv sync
+uv sync --locked
 uv run python py-scripts/conversions.py
 ```
 

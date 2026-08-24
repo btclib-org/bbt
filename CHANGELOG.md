@@ -14,6 +14,18 @@ behind.
 
 ## Unreleased
 
+### The command that builds the environment is `uv sync --locked`
+
+- **`py-scripts/README.md` told a reader to build it with a bare
+  `uv sync`** (btclib-org/bbt#21), where `CONTRIBUTING.md` documents
+  `uv sync --locked` and says what the flag buys: a lock out of step with
+  `pyproject.toml` becomes a failure rather than a silent re-resolution.
+  It is the first command a reader of that directory runs.
+
+- **`CLAUDE.md`'s worktree recipe spelled it bare too**, in the comment
+  beside `cd "$WT"`, above the entry in the same file asking for the
+  flag.
+
 ### The regtest lab runs on a current Bitcoin Core
 
 - **`regtest-lab/linux.md` and `mac-os.md` downloaded Core from

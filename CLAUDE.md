@@ -81,7 +81,7 @@ once, which the ordinary sequence avoids by each removing its own.
 ```shell
 WT=<scratchpad>/wt-<tracker>-<issue>-<repo>-<role>  # wt-github-255-btclib-coder
 git worktree add -b <branch> "$WT" origin/main
-cd "$WT"                              # uv sync only to run something
+cd "$WT"                     # uv sync --locked only to run something
 # edit, gate and commit here, then
 git push origin HEAD:refs/heads/<branch>
 git worktree remove --force "$WT"     # removing it is part of finishing
