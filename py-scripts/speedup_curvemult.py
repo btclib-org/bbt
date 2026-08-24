@@ -168,7 +168,7 @@ w = 4
 start = time.time()
 for q in qs:
     T = (
-        _mult_sliding_window_var(q, ec.GJ, ec, 5)
+        _mult_sliding_window_var(q, ec.GJ, ec, w)
         if gen_only
         else _mult_sliding_window_var(q, T, ec, w)
     )
@@ -185,7 +185,7 @@ w = 5
 start = time.time()
 for q in qs:
     T = (
-        _mult_sliding_window_var(q, ec.GJ, ec, 5)
+        _mult_sliding_window_var(q, ec.GJ, ec, w)
         if gen_only
         else _mult_sliding_window_var(q, T, ec, w)
     )
@@ -201,7 +201,7 @@ T = ec.GJ
 w = 4
 start = time.time()
 for q in qs:
-    T = _mult_w_NAF_var(q, ec.GJ, ec, 4) if gen_only else _mult_w_NAF_var(q, T, ec, w)
+    T = _mult_w_NAF_var(q, ec.GJ, ec, w) if gen_only else _mult_w_NAF_var(q, T, ec, w)
 wNAF_4 = time.time() - start
 print(f"wNAF 4           : {wNAF_4 / benchmark:.0%}", _cached_multiples.cache_info())
 
@@ -211,7 +211,7 @@ T = ec.GJ
 w = 5
 start = time.time()
 for q in qs:
-    T = _mult_w_NAF_var(q, ec.GJ, ec, 4) if gen_only else _mult_w_NAF_var(q, T, ec, w)
+    T = _mult_w_NAF_var(q, ec.GJ, ec, w) if gen_only else _mult_w_NAF_var(q, T, ec, w)
 wNAF_5 = time.time() - start
 print(f"wNAF 5           : {wNAF_5 / benchmark:.0%}", _cached_multiples.cache_info())
 

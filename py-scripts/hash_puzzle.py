@@ -9,7 +9,7 @@ Times how long each extra zero takes to find, and plots the counts.
 
 import hashlib
 import time
-from typing import List
+from typing import List, Optional
 
 import matplotlib.pyplot as plt
 
@@ -27,13 +27,17 @@ print(f"{zeros} required zeros")
 # n[i] is used to count the results starting with i+1 zeros
 n: List[int] = []
 maxEval = pow(16, zeros + 1)
-i = j = nonce = 0
+i = j = 0
+# None rather than 0, which is a nonce the search can return: with 0 as
+# the sentinel a hash found at i == 0 leaves the loop running and the
+# report reading the exhausted values instead of the found ones
+nonce: Optional[int] = None
 # the loop below binds these, and the report at the end reads them: what
 # says the loop runs is that maxEval is at least 256, which is arithmetic
 # rather than control flow, so bind them here and let the report be safe
 string = hashValue = ""
 start = time.time()
-while i < maxEval and nonce == 0:
+while i < maxEval and nonce is None:
     string = msg + str(i)
     hashValue = hashlib.sha256(string.encode()).hexdigest()
     while hashValue[j] == "0":
@@ -59,7 +63,7 @@ while i < maxEval and nonce == 0:
     j = 0
     i += 1
 
-if n[zeros - 1] == 1:
+if nonce is not None:
     print("nonce:", nonce)
     print(string)
     print(hashValue)
@@ -69,7 +73,12 @@ else:
 
 # Now plot the result in a bar chart
 
-x = range(1, zeros + 1)
+# len(n) and not zeros: the two agree only by luck. A search that
+# exhausts leaves n shorter, and plt.bar refuses two shapes that differ;
+# a hash carrying more zeros than were asked for leaves it longer, and
+# plt.bar accepts that by broadcasting x, drawing every bar at the first
+# tick. len(n) is the length that matches either way
+x = range(1, len(n) + 1)
 plt.bar(x, n)
 plt.xlabel("Leading zeros")
 plt.ylabel("Occurrences")

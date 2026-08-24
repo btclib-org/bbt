@@ -14,6 +14,28 @@ behind.
 
 ## Unreleased
 
+### Two scripts do what they say when they are run
+
+- **`hash_puzzle.py` raised `IndexError` where it had a sentence
+  prepared** (btclib-org/bbt#38). It asked whether a nonce was found by
+  subscripting the counter list at the number of zeros requested, and a
+  search that exhausts never grows that list to reach it, so the failure
+  path of a script demonstrating proof of work was an unhandled
+  exception and `nonce not found` could not print. It asks `nonce`
+  instead, with `None` for the sentinel rather than `0` — which is a
+  nonce the search can return, and as the sentinel turned a search
+  succeeding on its first attempt into `nonce not found`. The bar chart
+  took the number of zeros for its x axis, where the counter list is the
+  only length that always matches it: shorter when the search exhausts,
+  which `plt.bar` refuses, and longer when the winning hash carries more
+  zeros than were asked for, which `plt.bar` accepts by broadcasting and
+  draws at one tick.
+
+- **`speedup_curvemult.py` benchmarked windows it did not label**
+  (btclib-org/bbt#23). Four call sites passed a literal where the branch
+  beside them passed `w`: the row labelled *Sliding window 4* measured
+  five, and *wNAF 5* measured four. They pass `w`.
+
 ### `links.yml` reads each page once
 
 - **It passed lychee `"*.md"` and `"**/*.md"`, and the second already
