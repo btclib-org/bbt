@@ -108,12 +108,13 @@ select = [
     "C90", # mccabe, at ruff's default
     "D",   # pydocstyle, at the pep257 convention below
     # flake8-copyright, reading the notice out of COPYRIGHT the way
-    # section 5 asks and every sibling writes it. The scripts opened
-    # with btclib's pre-MIT header instead -- a restriction LICENSE does
-    # not impose, a year range neither licence file carries, and a claim
+    # section 5 asks and every sibling writes it. The scripts, and the
+    # first code cell of ipynb/PartialHashInversion.ipynb, opened with
+    # btclib's pre-MIT header instead -- a restriction LICENSE does not
+    # impose, a year range neither licence file carries, and a claim
     # that the file is part of a package this tree is not -- so this
     # family is here on the same terms as the rest of the list: the tree
-    # answers zero to it
+    # answers zero to it, notebooks included and nothing ignored
     "CPY",
     "E",    # pycodestyle errors
     "F",    # pyflakes
@@ -144,17 +145,6 @@ ignore = [
     "magic-value-comparison", # PLR2004
 ]
 
-[tool.ruff.lint.per-file-ignores]
-# the notebooks, until somebody decides where a notice belongs in one.
-# All four are read now that each declares a language in its metadata,
-# so without this line selecting CPY would ask a notice of every one of
-# them rather than of the one whose metadata happened to name a
-# language: `uvx ruff check --preview --select CPY --config
-# 'lint.per-file-ignores = {}' ipynb/*.ipynb` reports four.
-# btclib-org/bbt#27 is where the decision is, and it is the issue this
-# line comes off with
-"*.ipynb" = ["missing-copyright-notice"]
-
 [tool.ruff.lint.flake8-copyright]
 # COPYRIGHT is the one place the notice text is written down; this is
 # all three of its lines as one regex, and byte for byte the string
@@ -176,7 +166,14 @@ ignore = [
 # `#!/usr/bin/env python3` resolves off PATH and not to the environment
 # `uv sync` builds, where btclib is (`python3 -c "import btclib"`), and
 # py-scripts/README.md documents `uv run python py-scripts/<name>.py`,
-# which consults no shebang
+# which consults no shebang.
+#
+# ipynb/PartialHashInversion.ipynb's first code cell opened with the
+# same line and it went too, but for none of those reasons: a cell is
+# not a file, nothing execs it, it has no executable bit, and
+# check-shebang-scripts-are-executable never reads it. It was a comment,
+# and what the anchor cost there was only that -- no pattern anchored at
+# the start of the cell can match one that keeps it
 notice-rgx = "^# Copyright \\(c\\) The btclib developers\\n# Distributed under the MIT software license, see the accompanying\\n# LICENSE file or https://opensource\\.org/license/mit for the full text\\."
 
 [tool.ruff.lint.mccabe]

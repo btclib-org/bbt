@@ -14,6 +14,41 @@ behind.
 
 ## Unreleased
 
+### Every notebook carries the licence this repository ships
+
+- **`ipynb/PartialHashInversion.ipynb`'s first code cell opened with
+  btclib's pre-MIT header** (btclib-org/bbt#27), shebang included. It
+  stated a restriction `LICENSE` does not impose, a year range neither
+  licence file carries, and that the file is part of `btclib`, which this
+  tree is not — the three claims btclib-org/bbt#15 removed from the
+  scripts, measured against the same two files: `LICENSE` is MIT and
+  `COPYRIGHT` names the holder without a year. The cell carries
+  `COPYRIGHT`'s three lines instead, and the shebang went with the
+  header — a cell is not a file and nothing execs it.
+
+- **The other three notebooks carried no notice at all**, and now carry
+  those same three lines at the top of their first code cell. The issue
+  left two questions open and they have different answers. *Where* a
+  notice goes is measured rather than chosen: `CPY001` reads the first
+  code cell, so a notice that satisfies the rule has to open the first
+  cell a reader runs and cannot sit in a markdown header they scroll
+  past. *Whether* one goes there at all was a choice, and the ground it
+  was taken on is one the tree had already written down — the per-file
+  ignore's own comment said btclib-org/bbt#27 "is the issue this line
+  comes off with", so its coming off is what the file said would happen,
+  and this is the change that does it. A reader who would rather it had
+  not is looking for that sentence, and it is in `pyproject.toml`'s
+  history rather than in anybody's judgement here.
+
+- **`pyproject.toml`'s per-file `missing-copyright-notice` ignore is
+  gone**, which is the thing it was written to come off for. `CPY` gates
+  `ipynb/` the way it gates `py-scripts/` now, with nothing excluded from
+  it, so the tree answers zero to that family with the ignore removed
+  rather than with it in place.
+
+- Nothing computed changes. Four comment lines were added at the top of
+  four cells, so the outputs these notebooks carry still answer them.
+
 ### ruff reads every notebook, and every notebook answers zero
 
 - **`DSA.ipynb`, `SSA.ipynb` and `PartialHashInversion.ipynb` declared no
