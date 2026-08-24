@@ -169,9 +169,9 @@ gh api repos/btclib-org/bbt \
 `main-self-merge` ruleset names it too, so the constraint holds even if
 this repository setting is flipped back.
 
-`COMMIT_OR_PR_TITLE` with `COMMIT_MESSAGES` is what makes [a pull
-request's title the landing commit's subject][s11-title] and the branch's
-own messages its body.
+`COMMIT_OR_PR_TITLE` is the subject — the pull request's title, or the
+subject of the single commit where a branch has one. `COMMIT_MESSAGES`
+is the branch's own commit messages as the body.
 
 `allow_update_branch` is false, so the *Update branch* button is not
 offered; a stale branch is rebased from a checkout instead.
@@ -279,5 +279,4 @@ file, since `check-yaml` alone reads it as yaml and not as what it is.
 [s11-deps]: https://github.com/btclib-org/.github#dependabot-and-pre-commitci
 [s11-merge]: https://github.com/btclib-org/.github#merge-method
 [s11-sigs]: https://github.com/btclib-org/.github#signatures
-[s11-title]: https://github.com/btclib-org/.github#what-a-pull-request-says-it-is
 [s11-tokens]: https://github.com/btclib-org/.github#tokens-publishing-scanning

@@ -14,6 +14,18 @@ behind.
 
 ## Unreleased
 
+### `REPOSITORY.md` names both sources of the landing commit's subject
+
+- **The `COMMIT_OR_PR_TITLE` paragraph named the pull request's title as
+  the landing commit's subject, without the condition the setting
+  carries** (btclib-org/bbt#44), citing the standard's *What a pull
+  request says it is* rather than its *Merge method*, which is the
+  subsection deciding which text lands. The setting takes the commit's
+  own subject where a branch has one commit and the pull request's title
+  where it has more, and the paragraph says so now. The `[s11-title]`
+  definition goes with the citation, that paragraph having been its only
+  user.
+
 ### `CLAUDE.md` names the worktree `wt-<tracker>-<issue>-<repo>-<role>`
 
 - **The recipe named the worktree after the issue alone, `wt<issue>`**
