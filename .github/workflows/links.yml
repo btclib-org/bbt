@@ -1,0 +1,109 @@
+---
+name: links
+
+# what this checks is an address, which is the defect a tree of prose can
+# have without anybody touching it: the launcher links in
+# regtest-lab/windows.md answered 404 for as long as it took somebody to
+# read them, and nothing here said so.
+#
+# Not a gate, and that is the design rather than an omission. A link rots
+# on somebody else's schedule, so testing it per commit reports the
+# internet's weather on a branch that changed no link; and a host
+# answering 502 or throttling a runner would turn a red merge into a run
+# to repeat rather than a thing to fix. Weekly, on demand, and red in the
+# Actions tab is where this belongs, so it is not in main's required
+# checks and must not be: `Lint` is that check, and REPOSITORY.md's
+# *Required checks on main* is where it is written down.
+
+on:
+  schedule:
+    # the day and the hour are the `links` row of section 10's grid in
+    # https://github.com/btclib-org/.github, the minute is this
+    # repository's row of the table beside it, and neither is this
+    # file's to choose or to restate
+    - cron: "32 4 * * 1"
+  # the escape hatch, and how a branch asks before a documentation change
+  # that adds links is merged
+  workflow_dispatch:
+  # so a change to this file, or to the ignore list beside it, is checked
+  # by the thing it configures
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review, closed]
+    paths:
+      - .github/workflows/links.yml
+      - .lycheeignore
+
+# least privilege for the GITHUB_TOKEN, as in lint.yml: nothing here
+# writes, and the token is supplied to the step below for github.com
+# links alone, where an unauthenticated runner is rate limited hard
+# enough to look like rot
+permissions:
+  contents: read
+
+concurrency:
+  # keyed on the pull request's number rather than on github.head_ref,
+  # for the reason lint.yml's own group gives: this repository is a fork
+  # and is forked in turn, so two branches arriving with one name is the
+  # ordinary case here. A run with no pull request falls back to
+  # github.ref
+  group: links-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  links:
+    name: Check the documentation links
+    # the condition lint.yml carries, for the same two reasons: a draft
+    # is work its author is not asking anyone to read yet, and the closed
+    # event is taken above only to supersede a run this pull request's
+    # group is still holding
+    if: ${{ !github.event.pull_request.draft && github.event.action != 'closed' }}
+    runs-on: ubuntu-latest
+    # a run of this tree answers in seconds; a job past this is hung on
+    # one host rather than working
+    timeout-minutes: 15
+    steps:
+      # every action pinned to a commit SHA with the tag in the comment:
+      # a tag, let alone a branch, is a name its owner can move
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # the checker reads the tree and nothing pushes it back
+          persist-credentials: false
+
+      - name: Check the links
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
+        with:
+          # the two globs are what `lychee --dump-inputs` resolves to the
+          # markdown this tree ships -- the root files, and the README of
+          # every directory that has one, and the three regtest-lab
+          # pages, and lab-tutorial/01.md. A hidden directory is skipped
+          # unless --hidden is passed, which leaves .claude/ out: those
+          # are a session's instructions rather than prose a reader is
+          # invited to follow, and their links are local, which
+          # `local-link-prefix` and a resolution against the tree already
+          # answer.
+          # --no-progress because the log is not a terminal.
+          # --retry-wait-time, against lychee's default of 1 second,
+          # because a second is no wait at all for the host that
+          # throttled the first request; --max-retries is not passed,
+          # 3 being what `lychee --help` already gives.
+          # --accept replaces lychee's default range rather than
+          # extending it -- `lychee --help` gives that default as
+          # 100..=103,200..=299 -- so the default is written out and 429
+          # is the one code added to it, a rate limit being an answer
+          # from a host that is alive.
+          # No --timeout: run over this tree, every host answered inside
+          # lychee's default of 20 seconds. btclib raised it to 45
+          # against a host measured timing out on a runner while
+          # answering in under a second elsewhere, and that number
+          # belongs here when a run here measures the same, not before
+          args: >-
+            --no-progress
+            --retry-wait-time 10
+            --accept 100..=103,200..=299,429
+            "*.md" "**/*.md"
+          # fail the job rather than only summarizing: a green run that
+          # found a dead link is the state this workflow exists to end
+          fail: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

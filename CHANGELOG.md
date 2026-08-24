@@ -14,6 +14,45 @@ behind.
 
 ## Unreleased
 
+### `links.yml` checks the addresses this tree asks a reader to follow
+
+- **Nothing measured whether a link still resolved** (btclib-org/bbt#22),
+  which in a tree that is documentation almost entirely is one of the few
+  defects it can have — and the launcher links in
+  `regtest-lab/windows.md` answered 404 until somebody read them.
+  `links.yml` runs lychee over the markdown weekly, on the day and hour
+  section 10's grid gives `links` and the minute it gives this
+  repository, and on a pull request that touches the workflow or the
+  ignore list beside it. It gates nothing: a link rots on somebody else's
+  schedule, so a red merge would be a run to repeat rather than a thing
+  to fix.
+
+- **`.lycheeignore` carries what a checker can only ever misreport.**
+  Stack Overflow answers a runner 403 whatever the request looks like,
+  measured with a current browser user agent and an `Accept: text/html`
+  header, while the page it names is live.
+
+### `REPOSITORY.md` and `lint.yml` said `main` had no required check
+
+- **Both said the rule did not exist, and `Lint` was bound**
+  (btclib-org/bbt#49). `REPOSITORY.md`'s *Required checks on main* opened
+  with *There are none* and printed the command answering `false`;
+  `gh api repos/btclib-org/bbt/branches/main/protection` answers with
+  `Lint` bound to app `15368` and `strict`. `lint.yml` contradicted
+  itself on the same command, its header denying the rule that its job's
+  own comment described. The section now reads the rule back from the
+  endpoint, and says why neither `claude-review.yml` nor `links.yml` is a
+  candidate for a second one; the instructions for creating a rule that
+  exists are gone, and what survives of them is that changing the list is
+  a `PATCH` rather than a `PUT` of the whole protection object, `Lint`
+  being the one rule here no ruleset carries a copy of.
+
+- **`CONTRIBUTING.md` stated the same thing a third time**, in the
+  paragraph that defers to `REPOSITORY.md` for it. *What gates a merge,
+  and what only reports* now says `Lint` is the required check, in the
+  sentence that already names the job, and names `links.yml` in the
+  enumeration of what CI does to a pull request.
+
 ### `regtest-lab/` and `README.md` link what this tree holds
 
 - **The tree linked itself and btclib under `dginst`, the owner both

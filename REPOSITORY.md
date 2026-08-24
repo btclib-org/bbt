@@ -24,48 +24,34 @@ gh api repos/btclib-org/bbt --jq '{fork, parent: .parent.full_name}'
 
 ## Required checks on main
 
-**There are none.**
+**`Lint`, and nothing else.**
 
 ```shell
 gh api repos/btclib-org/bbt/branches/main/protection \
-  --jq 'has("required_status_checks")'
-# false
+  --jq '.required_status_checks | {strict, checks}'
+# {"checks":[{"app_id":15368,"context":"Lint"}],"strict":true}
 ```
 
 `lint.yml` is the workflow that gates, and its `Lint` job is the context
-a rule would name — one job, so that job is the context, the [aggregate a
-required check needs][s10-check] being what a matrix needs. Until the
-rule exists, a red run reports and does not block. `claude-review.yml`'s
-job is not a candidate: it is the ack of record and must not become a
-branch rule, for the reason its own header gives.
+the rule names — one job, so that job is the context, the [aggregate a
+required check needs][s10-check] being what a matrix needs. Renaming that
+job leaves the context reporting nothing, which blocks every pull
+request, so the name belongs to the rule as much as to the file.
 
-The order is not an oversight and cannot be shortened: a check context
-cannot be bound before a workflow has produced it, so the rule is created
-after `lint.yml` has run at least once on this repository, and creating
-it is not something a pull request can do. The call, for whoever creates
-it — a `PUT` sets every field it is given and clears every field it is
-not, so this is the whole object rather than the one key being added:
+Neither of the other two workflows is a candidate, for two different
+reasons. `claude-review.yml` is the ack of record and must not become a
+branch rule, for the reason its own header gives. `links.yml` reports
+whether somebody else's host is answering, which is not a fact about this
+tree and not one a landing should wait on.
 
-```shell
-gh api -X PUT repos/btclib-org/bbt/branches/main/protection \
-  --input - <<'JSON'
-{"required_status_checks": {"strict": true,
-   "checks": [{"context": "Lint", "app_id": 15368}]},
- "enforce_admins": false,
- "required_pull_request_reviews": {"dismiss_stale_reviews": true,
-   "required_approving_review_count": 1},
- "restrictions": null,
- "required_linear_history": true,
- "allow_force_pushes": false,
- "allow_deletions": false,
- "required_conversation_resolution": true}
-JSON
-```
-
-The `checks` array and a JSON body on stdin, never `contexts` and never
-`-f`; a later change to the list is a `PATCH` of
-`/required_status_checks` rather than a partial `PUT`. `15368` is the
-Actions app, and a check bound to it cannot be reported by anything else.
+`15368` is the Actions app, and a check bound to it cannot be reported by
+anything else. Changing the list is a `PATCH` of
+`/required_status_checks`, never a `PUT` of the protection object: a
+`PUT` sets every field it is given and clears every field it is not, and
+this check is the one rule here no ruleset carries a copy of. The
+signatures, the linear history and the approving review survive a partial
+`PUT` in `main-integrity` and `main-self-merge`, read back in the next
+section; `Lint` would not.
 
 ## Branch protection and the rulesets
 
@@ -216,7 +202,7 @@ gh api repos/btclib-org/bbt/actions/permissions
 # {"enabled":true,"allowed_actions":"all","sha_pinning_required":false}
 ```
 
-`sha_pinning_required` is false and every action the two workflows use
+`sha_pinning_required` is false and every action a workflow here uses
 is pinned to a SHA anyway, which is [what the standard asks of the
 workflow][s10] rather than of the setting. The setting would refuse a tag
 outright; leaving it off is the sibling repositories' answer too, so this
@@ -243,9 +229,9 @@ to each. What answers `disabled` is plan-gated rather than declined, so
 this call reports the setting and not the request.
 
 `.github/dependabot.yml` watches the two things this tree pins and
-nothing else moves: the actions `lint.yml` and `claude-review.yml` pin
-by SHA, and `uv.lock`, which the `uv-lock` hook keeps in step with
-`pyproject.toml` without moving what it resolves to. Weekly on Thursday,
+nothing else moves: the actions the workflows pin by SHA, and `uv.lock`,
+which the `uv-lock` hook keeps in step with `pyproject.toml` without
+moving what it resolves to. Weekly on Thursday,
 grouped and with the seven-day cooldown, as [section 11][s11-deps]
 asks; the file's own header says why no sentinel pre-validates what it
 opens. The pre-commit revisions are the third thing pinned here and have
@@ -261,10 +247,6 @@ file, since `check-yaml` alone reads it as yaml and not as what it is.
   publisher:
   `gh api repos/btclib-org/bbt/environments --jq .total_count` answers
   `0`.
-- **No `links.yml`.** It gates nothing anywhere, and it does not exist
-  here. It would have a subject — this tree's markdown points at a
-  course page, a wallet, a block explorer and a key generator, and one
-  of those links rotting is a step a reader cannot follow.
 - **No Pages and no Read the Docs.** There is no documentation build:
   what this repository ships is read on github.com or cloned.
 - **No suite and no coverage.** [Section 8's ratchet][s8] is a claim

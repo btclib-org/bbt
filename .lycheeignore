@@ -1,0 +1,11 @@
+# what links.yml is told not to check, each line a regex and each with
+# the measurement that put it here.
+
+# Stack Overflow answers a runner 403 whatever the request looks like --
+# measured with curl carrying a current Chrome user agent and an
+# Accept: text/html header, from a residential address rather than a
+# datacenter one -- while the page it names is live in a browser. The
+# block is the host's policy on automated requests, so a checker can
+# only ever report it as rot, and reporting it every Monday is what
+# would teach a reader to stop reading this workflow's output.
+^https://stackoverflow\.com/

@@ -231,17 +231,16 @@ them here is what keeps a regenerated baseline the same baseline.
 
 ### What gates a merge, and what only reports
 
-`lint.yml`'s `Lint` job is the whole of what CI runs as a gate.
-`claude-review.yml` runs beside it and reports: its verdict is the ack of
-record the section above names, posted as a comment, and its check is
-red when no ack of the head was posted — which gates nothing, the check
-not being required. There is no suite, no documentation build and no
+`lint.yml`'s `Lint` job is the whole of what CI runs as a gate, and it is
+`main`'s required check — which `REPOSITORY.md` reads back from the
+endpoint rather than restating here. `claude-review.yml` runs beside it
+and reports: its verdict is the ack of record the section above names,
+posted as a comment, and its check is red when no ack of the head was
+posted — which gates nothing, the check not being required. `links.yml`
+reaches a pull request only when that pull request touches the workflow
+or the ignore list beside it, and gates nothing either, for the reason
+its own header gives. There is no suite, no documentation build and no
 release, so nothing else is asked of a pull request.
-
-**It is not a required check yet**, and `REPOSITORY.md` reads that back
-from the endpoint rather than restating it: a red run does not block a
-merge today, and until the rule exists the gate binds an author who runs
-it and nobody else.
 
 ### A version, and no release
 
@@ -275,7 +274,6 @@ subject rather than by version, there being no version to group by.
 requires a signature on `refs/tags/v*` and has no bypass actor, and
 `REPOSITORY.md` carries the call that reads it back. There is no such
 tag, so it enforces nothing today, and that is not a defect to remove: it
-is the rule being in place before the first tag rather than after it,
-which is the order the required-check rule in `REPOSITORY.md` could not
-take. Whoever cuts a first tag here signs it — `git tag -s` — and finds
-that out from the push rather than from this section.
+is the rule being in place before the first tag rather than after it.
+Whoever cuts a first tag here signs it — `git tag -s` — and finds that
+out from the push rather than from this section.
