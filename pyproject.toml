@@ -203,13 +203,13 @@ convention = "pep257"
 
 # codespell reads nothing this tree's prose needs relaxed, and this list
 # is the exception that proves it: every word in it is a *key* of the
-# typos table below, which codespell reads as prose because a toml key is
-# text like any other. So the entry exists to let one checker's
+# typos word table below, which codespell reads as prose because a toml
+# key is text like any other. So the entry exists to let one checker's
 # configuration be written without the other objecting to it, and it is
 # what keeps that table from being the reason codespell has to be
 # excluded from this file.
 [tool.codespell]
-ignore-words-list = "ser,nd,shs,iz"
+ignore-words-list = "ser,nd,shs"
 
 # typos' configuration, where section 4 says both spell checkers are
 # configured. What is *not* here matters as much: no
@@ -218,14 +218,16 @@ ignore-words-list = "ser,nd,shs,iz"
 # demonstrate them rather than in a data directory that could be skipped
 # whole -- so what is named is the token, and the next vector that trips
 # the checker is an edit somebody has to make deliberately.
+# .pre-commit-config.yaml does hold an exclude and it is not this one:
+# what it keeps off the notebooks is the in-place fixing, a reporting
+# entry beside each fixer reading them.
 #
-# Every entry below was measured by the hook writing the wrong thing:
 # `typos --write-changes` rewrote a BIP32 test vector, turning
 # `...SL39UNdE3BBDu76` into `...SL39UAndE3BBDu76` and `3ND1` into
-# `3AND1` inside a base58 xprv and xpub, and it rewrote a Colab cell id
-# in two notebooks. A base58 string and an opaque identifier are not
-# words and the checker cannot tell; codespell, which matches whole
-# words, reported none of them.
+# `3AND1` inside a base58 xprv and xpub: that is what the word table
+# below answers to, every entry naming where its own token is read. A
+# base58 string is not a word and the checker cannot tell; codespell,
+# which matches whole words, reported neither.
 [tool.typos.default.extend-words]
 # `ser32(i)`, BIP32's serialization function, named in the comment above
 # `child_number` in both bip32_testvector scripts
@@ -238,10 +240,6 @@ nd = "nd"
 # that prvkey2wif_compressed.py asserts against, which is the encoding
 # of the private key on the line above it
 shs = "shs"
-# inside `aecLiCr2dNIz`, the Colab cell id of one cell of DSA.ipynb and
-# of the same cell in SSA.ipynb -- an opaque identifier the notebook
-# format assigns, and the same class of finding as the base58 above
-iz = "iz"
 # ruff's name for the copyright rule, selected above and named in
 # CHANGELOG.md, rather than the `COPY` or `CPU` this checker offers for
 # it. The occurrences in this file need no entry and are not what asks
@@ -249,6 +247,19 @@ iz = "iz"
 # so `uvx typos --force-exclude pyproject.toml` reports nothing while
 # the same command on CHANGELOG.md reports the word
 CPY = "CPY"
+
+# an opaque identifier the notebook format assigns, matched whole:
+# `aecLiCr2dNIz` is the Colab cell id of one cell of DSA.ipynb and of the
+# same cell in SSA.ipynb, and naming it here rather than the fragment of
+# it this checker reads as a word is what leaves that fragment checked
+# everywhere else in the tree. The entry of .pre-commit-config.yaml that
+# reads the notebooks and does not write them is what finds it there;
+# the entry beside it that writes everything else finds it wherever the
+# identifier is written out, which is .pre-commit-config.yaml's own
+# comment and CHANGELOG.md's entry -- and CHANGELOG.md is append-only,
+# so this stays owed even if that comment is one day reworded away
+[tool.typos.default.extend-identifiers]
+aecLiCr2dNIz = "aecLiCr2dNIz"
 
 [tool.mypy]
 # mypy.ini's show_column_numbers, the one of its two settings that

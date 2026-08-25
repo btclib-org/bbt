@@ -121,6 +121,9 @@ repos:
     hooks:
       - id: codespell
         name: codespell (prose and comments, in place fixes)
+        # the notebooks are the entry below's, this one being the one
+        # that writes
+        exclude: \.ipynb$
         # the "clear" dictionary alone, where codespell's default is
         # "clear,rare": the other builtins make a hook whose findings are
         # mostly wrong, and such a hook gets an ignore list long enough
@@ -133,9 +136,29 @@ repos:
         # rather than on principle: `uvx codespell --builtin clear .`
         # rewrites nothing in this tree, proved against a control file of
         # misspellings it does report. That control is a file and not a
-        # word quoted here, because typos above corrects prose in place
+        # word quoted here, because typos below corrects prose in place
         # and rewrote an earlier draft of this very comment
         args: [--builtin, clear, --write-changes]
+      # the same checker over the notebooks, reporting rather than
+      # writing. A correction inside one is an edit to a cell's `source`
+      # that leaves that cell's committed `outputs` where they are, and
+      # ipynb/README.md names the notebooks whose stored output a
+      # reader's own run reproduces byte for byte -- so such an edit does
+      # not leave the file untidy, it makes the file contradict itself,
+      # and the diff shows the changed cell without showing that its
+      # stored output has stopped answering it. Excluding the notebooks
+      # from the checker is the other way to stop it and the one
+      # pyproject.toml's typos comment refuses: what is dropped here is
+      # the writing, not the reading. A finding is answered in the cell,
+      # and ipynb/README.md is what says for which notebooks the outputs
+      # then have to be produced again.
+      # `alias` because both entries answer to the same id: it is what
+      # SKIP= and `pre-commit run <hook>` need to address one of them
+      - id: codespell
+        alias: codespell-notebooks
+        name: codespell (notebooks, reported and not written)
+        files: \.ipynb$
+        args: [--builtin, clear]
   # the second spell checker, and not a replacement for the one above:
   # codespell matches whole words and keeps the hyphen inside the token,
   # while typos splits hyphens, snake_case and camelCase.
@@ -147,6 +170,9 @@ repos:
     hooks:
       - id: typos
         name: typos (identifiers and hyphenated words, in place fixes)
+        # the notebooks are the entry below's, for the reason written
+        # beside codespell above
+        exclude: \.ipynb$
         # what the hook declares, restated rather than inherited: both
         # flags are choices this repository has to keep making. Dropping
         # --write-changes would make it a report where every other fixing
@@ -154,6 +180,20 @@ repos:
         # [tool.typos.files] silent, because pre-commit passes filenames
         # and typos honours its own exclude list only under that flag
         args: [--write-changes, --force-exclude]
+      # the notebooks, reported and not written. --force-exclude is here
+      # for the same reason it is above and it is what keeps the two
+      # entries one configuration: with it on both, --write-changes is
+      # the only difference between them, so an exclude written into
+      # [tool.typos.files] cannot come to mean "not checked" for one of
+      # them and "checked but not corrected" for the other.
+      # `aecLiCr2dNIz`, the Colab cell id this entry reads in DSA.ipynb
+      # and SSA.ipynb, is what pyproject.toml's extend-identifiers table
+      # is for: drop that entry and this hook fails on it
+      - id: typos
+        alias: typos-notebooks
+        name: typos (notebooks, reported and not written)
+        files: \.ipynb$
+        args: [--force-exclude]
   # MD013 at 80 columns, tables included, and the shared configuration is
   # the one every repository of the organization carries: prose moves
   # between them, and a paragraph that lints in one has to lint here

@@ -8,6 +8,38 @@ behind.
 
 ## Unreleased
 
+### The spell checkers read the notebooks and do not write to them
+
+- **`codespell` and `typos` correct in place everywhere but `\.ipynb$`,
+  and a second entry of each reads those files without writing**
+  (btclib-org/bbt#73). A correction inside a notebook is an edit to a
+  cell's `source` that leaves that cell's committed `outputs` where they
+  are, and `ipynb/README.md` names the notebooks whose stored output a
+  reader's own run reproduces byte for byte, so such an edit makes the
+  file contradict itself and nothing in the diff says the output has
+  stopped answering the cell. Excluding the notebooks from the checkers
+  is the other way to stop it and is what `pyproject.toml`'s typos
+  comment refuses: what is dropped here is the writing, not the reading.
+
+- **A misspelling in a cell fails the gate and is named**, rather than
+  being repaired into the file for its author to accept as a lint fix.
+  Measured with a control put into a cell's `source` of
+  `ipynb/field_table.ipynb` and into `ipynb/README.md` beside it: over
+  `uvx pre-commit run --all-files` the notebook came out byte for byte
+  the file that went in, the markdown was repaired in place, and the
+  reporting entry failed naming the file, the line and the word. What
+  the notebooks are still owed is a check that a cell's output answers
+  the cell, which is btclib-org/bbt#78's.
+
+- **`aecLiCr2dNIz`, the Colab cell id of one cell of `ipynb/DSA.ipynb`
+  and of the same cell in `ipynb/SSA.ipynb`, is named under
+  `[tool.typos.default.extend-identifiers]`.** That entry matches the
+  whole identifier, so the two-letter fragment `typos` reads inside it
+  is spell checked again everywhere else in the tree.
+  `[tool.codespell] ignore-words-list` drops the same word: that list
+  admits only keys of the typos word table, and the word is not one
+  `codespell --builtin clear` reports anywhere.
+
 ### Nothing is carried where nothing reads it
 
 - **The root `TODO` is gone** (btclib-org/bbt#70). Twenty bytes,
