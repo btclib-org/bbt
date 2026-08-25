@@ -187,8 +187,9 @@ repos:
       # [tool.typos.files] cannot come to mean "not checked" for one of
       # them and "checked but not corrected" for the other.
       # `aecLiCr2dNIz`, the Colab cell id this entry reads in DSA.ipynb
-      # and SSA.ipynb, is what pyproject.toml's extend-identifiers table
-      # is for: drop that entry and this hook fails on it
+      # and SSA.ipynb, carries an entry of its own in pyproject.toml's
+      # extend-identifiers table: drop that entry and this hook fails
+      # on it
       - id: typos
         alias: typos-notebooks
         name: typos (notebooks, reported and not written)

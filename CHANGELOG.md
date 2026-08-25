@@ -8,6 +8,41 @@ behind.
 
 ## Unreleased
 
+### Every spell-checking exception names a string or one file
+
+- **`[tool.typos.default.extend-words]` and `[tool.codespell]
+  ignore-words-list` are gone** (closes btclib-org/bbt#83). A word entry
+  stops its checker reporting that token in every file of the tree,
+  where what each of them protected is a fixed string in one script:
+  `ser32(i)`, BIP32's serialization function, named in the comment above
+  `child_number`; the base58 extended keys `bip32_testvector1.py` and
+  `bip32_testvector3.py` assert against; and the WIF
+  `prvkey2wif_compressed.py` asserts against. Each is named whole under
+  `[tool.typos.default.extend-identifiers]` instead, which matches an
+  identifier before the checker splits it into words, so the string is
+  protected and the fragment read inside it stays spell checked
+  everywhere else. A base58 key is a long thing to keep in
+  `pyproject.toml`, and that is the trade: this tree is course material
+  whose prose is the product, and an exception blinding both checkers to
+  a real word in every file of it costs more than the key length.
+
+- **What the suppression cost is measured with a file rather than
+  argued.** A markdown file holding those fragments as prose is reported
+  by `typos` and by `codespell --builtin clear` under this
+  configuration, and by neither under the one it replaces, while
+  `git ls-files | typos --file-list - --force-exclude` and the same list
+  through `codespell --builtin clear` exit zero over the tree either
+  way.
+
+- **`CPY` is the exception that stays, and it is narrowed to
+  `CHANGELOG.md` rather than to a string.** ruff's name for the
+  copyright rule is a whole word to `typos`, which offers `COPY` and
+  `CPU` for it, so no identifier entry reaches it; and the file naming
+  the rule is append-only, so those occurrences cannot be removed
+  either. `[tool.typos.type.changelog]`, a file type whose glob is that
+  one file, is what carries it, so the same token written in a script or
+  in any other markdown of this tree is still reported.
+
 ### One reduction mod `ec.n`, written one way
 
 - **`py-scripts/dsa_example2.py` and `py-scripts/ssa_example2.py`

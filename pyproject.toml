@@ -201,65 +201,73 @@ max-doc-length = 80
 # what settles both
 convention = "pep257"
 
-# codespell reads nothing this tree's prose needs relaxed, and this list
-# is the exception that proves it: every word in it is a *key* of the
-# typos word table below, which codespell reads as prose because a toml
-# key is text like any other. So the entry exists to let one checker's
-# configuration be written without the other objecting to it, and it is
-# what keeps that table from being the reason codespell has to be
-# excluded from this file.
-[tool.codespell]
-ignore-words-list = "ser,nd,shs"
-
-# typos' configuration, where section 4 says both spell checkers are
-# configured. What is *not* here matters as much: no
-# `files.extend-exclude`. A file the checker never reads is a file nobody
-# is checking, and this tree's vectors sit inside the scripts that
-# demonstrate them rather than in a data directory that could be skipped
-# whole -- so what is named is the token, and the next vector that trips
-# the checker is an edit somebody has to make deliberately.
-# .pre-commit-config.yaml does hold an exclude and it is not this one:
-# what it keeps off the notebooks is the in-place fixing, a reporting
-# entry beside each fixer reading them.
+# typos' configuration, and the only spell checker configuration this
+# file carries: codespell has nothing relaxed for it anywhere, so
+# everything it is told is the arguments .pre-commit-config.yaml passes.
+# Section 4 of the standard is what puts a spell checker's configuration
+# in this file rather than in a dotfile of its own.
 #
-# `typos --write-changes` rewrote a BIP32 test vector, turning
+# What is *not* here matters as much: no `files.extend-exclude`. A file
+# the checker never reads is a file nobody is checking, and this tree's
+# vectors sit inside the scripts that demonstrate them rather than in a
+# data directory that could be skipped whole -- so what is named is the
+# token, and the next vector that trips the checker is an edit somebody
+# has to make deliberately. .pre-commit-config.yaml does hold an exclude
+# and it is not this one: what it keeps off the notebooks is the
+# in-place fixing, a reporting entry beside each fixer reading them.
+#
+# Nor is `[default.extend-words]` here, and that is the same argument
+# one step in. A word entry stops the checker reporting its token in
+# every file of the tree, prose as readily as encoding, where what this
+# tree has to protect is a fixed string in one script -- so a word entry
+# buys the string and spends the word. Without the identifiers below,
+# `typos --write-changes` rewrites a BIP32 test vector, turning
 # `...SL39UNdE3BBDu76` into `...SL39UAndE3BBDu76` and `3ND1` into
-# `3AND1` inside a base58 xprv and xpub: that is what the word table
-# below answers to, every entry naming where its own token is read. A
-# base58 string is not a word and the checker cannot tell; codespell,
-# which matches whole words, reported neither.
-[tool.typos.default.extend-words]
-# `ser32(i)`, BIP32's serialization function, named in the comment above
-# `child_number` in both bip32_testvector scripts
-ser = "ser"
-# inside the base58 of an xprv and an xpub in bip32_testvector1.py and
-# bip32_testvector3.py, where typos splits the camel case and reads a
-# fragment of the encoding as a word
-nd = "nd"
-# inside the WIF `KwdMAjGmerYanjeui5SHS7JkmpZvVipYvB2LJGU1ZxJwYvP98617`
-# that prvkey2wif_compressed.py asserts against, which is the encoding
-# of the private key on the line above it
-shs = "shs"
-# ruff's name for the copyright rule, selected above and named in
-# CHANGELOG.md, rather than the `COPY` or `CPU` this checker offers for
-# it. The occurrences in this file need no entry and are not what asks
-# for one: typos does not read the file its own configuration lives in,
-# so `uvx typos --force-exclude pyproject.toml` reports nothing while
-# the same command on CHANGELOG.md reports the word
-CPY = "CPY"
+# `3AND1` inside a base58 xprv and xpub: a base58 string is not a word
+# and this checker cannot tell. codespell matches whole words and
+# reports neither.
 
-# an opaque identifier the notebook format assigns, matched whole:
-# `aecLiCr2dNIz` is the Colab cell id of one cell of DSA.ipynb and of the
-# same cell in SSA.ipynb, and naming it here rather than the fragment of
-# it this checker reads as a word is what leaves that fragment checked
-# everywhere else in the tree. The entry of .pre-commit-config.yaml that
-# reads the notebooks and does not write them is what finds it there;
-# the entry beside it that writes everything else finds it wherever the
-# identifier is written out, which is .pre-commit-config.yaml's own
-# comment and CHANGELOG.md's entry -- and CHANGELOG.md is append-only,
-# so this stays owed even if that comment is one day reworded away
+# matched whole, before the checker splits an identifier into words, so
+# each key protects one string and leaves the fragment read inside it
+# spell checked everywhere else in the tree
 [tool.typos.default.extend-identifiers]
+# the Colab cell id of one cell of DSA.ipynb and of the same cell in
+# SSA.ipynb. The entry of .pre-commit-config.yaml that reads the
+# notebooks and does not write them is what finds it there; the entry
+# beside it that writes everything else finds it wherever the identifier
+# is written out, which is .pre-commit-config.yaml's own comment and
+# CHANGELOG.md's entry -- and CHANGELOG.md is append-only, so this stays
+# owed even if that comment is one day reworded away
 aecLiCr2dNIz = "aecLiCr2dNIz"
+# BIP32's serialization function, named in the comment above
+# `child_number` in bip32_testvector1.py and bip32_testvector3.py
+ser32 = "ser32"
+# the extended private key bip32_testvector1.py asserts against for
+# m/0'/1/2'/2/1000000000
+xprvA41z7zogVVwxVSgdKUHDy1SKmdb533PjDz7J6N6mV6uS3ze1ai8FHa8kmHScGpWmj4WggLyQjgPie1rFSruoUihUZREPSL39UNdE3BBDu76 = "xprvA41z7zogVVwxVSgdKUHDy1SKmdb533PjDz7J6N6mV6uS3ze1ai8FHa8kmHScGpWmj4WggLyQjgPie1rFSruoUihUZREPSL39UNdE3BBDu76"
+# the master extended public key bip32_testvector3.py asserts against
+xpub661MyMwAqRbcEZVB4dScxMAdx6d4nFc9nvyvH3v4gJL378CSRZiYmhRoP7mBy6gSPSCYk6SzXPTf3ND1cZAceL7SfJ1Z3GC8vBgp2epUt13 = "xpub661MyMwAqRbcEZVB4dScxMAdx6d4nFc9nvyvH3v4gJL378CSRZiYmhRoP7mBy6gSPSCYk6SzXPTf3ND1cZAceL7SfJ1Z3GC8vBgp2epUt13"
+# the WIF prvkey2wif_compressed.py asserts against, which is the base58
+# encoding of the private key printed above it
+KwdMAjGmerYanjeui5SHS7JkmpZvVipYvB2LJGU1ZxJwYvP98617 = "KwdMAjGmerYanjeui5SHS7JkmpZvVipYvB2LJGU1ZxJwYvP98617"
+
+# `CPY` is ruff's name for the copyright rule, selected above, and this
+# checker offers `COPY` and `CPU` for it. No identifier entry narrows
+# this one the way those above narrow theirs, the identifier being the
+# word itself, so what is narrowed is the file instead: CHANGELOG.md is
+# where the rule is named, that file is append-only, and `CPY` written
+# anywhere else in this tree is still reported. Naming a type puts
+# CHANGELOG.md in it rather than in `md`, and `typos --dump-config -`
+# prints no `[type.md]` section for that to displace; whether a release
+# of this checker later adds one is an argument and not a measurement.
+# This file needs no entry at all, typos not reading the file its own
+# configuration lives in: `typos --force-exclude --files .` lists what
+# it does read
+[tool.typos.type.changelog]
+extend-glob = ["CHANGELOG.md"]
+
+[tool.typos.type.changelog.extend-words]
+CPY = "CPY"
 
 [tool.mypy]
 # mypy.ini's show_column_numbers, the one of its two settings that
