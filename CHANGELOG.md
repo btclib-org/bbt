@@ -1,9 +1,3 @@
-<!-- markdownlint-disable MD022 MD032 -->
-<!-- This file is merge=union, so a rebase joins two sections and drops
-     the blank line between them without a conflict: the rule is off
-     here for the duration of btclib-org/.github#33, and goes back on
-     when that queue is empty. btclib-org/.github#138 is the record. -->
-
 # Changelog
 
 What changed in this repository, and why. Nothing here is released —
@@ -13,6 +7,27 @@ version, and there are no release notes for this file to be the record
 behind.
 
 ## Unreleased
+
+### The union driver's damage repairs itself
+
+- **`CHANGELOG.md` turned MD022 and MD032 off for itself**
+  (btclib-org/bbt#66), because a rebase of a `merge=union` file joins two
+  `###` blocks and drops the blank line between them, and the rule
+  reported a gap it would not close. The markdown hook runs with `--fix`,
+  so that gap is now its own repair: the directive is gone and both rules
+  apply here again. Measured by doing the damage and running the hook —
+  it puts the line back, where with the directive in place it did not.
+
+- **`codespell` corrects in place**, joining the hooks that fix rather
+  than report. The flag went on against a measurement and not on
+  principle: a spell checker's repairs are guesses where a formatter's
+  are deterministic, and this one rewrites nothing in the tree today,
+  proved against a control file of misspellings it does report.
+
+- The other two hooks the issue names needed nothing. `markdownlint-cli2`
+  already carried `--fix`, and `typos` already declared
+  `--write-changes --force-exclude` with the comment saying why it
+  restates them rather than inheriting them.
 
 ### No script under `py-scripts/` writes outside this tree
 
