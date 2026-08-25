@@ -8,6 +8,19 @@ behind.
 
 ## Unreleased
 
+### `pyproject.toml` names the oldest uv that may read `uv.lock`
+
+- **`[tool.uv] required-version` is declared, at the ceiling rather than
+  safely below it** (btclib-org/bbt#68). What a floor refuses is an
+  older uv rewriting the committed lock in a format the runners then
+  fail to read, so one below the ceiling is safe and buys nothing beyond
+  where it sits.
+
+- **The ceiling is the uv Dependabot's own bundled updater ships**, a
+  floor above it making every lock update that updater attempts a silent
+  no-op. Section 1 of the standard has the argument and section 15 the
+  command that re-derives the ceiling.
+
 ### `py-scripts/ssa_example2.py` signs the way BIP340 says
 
 - **The script left the even-`y` requirement on the ephemeral point out
