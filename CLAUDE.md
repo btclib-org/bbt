@@ -129,9 +129,25 @@ Do not use Fable unless explicitly instructed.
   the trap this tree fell into: the lock is tracked because the first
   documented command a session runs would otherwise leave the tree
   dirty.
-- **A notebook carries its outputs**, so a cell edited without a re-run
-  leaves a figure answering an earlier question. `check-json` asks only
-  that the file still parses, and nothing here asks the other question.
+- **A notebook carries its outputs, and three of the four are
+  transcripts**: `DSA.ipynb`, `SSA.ipynb` and `field_table.ipynb` each
+  reproduce every stored output byte for byte when executed, so a cell
+  edited without a re-run does not merely leave a figure answering an
+  earlier question, it makes the file disagree with itself.
+  `PartialHashInversion.ipynb` is the exception and cannot be anything
+  else: its first cell calls `input()` twice, so headless it raises
+  `StdinNotImplementedError` before computing anything, and what it
+  prints is wall clock timings over matplotlib figures. It is an
+  illustration, and `ipynb/README.md` is where that is said to a reader.
+  `check-json` asks only that a file parses, and nothing here asks
+  either of the other two questions.
+- **The first cell of `DSA.ipynb` and `SSA.ipynb` carries no output on
+  purpose**, and executing one is how that gets undone: empty it again
+  afterwards. `ipynb/README.md` has why, that being a reader's question
+  rather than a session's. Executing also writes an `execution` block of
+  wall clock timestamps into each cell's metadata and stamps the running
+  interpreter into `language_info`. Strip both, or the file you just
+  refreshed stops reproducing itself on the next run.
 - **Nor is a notebook a file a diff answers.** `pretty-format-json`
   carries `exclude: \.ipynb$`, so nothing normalises these and they are
   not written alike: `SSA.ipynb` is one line of JSON, and the indent of

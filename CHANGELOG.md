@@ -8,6 +8,40 @@ behind.
 
 ## Unreleased
 
+### The notebooks say which of them a reader can reproduce
+
+- **`ipynb/DSA.ipynb` carried the outputs of a 2020 session**
+  (btclib-org/bbt#19), and one of them had gone wrong rather than merely
+  stale: btclib renamed the cofactor in its curve dump, so the committed
+  output read `h = 1` where the library now prints `cofactor = 1` —
+  and `ipynb/SSA.ipynb`, which has the same source cell, already printed
+  the new one. Two notebooks in one directory disagreed about the output
+  of identical code. Every other value was still correct: executed
+  against btclib 2026.8.21, fourteen of its sixteen code cells
+  reproduced their committed output byte for byte.
+
+- **It is executed and its outputs are the run's**, its execution counts
+  now 1 to 16 rather than the `5, 22, 25, 8, …` of a notebook run out of
+  order — a sequence in which 18 appeared twice, which one kernel cannot
+  produce. `ipynb/field_table.ipynb` needed no new outputs, its three
+  cells already reproducing exactly, but carried counts starting at 66
+  and a `language_info` naming Python 3.8.
+
+- **The `!pip install` cell carries no output**, which is what
+  `ipynb/SSA.ipynb` already did. It answers a download transcript on
+  Colab, `Requirement already satisfied` under `pip` and
+  `command not found: pip` in the environment `uv sync` builds, so what
+  was stored there described a machine that no longer exists. The Colab
+  `outputId` and `colab` receipts of that session are gone from the cell
+  metadata for the same reason.
+
+- **`ipynb/README.md` now says which notebooks are transcripts and which
+  one is an illustration.** `ipynb/PartialHashInversion.ipynb` cannot be
+  a transcript and the reader is told so rather than left to find out:
+  its first cell calls `input()` twice, so headless it raises
+  `StdinNotImplementedError` before computing anything, and what it
+  prints is how long the search took on one machine.
+
 ### `pyproject.toml` names the oldest uv that may read `uv.lock`
 
 - **`[tool.uv] required-version` is declared, at the ceiling rather than
