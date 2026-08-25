@@ -8,6 +8,33 @@ behind.
 
 ## Unreleased
 
+### One reduction mod `ec.n`, written one way
+
+- **`py-scripts/dsa_example2.py` and `py-scripts/ssa_example2.py`
+  assigned the same variable twice at four places** (btclib-org/bbt#75),
+  `int.from_bytes(x, "big") % ec.n` immediately overwritten by
+  `int_from_bits(x, ec.nlen) % ec.n`, with nothing saying whether the
+  second corrected the first or the first was left over. Each is one
+  line now, `int_from_bits`, and both scripts print byte for byte what
+  they printed before.
+
+- **The one that is kept is the one that is right on any curve.**
+  `int_from_bits` is SEC 1 v.2 §4.1.3(5)'s transformation: it drops the
+  bits by which the digest is longer than the group order. Over
+  secp256k1 and SHA256 it drops none, so the two spellings are the same
+  number — measured over 20000 random digests, zero disagreements — and
+  they are not the same number where the order is shorter than the
+  digest. That is sixteen of btclib's `CURVES` entries and fourteen
+  curves: `nistp192` and `secp192r1` are one curve under two names, and
+  so are `nistp224` and `secp224r1`.
+
+- **`ipynb/SSA.ipynb` keeps its own spelling and the script says so.**
+  The notebook computes the BIP340 challenge with
+  `int.from_bytes(t, "big") % ec.n`, which btclib-org/bbt#16 made the
+  reference for that arithmetic; the script's `challenge` now carries
+  the sentence that reconciles them, rather than leaving a reader to
+  find one formula written two ways.
+
 ### The spell checkers read the notebooks and do not write to them
 
 - **`codespell` and `typos` correct in place everywhere but `\.ipynb$`,

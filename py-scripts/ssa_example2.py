@@ -31,6 +31,12 @@ def challenge(x_K: int, x_Q: int, msg: bytes) -> int:
         "BIP0340/challenge",
         x_K.to_bytes(32, "big") + x_Q.to_bytes(32, "big") + msg,
     )
+    # BIP340 asks for int(hash) mod n with no truncation, which is how
+    # ipynb/SSA.ipynb writes this line and the one computing the
+    # ephemeral key below: int.from_bytes(t, "big") % ec.n. int_from_bits
+    # is SEC 1 v.2 4.1.3(5)'s form for the general case, where the digest
+    # may be longer than the order; on secp256k1 with a 32-byte hash the
+    # two are the same number, so neither spelling is the lax one
     return int_from_bits(t, ec.nlen) % ec.n
 
 
@@ -60,7 +66,6 @@ print("\n*** Ephemeral key and challenge")
 # different for each msg, private because of q
 temp = q.to_bytes(32, "big") + msg1
 k1_bytes = sha256(temp).digest()
-k1 = int.from_bytes(k1_bytes, "big") % ec.n
 k1 = int_from_bits(k1_bytes, ec.nlen) % ec.n
 assert 0 < k1 < ec.n, "Invalid ephemeral key"
 

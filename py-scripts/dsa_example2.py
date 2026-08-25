@@ -37,8 +37,12 @@ print(msg1.decode())
 
 print("2. Sign message")
 msghd1 = sha256(msg1).digest()
-# hash(msg) must be transformed into an integer modulo ec.n:
-c1 = int.from_bytes(msghd1, "big") % ec.n
+# hash(msg) must be transformed into an integer modulo ec.n, and
+# int_from_bits is the transformation SEC 1 v.2 4.1.3(5) asks for: it
+# drops the bits by which the digest is longer than the group order.
+# Here it drops none, ec.nlen being 256 and the digest 256 bits, so the
+# plainer int.from_bytes(msghd1, "big") is the same number -- on a curve
+# whose order is shorter it is not
 c1 = int_from_bits(msghd1, ec.nlen) % ec.n
 assert c1 != 0
 print(f"    c1:    {hex(c1).upper()}")
@@ -48,7 +52,6 @@ print(f"    c1:    {hex(c1).upper()}")
 # different for each msg, private because of q
 temp = q.to_bytes(32, "big") + c1.to_bytes(32, "big")
 k1_bytes = sha256(temp).digest()
-k1 = int.from_bytes(k1_bytes, "big") % ec.n
 k1 = int_from_bits(k1_bytes, ec.nlen) % ec.n
 assert 0 < k1 < ec.n, "Invalid ephemeral key"
 print(f"eph k1:    {hex(k1).upper()}")
@@ -99,7 +102,6 @@ print(msg2.decode())
 print("2. Sign message")
 msghd2 = sha256(msg2).digest()
 # hash(msg) must be transformed into an integer modulo ec.n:
-c2 = int.from_bytes(msghd2, "big") % ec.n
 c2 = int_from_bits(msghd2, ec.nlen) % ec.n
 assert c2 != 0
 print(f"    c2:    {hex(c2).upper()}")
