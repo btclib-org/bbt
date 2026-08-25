@@ -8,6 +8,32 @@ behind.
 
 ## Unreleased
 
+### The by-hand ECDSA script recovers the public key too
+
+- **`py-scripts/dsa_example2.py` prints a `4. Recover keys` step**
+  (closes btclib-org/bbt#81), the step `py-scripts/dsa_example1.py`
+  shows as a call to `recover_pub_keys` and this one writes out: the
+  verification equation K = s^-1 (c G + r Q) solved for Q rather than
+  for K, over each candidate K that r admits. It is built from
+  `btclib.curves.curve` and `btclib.number_theory` like the rest of the
+  script, which imports nothing from `btclib.ecc.dsa`.
+
+- **What it prints is what `recover_pub_keys` returns, in the same
+  order.** Measured outside the script, the script's own printed
+  `(r1, s1)` handed to `recover_pub_keys(msg1, Sig(r1, s1))`: the two
+  lists agree pair by pair, and the public key step 0 prints is among
+  them. The rest of the script prints byte for byte what it printed
+  before, `git show origin/main:py-scripts/dsa_example2.py` run and
+  diffed against it.
+
+- **A section of this script rather than a script of its own, and it
+  recovers for the first signature only.** The script is where the
+  by-hand arithmetic already is, so a separate script would carry a
+  second copy of the key generation and the signing to reach it; the
+  second signature is there for what an ephemeral key reused across two
+  messages exposes, and recovering from it again would print the same
+  candidate K, its r being the same r.
+
 ### Every spell-checking exception names a string or one file
 
 - **`[tool.typos.default.extend-words]` and `[tool.codespell]

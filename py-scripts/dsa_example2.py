@@ -4,14 +4,16 @@
 
 """Sign and verify ECDSA by hand, from btclib's number-theory primitives.
 
-Shows that a signature's s can be malleated into another valid one, and what
-reusing an ephemeral key across two messages exposes.
+Shows that the public key is recoverable from the signature alone, that a
+signature's s can be malleated into another valid one, and what reusing an
+ephemeral key across two messages exposes.
 """
 
 from hashlib import sha256
 
 from btclib.curves.curve import mult
 from btclib.curves.curve import secp256k1 as ec
+from btclib.exceptions import BTClibValueError
 from btclib.number_theory import mod_inv
 from btclib.utils import int_from_bits
 
@@ -76,6 +78,29 @@ U = mult(u, ec.G)
 V = mult(v, Q)
 x, y = ec.add_var(U, V)
 print(r1 == x % ec.n)
+
+print("4. Recover keys")
+# the verification just above recomputes K = s^-1 (c G + r Q) and reads
+# its x; solved for Q instead, the same equation is Q = r^-1 (s K - c G),
+# which needs no private key. K is not in the signature, but r is K[0]
+# reduced mod ec.n, so K[0] is r or r + ec.n -- 2*ec.n exceeds ec.p, so
+# there is no third -- and an x on the curve carries two y, one of each
+# parity: four candidate K at most, one of them the K the signing step
+# above computed, and its Q the signer's public key
+r1_inv = mod_inv(r1, ec.n)
+cG = mult(c1, ec.G)
+i = 0
+for x_K in (r1, r1 + ec.n):
+    try:
+        y_even = ec.y_even_var(x_K)
+    except BTClibValueError:
+        # x_K is outside the field, or is no curve point's x-coordinate
+        continue
+    for y_K in (y_even, ec.p - y_even):
+        sK = mult(s1, (x_K, y_K))
+        key = mult(r1_inv, ec.add_var(sK, ec.negate(cG)))
+        print(f" key#{i}: {'02' if key[1] % 2 == 0 else '03'} {hex(key[0]).upper()}")
+        i += 1
 
 
 print("\n** Malleated signature")
