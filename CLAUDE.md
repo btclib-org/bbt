@@ -159,8 +159,10 @@ Do not use Fable unless explicitly instructed.
   `StdinNotImplementedError` before computing anything, and what it
   prints is wall clock timings over matplotlib figures. It is an
   illustration, and `ipynb/README.md` is where that is said to a reader.
-  `check-json` asks only that a file parses, and nothing here asks
-  either of the other two questions.
+  `check-json` asks only that a file parses. Whether a transcript
+  still reproduces is asked by `.github/scripts/check_notebooks.py`,
+  which `lint.yml` runs; whether `PartialHashInversion.ipynb` still
+  runs is asked by nothing.
 - **The first cell of `DSA.ipynb` and `SSA.ipynb` carries no output on
   purpose**, and executing one is how that gets undone: empty it again
   afterwards. `ipynb/README.md` has why, that being a reader's question

@@ -322,7 +322,7 @@ repos:
         name: mypy (strict, in the project environment)
         entry: >
           uv run --locked --no-default-groups --group lint
-          mypy py-scripts
+          mypy py-scripts .github/scripts
         language: system
         types: [python]
         pass_filenames: false

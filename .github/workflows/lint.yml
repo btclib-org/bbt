@@ -3,17 +3,19 @@ name: lint
 
 # what this workflow runs is .pre-commit-config.yaml itself, never a
 # second list of the same tools: a commit and CI then enforce one thing,
-# and a hook added to that file needs no edit here.
+# and a hook added to that file needs no edit here. The notebook step at
+# the foot of the job is the one thing beside it, and its own comment
+# says why it is not a hook.
 #
 # It is the only workflow here that gates: claude-review.yml reports a
 # verdict rather than a check, and links.yml asks whether somebody
 # else's host is answering. The reason this one gates is that without it
 # the hook config gates nothing at all: a contributor who does not run
 # the gate by hand is refused by nothing, and the tree this repository
-# ships is prose and notebooks that only a reader ever opens. What the
-# standard would otherwise ask for -- a test workflow, a docs build, a
-# release -- has no subject here: there is no suite, no documentation
-# build and nothing published.
+# ships is prose and notebooks, which nothing compiles and nothing
+# imports. What the standard would otherwise ask for -- a test workflow,
+# a docs build, a release -- has no subject here: there is no suite, no
+# documentation build and nothing published.
 
 on:
   push:
@@ -126,3 +128,31 @@ jobs:
       # than only that something is unclean
       - name: Run every hook
         run: uvx pre-commit run --all-files --show-diff-on-failure
+
+      # what no hook covers: ipynb/README.md promises that executing a
+      # transcript notebook gives back every output committed in it, and
+      # check-json asks only that the file still parses. The script this
+      # runs is the whole of the promise, and CONTRIBUTING.md's last
+      # section documents the same command for an author to run first.
+      #
+      # A step of this job and not a job of its own, because `Lint` is
+      # the required context -- REPOSITORY.md reads it back from the
+      # protection endpoint -- so a second job would report beside the
+      # rule rather than gate with it.
+      #
+      # And a step rather than a hook, because a hook would execute the
+      # transcript notebooks at every commit where this runs them once
+      # per push.
+      #
+      # nbclient and nbformat arrive through `--with` rather than from
+      # pyproject.toml, for the reason CONTRIBUTING.md's last section
+      # gives.
+      #
+      # `!cancelled()` so that one push answers for the hooks and for the
+      # notebooks: with the default condition a red hook withholds the
+      # notebook result until whatever push fixes it
+      - name: Check that the transcript notebooks reproduce
+        if: ${{ !cancelled() }}
+        run: >
+          uv run --locked --with nbclient --with nbformat
+          python .github/scripts/check_notebooks.py

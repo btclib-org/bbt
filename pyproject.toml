@@ -279,10 +279,11 @@ CPY = "CPY"
 # forward.
 #
 # The `mypy` hook in .pre-commit-config.yaml is what runs this, and it
-# names py-scripts, where every tracked Python file of this tree is:
-# `git ls-files '*.py'` is what says whether that is still the whole of
-# them. Where one line cannot be typed the answer is
-# `# type: ignore[code]` at that line, and never a setting relaxed here
+# names py-scripts and .github/scripts, which is where every tracked
+# Python file of this tree is: `git ls-files '*.py'` is what says
+# whether those two are still the whole of them. Where one line cannot
+# be typed the answer is `# type: ignore[code]` at that line, and never
+# a setting relaxed here
 strict = true
 warn_unreachable = true
 show_column_numbers = true

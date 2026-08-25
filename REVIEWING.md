@@ -463,8 +463,10 @@ because that document, and not this one, is where the rule lives.
 - **Does a notebook's committed output belong to the code beside it?**
   The `.ipynb` files under `ipynb/` carry their outputs, embedded images
   included, so a cell edited without a re-run leaves a figure that
-  answers an earlier question. Nothing checks this: `check-json` asks
-  only that the file still parses.
+  answers an earlier question. `lint.yml` executes the transcripts among
+  them and compares every output, which `CONTRIBUTING.md`'s last section
+  gives as a command to run first; `ipynb/PartialHashInversion.ipynb` is
+  the one it cannot execute, and there the question is the reviewer's.
 - **Does a ruff family left out of `select` carry its count and the
   command that re-derives it?** `pyproject.toml` records one beside each,
   because a short select list is a measurement here rather than a

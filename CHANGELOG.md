@@ -8,6 +8,69 @@ behind.
 
 ## Unreleased
 
+### The transcript notebooks are executed and compared, not only parsed
+
+- **`lint.yml` runs `.github/scripts/check_notebooks.py`, which executes
+  each transcript notebook and compares every code cell's outputs and
+  execution count with what is committed** (closes btclib-org/bbt#78).
+  `ipynb/README.md` promises that a reader's own run gives those outputs
+  back byte for byte, and `check-json` asks only that the file still
+  parses. A cell edited without a re-run fails the gate, named with its
+  notebook, its index and a diff of the two. A cell that raises rather
+  than drifting — a btclib API removed under it — aborts the run there,
+  so the notebooks after it go unread and what is printed is the
+  traceback rather than that report.
+
+- **The executed notebook is compared after `nbformat` has serialised
+  it.** A stream output's `text` is one string in memory and a list of
+  lines on disk, so reading the committed file as JSON and comparing it
+  against the executed objects reports every cell carrying an output as
+  differing, the cells that reproduce exactly included. Outside the
+  comparison are the notebook's `language_info` and each cell's
+  `execution` metadata, which execution rewrites with the running
+  interpreter and with wall clock.
+
+- **`ipynb/PartialHashInversion.ipynb` is named rather than detected,
+  and not executed**, its first cell calling `input()` twice. The run
+  fails where that name is not there, and where the directory holds no
+  transcript at all, so neither a rename nor a move leaves the gate
+  reading nothing and passing.
+
+- **The `!pip install` line is stripped and the rest of the cell run,
+  and the cell itself is not compared**, which is one treatment for the
+  reason `ipynb/README.md` already gives: what that line prints describes
+  the machine. The cell runs because it carries the imports the notebook
+  needs and the execution count every later cell's is counted from. Not
+  running the line also keeps the notebooks off the network, so what they
+  are compared against is the btclib `uv.lock` pins.
+
+- **`nbclient` and `nbformat` arrive through `uv run --with`** and are
+  in no dependency group, nothing this tree ships importing either.
+  `CONTRIBUTING.md`'s last section documents the command an author runs
+  first, and the `mypy` hook reads `.github/scripts` beside `py-scripts`
+  so that the script is type checked like the rest.
+
+- **`CLAUDE.md` and `pyproject.toml` describe this gate and the
+  directories the `mypy` hook names** (closes btclib-org/bbt#89).
+  `CLAUDE.md`'s notebook bullet says that
+  `.github/scripts/check_notebooks.py` is what asks whether a transcript
+  still reproduces, and that whether `PartialHashInversion.ipynb` runs
+  is asked by nothing. The comment above `[tool.mypy]`'s `strict` names
+  `.github/scripts` beside `py-scripts` and keeps `git ls-files '*.py'`,
+  which is what says whether those are still the whole of the tree's
+  tracked Python.
+
+- **`claude-review.yml`'s prompt names what `lint.yml` executes**
+  (closes btclib-org/bbt#92), that prompt being the whole of what the
+  reviewing model is told about this tree before it opens
+  `REVIEWING.md`: a review told that nothing runs the material does not
+  ask what an executed comparison covers, and
+  `ipynb/PartialHashInversion.ipynb` is where a reader's own eye is the
+  only check there is. The action refuses to run where that file differs
+  from the copy on the default branch, so the pull request editing it
+  gets no review of record; the file's own comment is where that is
+  called deliberate and where it says the job gates nothing.
+
 ### `codespell --version` is a sha where `typos --version` is a release
 
 - **`CLAUDE.md` carries why the two spell checkers answer that question

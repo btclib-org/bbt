@@ -251,7 +251,9 @@ file, since `check-yaml` alone reads it as yaml and not as what it is.
   what this repository ships is read on github.com or cloned.
 - **No suite and no coverage.** [Section 8's ratchet][s8] is a claim
   about a package's own code and this tree ships none. What replaces a
-  test here is that a script can be run, which nothing automates.
+  test here is that a script can be run and that a transcript notebook
+  reproduces its committed outputs; `lint.yml` automates the second, and
+  the first is a person reading what a script printed.
 
 [std]: https://github.com/btclib-org/.github
 [s3]: https://github.com/btclib-org/.github#3-pyprojecttoml-is-the-configuration

@@ -206,7 +206,7 @@ directory of scripts that demonstrate one thing each.
 
 ```shell
 uv sync --locked                        # the environment the tree runs in
-uvx pre-commit run --all-files          # the whole gate
+uvx pre-commit run --all-files          # every hook
 uvx pre-commit run markdownlint-cli2    # one hook
 uvx pre-commit validate-config .pre-commit-config.yaml
 ```
@@ -218,6 +218,23 @@ same command for the reason its own header gives. The last one is worth
 running before pushing a change to the hook config: it catches what a
 wrong `types_or` tag or a malformed entry would otherwise turn into a red
 lint job.
+
+The hooks are not the whole of what `lint.yml` runs. `ipynb/README.md`
+promises that executing a transcript notebook gives back every output
+committed in it, and `check-json` asks only that the file still parses,
+so that promise has a gate of its own:
+
+```shell
+uv run --locked --with nbclient --with nbformat \
+    python .github/scripts/check_notebooks.py
+```
+
+`nbclient` and `nbformat` arrive through `--with` and are in no
+dependency group: nothing this tree ships imports either, so they belong
+to the command that runs the gate rather than to the environment the
+material runs in. The script names every file it reads and fails where it
+reads none, `ipynb/PartialHashInversion.ipynb` excepted — that file's own
+paragraph in `ipynb/README.md` says why it cannot be a transcript.
 
 `uv.lock` is tracked and the `uv-lock` hook keeps it in step with
 `pyproject.toml`. `--locked` above is what makes a mismatch a failure
@@ -238,7 +255,8 @@ that hook:
 
 ```shell
 uvx pre-commit run --all-files mypy
-uv run --locked --no-default-groups --group lint mypy py-scripts
+uv run --locked --no-default-groups --group lint \
+    mypy py-scripts .github/scripts
 ```
 
 The second line is the hook's own entry, and it is what to reach for

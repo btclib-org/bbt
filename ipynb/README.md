@@ -20,6 +20,10 @@ on Colab, another in an environment built with `pip`, and
 there would describe the reader's machine rather than the material. That
 cell is provisioning; the transcript is everything after it.
 
+Editing a cell here means re-running the notebook and committing what it
+prints. `lint.yml` executes the three and compares every output, and
+`CONTRIBUTING.md`'s last section gives the same command to run first.
+
 `PartialHashInversion.ipynb` is an **illustration**, and cannot be a
 transcript. Its first cell calls `input()` twice, for a string and for a
 number of leading zeros, so nothing executes it without a person at the
