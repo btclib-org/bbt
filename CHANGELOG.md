@@ -8,6 +8,18 @@ behind.
 
 ## Unreleased
 
+### `check_notebooks.py` reads every notebook, a raised cell included
+
+- **A code cell that raises no longer stops the run**
+  (closes btclib-org/bbt#94). Each notebook's execution sits in its own
+  `try`, so a raised cell is collected the way a drifted output is: the
+  notebook is reported `raised executing a cell`, next to what raised,
+  and the notebooks after it are still read.
+
+- **The `ILLUSTRATIONS` check that reports a missing illustration now
+  runs after the transcripts loop**, so it is reported whether or not a
+  notebook raised.
+
 ### The suppressed spell-checker strings have no substitute
 
 - **`CLAUDE.md` says what fixes the extended keys and the WIF under

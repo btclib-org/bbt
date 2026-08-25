@@ -130,14 +130,14 @@ def departures(path: Path, name: str) -> list[str]:
     return found
 
 
+def raised(name: str, error: Exception) -> str:
+    """Say which notebook's execution raised, and with what error."""
+    return "\n".join([f"  {name} raised executing a cell:", str(error)])
+
+
 def main() -> int:
     """Check every transcript notebook, and name every file it reads."""
     failures = []
-    for name in ILLUSTRATIONS:
-        if (NOTEBOOK_DIR / name).exists():
-            print(f"ipynb/{name}: illustration, not executed")
-        else:
-            failures.append(f"  ipynb/{name}: named an illustration and not there")
     transcripts = [
         path
         for path in sorted(NOTEBOOK_DIR.glob("*.ipynb"))
@@ -147,9 +147,22 @@ def main() -> int:
         failures.append("  ipynb/: no transcript notebook, so nothing was read")
     for path in transcripts:
         name = path.relative_to(ROOT).as_posix()
-        found = departures(path, name)
+        # a cell that raises is a departure like any other: collected and
+        # not left to abort the run, or every notebook after it goes
+        # unread and unreported
+        try:
+            found = departures(path, name)
+        except Exception as error:
+            print(f"{name}: raised executing a cell")
+            failures.append(raised(name, error))
+            continue
         print(f"{name}: {'differs from' if found else 'reproduces'} its outputs")
         failures.extend(found)
+    for name in ILLUSTRATIONS:
+        if (NOTEBOOK_DIR / name).exists():
+            print(f"ipynb/{name}: illustration, not executed")
+        else:
+            failures.append(f"  ipynb/{name}: named an illustration and not there")
     for failure in failures:
         print(failure)
     return 1 if failures else 0
