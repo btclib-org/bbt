@@ -14,6 +14,27 @@ behind.
 
 ## Unreleased
 
+### No script under `py-scripts/` writes outside this tree
+
+- **`curves.py` and `rfc6979.py` demonstrated nothing: they generated
+  data files for btclib-org/btclib and wrote them into
+  `../../btclib/btclib/data` and `../../btclib/btclib/tests/test_data`**
+  (btclib-org/bbt#17), paths that repository does not have, so each
+  exited 1 with `FileNotFoundError`. They are deleted. The issue
+  reserved the decision of where that data belongs and the maintainer
+  took it; btclib-org/btclib carries the curve parameters at
+  `btclib/curves/_data/` and the RFC 6979 vectors at
+  `tests/ecc/_data/rfc6979.json`, whose provenance its own
+  `tests/_data/README.md` records as a transcription of the RFC.
+  `gh api "repos/btclib-org/btclib/git/trees/main?recursive=1"` is what
+  says which paths that repository has, and
+  `grep -rn 'open(\|\.\./\|dirname(__file__)' py-scripts/*.py` that
+  nothing left here reaches past the repository root.
+
+- **`py-scripts/README.md` no longer carries the exception they
+  needed**, its list being what a reader has to know before running a
+  script.
+
 ### `ipynb/SSA.ipynb` signs with Schnorr
 
 - **The notebook was titled Schnorr and demonstrated ECDSA**
