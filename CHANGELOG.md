@@ -8,6 +8,13 @@ behind.
 
 ## Unreleased
 
+### `.pre-commit-config.yaml`'s ruff comment says `select = ["ALL"]`
+
+- **The comment above the `ruff-check` hook no longer describes a short,
+  zero-finding selection** (closes btclib-org/bbt#104). It names
+  `pyproject.toml`'s `select = ["ALL"]` and where each exclusion is
+  argued instead.
+
 ### `CLAUDE.md` names two traps `select = ["ALL"]` and the union merge left behind
 
 - **`uvx ruff check --select ALL .` on the command line is not what the
