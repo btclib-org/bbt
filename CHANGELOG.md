@@ -8,6 +8,24 @@ behind.
 
 ## Unreleased
 
+### `codespell --version` is a sha where `typos --version` is a release
+
+- **`CLAUDE.md` carries why the two spell checkers answer that question
+  differently** (closes btclib-org/bbt#84). pre-commit's first strategy
+  fetches one named ref and checks out `FETCH_HEAD`, so the clone holds
+  no local ref for `setuptools_scm` to describe and codespell reports
+  `0.1.dev1+g<sha>` where its `rev:` names a release; `typos` installs a
+  released package rather than building its clone and reports that
+  release. Of the two checkers configured side by side, only one's
+  version string is usable as evidence of which version ran.
+
+- **The sha is what answers the question for codespell.** The field
+  after `+g` abbreviates the commit the clone sits on, and that commit
+  is the one `codespell-project/codespell`'s pinned tag points at, so
+  the string that appears to contradict the pin is what shows it
+  honoured. The bullet carries the commands that map a pin to its
+  clone, read the clone's `HEAD` and resolve the tag at the remote.
+
 ### The by-hand ECDSA script recovers the public key too
 
 - **`py-scripts/dsa_example2.py` prints a `4. Recover keys` step**
