@@ -8,6 +8,34 @@ behind.
 
 ## Unreleased
 
+### Nothing is carried where nothing reads it
+
+- **The root `TODO` is gone** (btclib-org/bbt#70). Twenty bytes,
+  `jupyter for scripts`, tracked since 2019-01-23 and named by no
+  document: not `README.md`'s list of folders, not `CLAUDE.md`'s
+  *Architecture*, not `CONTRIBUTING.md`, not `.gitignore`. A file called
+  `TODO` at the root of a repository whose material is the product reads
+  as a statement about the course rather than a note to its author, and
+  seven years is long enough to answer whether it named anything anybody
+  wanted.
+
+- **`py-scripts/dsa_example2.py` carried two notes and now carries
+  neither.** `# TODO implement pubkey recovery` is btclib-org/bbt#81: it
+  is real work, `dsa_example1.py` showing recovery with the library
+  while its by-hand twin shows none, and `CONTRIBUTING.md`'s *The issue
+  tracker* says a finding is filed rather than carried.
+  `# TODO crack private key` is not work at all — `ipynb/DSA.ipynb`'s
+  last cell sets exactly that as the reader's exercise, so a script that
+  answered it would spend it. The comment there now says so, which is
+  the other half of what the issue asked for: a note is an issue or a
+  sentence saying why the comment is the right place.
+
+- **`py-scripts/ssa_example2.py` says it too.** It stops one step short
+  of `ipynb/SSA.ipynb`'s exercise for the same reason and said nothing
+  about it, so the two twin scripts would otherwise have explained
+  themselves differently. Its note was already gone, removed by
+  btclib-org/bbt#67; what was missing was the sentence.
+
 ### The regtest walk-through's transaction samples say they are samples
 
 - **`regtest-lab/README.md` showed the output of `gettransaction` as a

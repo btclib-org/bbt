@@ -16,8 +16,9 @@ from btclib.number_theory import mod_inv
 from btclib.utils import int_from_bits
 
 # note: no import from btclib.ecc.dsa
-# TODO implement pubkey recovery
-# TODO crack private key
+# the private key is recoverable from the two signatures below, and this
+# script stops short of doing it on purpose: ipynb/DSA.ipynb sets that as
+# the reader's exercise, and a script that answered it would spend it
 
 print("\n*** EC:")
 print(ec)
