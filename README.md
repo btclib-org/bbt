@@ -1,5 +1,23 @@
 # Bitcoin and Blockchain Technology
 
+<!-- The badges are what the reader decides with, one property of the
+tree per badge, in the fixed order btclib-org/.github's README.md
+section 2 gives: the licence, the lint workflow, pre-commit.ci, then
+the sentinels this tree runs, in section 10's calendar order -- here
+only links. This tree publishes nothing (`package = false`, no
+`release.yml`), holds no suite (no `tests/`) and builds no
+documentation (no `docs/`), so the version, downloads, development
+status, supported Python versions, wheel, implementation,
+github/v/release, test, docs and Read the Docs badges have no state to
+report. One badge per line keeps a change to one line and every line
+inside MD013, whose 80 columns bind only where a space follows
+them. -->
+[![license](https://img.shields.io/github/license/btclib-org/bbt.svg)](https://github.com/btclib-org/bbt/blob/main/LICENSE)
+
+[![lint workflow status](https://github.com/btclib-org/bbt/actions/workflows/lint.yml/badge.svg)](https://github.com/btclib-org/bbt/actions/workflows/lint.yml)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/btclib-org/bbt/main.svg)](https://results.pre-commit.ci/latest/github/btclib-org/bbt/main)
+[![links workflow status](https://github.com/btclib-org/bbt/actions/workflows/links.yml/badge.svg)](https://github.com/btclib-org/bbt/actions/workflows/links.yml)
+
 The course is taught at:
 
 - University of Milano-Bicocca

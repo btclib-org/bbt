@@ -20,6 +20,16 @@ behind.
   runs after the transcripts loop**, so it is reported whether or not a
   notebook raised.
 
+### `README.md`'s head carries a badge row, one badge per property
+
+- **The licence, the lint workflow, pre-commit.ci and the `links`
+  sentinel, in that order** (issue #98). This tree publishes nothing,
+  holds no suite and builds no documentation, so it owes none of the
+  badges those properties earn, and `links` is the only sentinel it
+  runs. The issue's other checkboxes — `pyproject.toml`'s `select`
+  list, `claude-review.yml`'s ack of record and `REVIEWING.md`'s own
+  sentence about it — stay open here.
+
 ### The suppressed spell-checker strings have no substitute
 
 - **`CLAUDE.md` says what fixes the extended keys and the WIF under
