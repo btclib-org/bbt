@@ -8,6 +8,23 @@ behind.
 
 ## Unreleased
 
+### The suppressed spell-checker strings have no substitute
+
+- **`CLAUDE.md` says what fixes the extended keys and the WIF under
+  `[tool.typos.default.extend-identifiers]`** (closes btclib-org/bbt#96).
+  `py-scripts/bip32_testvector1.py` and `bip32_testvector3.py` are named
+  for the BIP32 vectors they walk, their seeds are the ones the BIP
+  publishes and every string they assert is a key of that vector; the
+  two WIF scripts start from the private key the Bitcoin wiki page they
+  cite works through. A different key leaves a script deriving what no
+  published document confirms.
+
+- **Nor is a cleaner vector available.** The extended keys of each test
+  vector `bip-0032.mediawiki` publishes, taken a vector at a time
+  through the pinned `typos` binary, are reported for every vector. That
+  the extraction gives back the extended keys `pyproject.toml` already
+  suppresses is the control on it.
+
 ### The transcript notebooks are executed and compared, not only parsed
 
 - **`lint.yml` runs `.github/scripts/check_notebooks.py`, which executes

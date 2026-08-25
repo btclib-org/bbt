@@ -119,6 +119,23 @@ Do not use Fable unless explicitly instructed.
   family left out carries the reason and the command: adding one back is
   a claim that the tree now answers zero to it, which is a measurement
   and not an edit.
+- **The extended keys and the WIF in `pyproject.toml`'s `typos` table
+  cannot be traded for cleaner ones.** `py-scripts/bip32_testvector1.py`
+  and `bip32_testvector3.py` are named for the BIP32 vectors they walk,
+  their seeds are the ones the BIP publishes and every string they
+  assert is a key of that vector; the two WIF scripts start from the
+  private key the Bitcoin wiki page they cite works through. A
+  substitute leaves a script deriving what no published document
+  confirms. Nor is a cleaner vector on offer: extract the extended keys
+  of each test vector `bip-0032.mediawiki` publishes and run the binary
+  pre-commit installed for the pinned `rev:` over them a vector at a
+  time — every vector is reported. Run it `--isolated`: `typos` reads
+  `pyproject.toml` from any parent directory, so an extraction written
+  in the worktree is checked with this tree's own suppressions in force,
+  and the vectors those suppressed keys come from answer clean. Re-take
+  that rather than believe it, the checker gaining and losing dictionary
+  entries between releases and its `rev:` in `.pre-commit-config.yaml`
+  moving too.
 - **The gate is a `uvx` although `uv.lock` is tracked.** pre-commit is
   in no dependency group, so there is no project environment for
   `uv run --only-group lint pre-commit` to resolve it from. A session
