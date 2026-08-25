@@ -8,6 +8,31 @@ behind.
 
 ## Unreleased
 
+### The regtest walk-through's transaction samples say they are samples
+
+- **`regtest-lab/README.md` showed the output of `gettransaction` as a
+  screenshot of a 2019 run** (btclib-org/bbt#54), while the setup pages
+  beside it install 31.1. Measured against v31.1.0 on a node in a
+  scratch datadir, a reader now sees four keys the page never
+  mentioned: `wtxid`, `mempoolconflicts`,
+  `lastprocessedblock` — an object of `hash` and `height` — and, in the
+  confirmed sample only, `blockheight`. Nothing a reader typed was
+  wrong; there was simply no way to tell a version difference from a
+  mistake.
+
+- **The two blocks are illustrations now, and say so.** Every value only
+  the reader's own run produces is written `...` — the txid, the wtxid,
+  the raw `hex`, the two unix timestamps and the block hash — and the
+  sentence under each says what is left is worth comparing and why: the
+  amounts are the same on any machine that followed these pages, because
+  `-fallbackfee=0.0002` in the setup command is what fixes the fee. The
+  two that vary anyway are named rather than left to puzzle over,
+  `vout` being whichever of the two outputs the wallet put first.
+
+- **The keys are in the order Core prints them, indented the way Core
+  indents them.** The old blocks were neither: they put every key at
+  column zero, which no Core that prints these keys does.
+
 ### The notebooks say which of them a reader can reproduce
 
 - **`ipynb/DSA.ipynb` carried the outputs of a 2020 session**

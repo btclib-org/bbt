@@ -102,9 +102,9 @@ the `[...]` part.
   ```shell
   $ bitcoin-cli -regtest generatetoaddress 101 your_address
   [
-    "5512774c20aec78eb14ac584bc767fb9464491b64c5dc61ea485fc772daac3bd",
+    "...",
+    ...
     "..."
-    "496e7640439f08d45674d394c5b4818344b2e391cd19496daa1d9380a9fe1016"
   ]
   ```
 
@@ -126,79 +126,107 @@ the `[...]` part.
   ```shell
   $ bitcoin-cli -regtest sendtoaddress \
       bcrt1qry4w50spgegfaemv7kl8q5efkfk3gpc5zvxnrd 0.99
-  3b11a2372173c4344edd0040a2a15d429c994287cc9cc0b9702546384c4ad4a1
+  ...
   ```
 
-- inspect the transaction (of course replacing the
-  `3b11a2372173c4344edd0040a2a15d429c994287cc9cc0b9702546384c4ad4a1`
-  below with your `txid`)
+- inspect the transaction, replacing `your_txid` below with the one the
+  previous command returned
 
   ```shell
-  $ bitcoin-cli -regtest gettransaction \
-      3b11a2372173c4344edd0040a2a15d429c994287cc9cc0b9702546384c4ad4a1
+  $ bitcoin-cli -regtest gettransaction your_txid
   {
-  "amount": -0.99000000,
-  "fee": -0.00002820,
-  "confirmations": 0,
-  "trusted": true,
-  "txid": "3b11a2372173c4344edd0040a2a15d429c994287cc9cc0b9702546384c4ad4a1",
-  "walletconflicts": [
-  ],
-  "time": 1558782133,
-  "timereceived": 1558782133,
-  "bip125-replaceable": "yes",
-  "details": [
-    {
-      "address": "bcrt1qry4w50spgegfaemv7kl8q5efkfk3gpc5zvxnrd",
-      "category": "send",
-      "amount": -0.99000000,
-      "vout": 1,
-      "fee": -0.00002820,
-      "abandoned": false
+    "amount": -0.99000000,
+    "fee": -0.00002820,
+    "confirmations": 0,
+    "trusted": true,
+    "txid": "...",
+    "wtxid": "...",
+    "walletconflicts": [
+    ],
+    "mempoolconflicts": [
+    ],
+    "time": ...,
+    "timereceived": ...,
+    "bip125-replaceable": "yes",
+    "details": [
+      {
+        "address": "bcrt1qry4w50spgegfaemv7kl8q5efkfk3gpc5zvxnrd",
+        "category": "send",
+        "amount": -0.99000000,
+        "vout": 0,
+        "fee": -0.00002820,
+        "abandoned": false
+      }
+    ],
+    "hex": "...",
+    "lastprocessedblock": {
+      "hash": "...",
+      "height": 101
     }
-  ],
-  "hex": "020000000001014afe8327a68faf8764a6eb9bbc5df55e0242a729f7d251a0db4cdb6b3406261b0000000000fdffffff023c481f240100000016001417a7b41a0168cf2f666d5a92f040fa93c37975efc09ee60500000000160014192aea3e0146509ee76cf5be705329b26d140714024730440220699fd7ea4c7bfac5652aa9e1d6d3cf6a697e5758c2b8cc1814cf1f8836b92baa02204c121a29feb851db8f9d4b0b4c9986c6c34ec7d749ec8fa59316e1eb20ca32ab01210397a0a9c8659f83cc3273ddc28da0eb27f74632d4d3421de3d6e4705ccad4dc8d65000000"
   }
   ```
 
+  The block above is an illustration and not a screenshot: every `...`
+  stands for a value only your own run produces, and there is nothing to
+  compare it against. What is worth comparing is the rest — the keys,
+  their order, and the amounts, which are the same on any machine that
+  followed these pages, because `-fallbackfee=0.0002` is what fixes the
+  fee. Two exceptions to expect: `vout` is `0` or `1` depending on which
+  of the two outputs the wallet happened to put first, and `height` is
+  the number of blocks you have generated so far.
+
 - no confirmation yet; now generate one more block and notice that the
-  transaction has been confirmed (again: replace the
-  `3b11a2372173c4344edd0040a2a15d429c994287cc9cc0b9702546384c4ad4a1`
-  below with your `txid`):
+  transaction has been confirmed:
 
   ```shell
   $ bitcoin-cli -regtest generatetoaddress 1 your_address
   [
-    "642c3c401d0f15509647eadcd4d6c331e54747880264e72a07e3e2afbb3b74a9"
+    "..."
   ]
-  $ bitcoin-cli -regtest gettransaction \
-      3b11a2372173c4344edd0040a2a15d429c994287cc9cc0b9702546384c4ad4a1
+  $ bitcoin-cli -regtest gettransaction your_txid
   {
-  "amount": -0.99000000,
-  "fee": -0.00002820,
-  "confirmations": 1,
-  "blockhash": "642c3c401d0f15509647eadcd4d6c331e54747880264e72a07e3e2afbb3b74a9",
-  "blockindex": 1,
-  "blocktime": 1558782231,
-  "txid": "3b11a2372173c4344edd0040a2a15d429c994287cc9cc0b9702546384c4ad4a1",
-  "walletconflicts": [
-  ],
-  "time": 1558782133,
-  "timereceived": 1558782133,
-  "bip125-replaceable": "no",
-  "details": [
-    {
-      "address": "bcrt1qry4w50spgegfaemv7kl8q5efkfk3gpc5zvxnrd",
-      "category": "send",
-      "amount": -0.99000000,
-      "vout": 1,
-      "fee": -0.00002820,
-      "abandoned": false
+    "amount": -0.99000000,
+    "fee": -0.00002820,
+    "confirmations": 1,
+    "blockhash": "...",
+    "blockheight": 102,
+    "blockindex": 1,
+    "blocktime": ...,
+    "txid": "...",
+    "wtxid": "...",
+    "walletconflicts": [
+    ],
+    "mempoolconflicts": [
+    ],
+    "time": ...,
+    "timereceived": ...,
+    "bip125-replaceable": "no",
+    "details": [
+      {
+        "address": "bcrt1qry4w50spgegfaemv7kl8q5efkfk3gpc5zvxnrd",
+        "category": "send",
+        "amount": -0.99000000,
+        "vout": 0,
+        "fee": -0.00002820,
+        "abandoned": false
+      }
+    ],
+    "hex": "...",
+    "lastprocessedblock": {
+      "hash": "...",
+      "height": 102
     }
-  ],
-  "hex": "020000000001014afe8327a68faf8764a6eb9bbc5df55e0242a729f7d251a0db4cdb6b3406261b0000000000fdffffff023c481f240100000016001417a7b41a0168cf2f666d5a92f040fa93c37975efc09ee60500000000160014192aea3e0146509ee76cf5be705329b26d140714024730440220699fd7ea4c7bfac5652aa9e1d6d3cf6a697e5758c2b8cc1814cf1f8836b92baa02204c121a29feb851db8f9d4b0b4c9986c6c34ec7d749ec8fa59316e1eb20ca32ab01210397a0a9c8659f83cc3273ddc28da0eb27f74632d4d3421de3d6e4705ccad4dc8d65000000"
   }
   ```
+
+  Four keys are new since the block before it — `blockhash`,
+  `blockheight`, `blockindex` and `blocktime` — and `bip125-replaceable`
+  has turned from `yes` to `no`: a transaction in a block can no longer
+  be replaced. `lastprocessedblock` now names the block that confirmed
+  it, which is the one `generatetoaddress` just printed. Its `height`
+  and `blockheight` are the same kind of number as before: these if
+  you generated exactly the blocks these pages ask for, larger if you
+  generated more.
 
 - stop the daemon (and the GUI) with the command
 
