@@ -28,8 +28,8 @@ r = secrets.randbits(ec.nlen)
 print(f"\npublic random number: {hex(r).upper()}")
 
 rbytes = r.to_bytes(ec.n_size, "big")
-nKeys = 3
-for i in range(nKeys):
+n_keys = 3
+for i in range(n_keys):
     ibytes = i.to_bytes(ec.n_size, "big")
     hd = hf(ibytes + rbytes).digest()
     offset = int_from_bits(hd, ec.nlen) % ec.n
@@ -40,9 +40,9 @@ for i in range(nKeys):
     print(f"           {hex(Q[1]).upper()}")
 
 # Pubkeys could also be calculated without using prvkeys
-for i in range(nKeys):
+for i in range(n_keys):
     ibytes = i.to_bytes(ec.n_size, "big")
     hd = hf(ibytes + rbytes).digest()
     offset = int_from_bits(hd, ec.nlen) % ec.n
     Q = ec.add_var(mpubkey, mult(offset, ec.G, ec))
-    assert Q == mult((mprvkey + offset) % ec.n, ec.G, ec)
+    assert mult((mprvkey + offset) % ec.n, ec.G, ec) == Q

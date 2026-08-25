@@ -28,7 +28,7 @@ address = "1Dorian4RoXcnBv9hnQ4Y2C1an6NJ4UrjX"
 # ...
 # ]}
 
-resp = requests.get(f"https://blockchain.info/unspent?active={address}")
+resp = requests.get(f"https://blockchain.info/unspent?active={address}", timeout=30)
 utxo_set = json.loads(resp.text)["unspent_outputs"]
 
 for utxo in utxo_set:

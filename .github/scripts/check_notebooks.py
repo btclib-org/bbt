@@ -149,10 +149,13 @@ def main() -> int:
         name = path.relative_to(ROOT).as_posix()
         # a cell that raises is a departure like any other: collected and
         # not left to abort the run, or every notebook after it goes
-        # unread and unreported
+        # unread and unreported. Blind on purpose: nbclient's own
+        # execution can raise more than one exception type, and a
+        # narrower except would leave exactly those doing what this
+        # function exists to prevent
         try:
             found = departures(path, name)
-        except Exception as error:
+        except Exception as error:  # noqa: BLE001
             print(f"{name}: raised executing a cell")
             failures.append(raised(name, error))
             continue

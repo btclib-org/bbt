@@ -117,7 +117,9 @@ for prime in primes:
                     # print("#", order+1, " ", x, ",", y, sep="")
                     # print("#", order+2, " ", x, ",", prime-y, sep="")
                     order += 2
-                except Exception:
+                except ValueError:
+                    # y2 has no square root mod prime, most x in the search do
+                    # not: mod_sqrt_var raises rather than the loop finding one
                     continue
             order += 1
             if isprime(order):
@@ -142,7 +144,7 @@ for prime in primes:
                 y = mod_sqrt_var(y2, prime)
                 assert (y * y) % prime == y2
                 gy = y
-            except Exception:
+            except ValueError:
                 gx += 1
         print(
             "ec",
@@ -176,7 +178,7 @@ for prime in primes:
                 y = mod_sqrt_var(y2, prime)
                 assert (y * y) % prime == y2
                 gy = y
-            except Exception:
+            except ValueError:
                 gx += 1
         print(
             "ec",

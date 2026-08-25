@@ -82,55 +82,60 @@ required-version = ">=0.12.1"
 # is still designing runs only where this file names it exactly
 preview = true
 explicit-preview-rules = true
-# What this list is *not* is the organization's, and the reason is that
-# no Python here has ever been through ruff: the scripts and the
-# notebooks are teaching material. So this is every family that answers
-# zero over the tree today, which makes it a gate rather than a list of
-# intentions.
-# `uvx ruff check --preview --select <family> .` is what re-derives each
-# answer below, and `uvx ruff check --statistics .` the whole of it.
-#
-# Left out because the tree trips them, each with the reason and none of
-# it this file's to spend:
-#   T20  a script's output is the whole of what it produces
-#   S    almost all S101, `assert` used to state what a step shows
-#   D    no module, function or notebook cell carries a docstring
-#   ERA  code commented out and kept as an alternative to read
-#   UP   written for an interpreter three releases back
-#   I    import blocks in the order they were typed
-#   B BLE FIX PGH SIM  a handful each, and each one a decision about
-#        the script it is in rather than about this file
-#
-# Left out because they cannot fire here, which section 5 asks for
-# separately: PT (no suite), RSE and TRY (no `raise` statement in the
-# tree, `grep -rn "raise " py-scripts`), TID (no package for a relative
-# import to be written in), and the families the organization's own
-# survey rejected.
-select = [
-    "A",   # flake8-builtins: a name that shadows a builtin
-    "C4",  # flake8-comprehensions
-    "C90", # mccabe, at ruff's default
-    "D",   # pydocstyle, at the pep257 convention below
-    # flake8-copyright, reading the notice out of COPYRIGHT the way
-    # section 5 asks and every sibling writes it. The scripts, and the
-    # first code cell of ipynb/PartialHashInversion.ipynb, opened with
-    # btclib's pre-MIT header instead -- a restriction LICENSE does not
-    # impose, a year range neither licence file carries, and a claim
-    # that the file is part of a package this tree is not -- so this
-    # family is here on the same terms as the rest of the list: the tree
-    # answers zero to it, notebooks included and nothing ignored
-    "CPY",
-    "E",    # pycodestyle errors
-    "F",    # pyflakes
-    "FURB", # refurb
-    "ISC",  # flake8-implicit-str-concat
-    "PIE",  # flake8-pie
-    "PL",   # pylint, which requirements-dev.txt asked for as a tool
-    "RET",  # flake8-return
-    "RUF",  # ruff-specific rules
-    "W",    # pycodestyle warnings, W505 the one max-doc-length configures
-]
+# every rule family ruff ships, present ones and a release's future ones
+# alike, per section 5: a hand-picked list is a thing that rots, since
+# nothing forces a second edit here the day ruff ships a family nobody
+# has looked at yet. `ignore` below is where a family or a single rule
+# is turned back off, each entry argued beside it -- a rule this tree
+# declines on its own merits, since no formatter runs here for one to
+# conflict with (this tree's own reason for E501 below). `uvx ruff
+# check --preview --select ALL .` is what re-derives the delta, and
+# `--statistics` the count by rule
+select = ["ALL"]
 ignore = [
+    # a script's or a notebook cell's output is the whole of what it
+    # produces, and .github/scripts/check_notebooks.py's own three
+    # prints are the one line of its log worth reading when lint.yml
+    # fails. `uvx ruff check --preview --select T201 .` lists every site,
+    # and every one is py-scripts, ipynb or that one CI script
+    "print",
+    # assert used to state what a step shows, throughout py-scripts and
+    # the notebooks alike -- a walkthrough asserting what it just
+    # computed, not a library validating a caller's input
+    "assert",
+    # no file here is part of a package and none will become one: every
+    # script is run on its own (py-scripts/README.md's
+    # `uv run python py-scripts/<name>.py`), and .github/scripts/ is read
+    # by path from a workflow rather than imported. `namespace-packages`
+    # in `[tool.ruff]` above is the alternative, declaring a directory to
+    # already carry an `__init__.py` it does not -- rejected because
+    # nothing here is a namespace package either, so declaring one would
+    # misstate the tree in the direction opposite this ignore's own
+    "implicit-namespace-package",
+    # what this finds is deliberately kept for the reader, not left over
+    # from a refactor: an alternative computation commented out beside
+    # the one that runs in ec_explorer.py and conversions.py, and
+    # getutxo.py's own comment walking the shape of the JSON the API
+    # returns, which happens to read as Python and is not
+    "commented-out-code",
+    # the crypto and Bitcoin notation exemption section 5 argues for
+    # pep8-naming: `cG`, `x_K`, `y_K` and `sK` in dsa_example2.py name a
+    # point, a coordinate and a scalar the way the DSA public-key
+    # recovery they walk is written, and `wNAF_4`/`wNAF_5` in
+    # speedup_curvemult.py are the windowed NAF the comment beside them
+    # already names. `x_K`/`x_Q` as argument names in ssa_example2.py and
+    # ipynb/SSA.ipynb are the same two coordinates read by
+    # `challenge()`, BIP340's own notation for them
+    "mixed-case-variable-in-global-scope",
+    "invalid-argument-name",
+    # FIX refuses a TODO, a FIXME, an XXX or a HACK wherever one opens a
+    # comment; TD disciplines the same four markers' format instead and
+    # is not even a superset of what FIX catches -- HACK draws no TD
+    # diagnostic at all. A repository that finishes what it starts keeps
+    # the refusal and leaves TD here, matching every other tree of the
+    # organization; `grep -rn "TODO\|FIXME\|XXX\|HACK" py-scripts ipynb
+    # .github/scripts` finds none of the four today
+    "TD",
     # what every sibling gets from ruff-format, this tree gets from
     # nothing: that hook is not in .pre-commit-config.yaml, for the
     # reason written beside the ruff hooks there. So selecting this rule
@@ -148,6 +153,28 @@ ignore = [
     # the last two in py-scripts/ec_explorer.py's isprime
     "magic-value-comparison", # PLR2004
 ]
+
+[tool.ruff.lint.per-file-ignores]
+# a table of over a hundred literal curves, each row one call to
+# Curve(p, a, b, G, n, h, weierstrass_check): naming the last argument by
+# keyword on every row would not make one row more legible, only every
+# row longer, and the table's own columns already say what each position
+# means
+"py-scripts/ellipticcurves.py" = ["FBT003"]
+# every notebook function walks a spec's own untyped pseudocode as the
+# cell presents it -- DSA.ipynb, SSA.ipynb and field_table.ipynb's
+# `tagged_hash`, `challenge` and `field_table` carry no annotation in the
+# notebook that mypy never reads (pyproject.toml's own `[tool.mypy]`
+# comment: the hook names py-scripts and .github/scripts, not ipynb).
+# The typed py-scripts equivalent, where one exists, already carries full
+# annotations -- ssa_example2.py's own `challenge(x_K: int, x_Q: int, ...)`
+"ipynb/*.ipynb" = ["ANN001", "ANN201"]
+# check_notebooks.py parses nbformat's own untyped JSON structures -- a
+# cell, a document, a notebook `executed()` hands back -- and `Any` is
+# what is honestly known about them, matching the loader argument section
+# 5 already makes for a JSON loader's own return: the caller's contract
+# to narrow, not the loader's to fake with a cast it cannot check
+".github/scripts/check_notebooks.py" = ["ANN401"]
 
 [tool.ruff.lint.flake8-copyright]
 # COPYRIGHT is the one place the notice text is written down; this is

@@ -34,12 +34,12 @@ for u, v, QJ in zip(us, vs, QJs):
 """
 
 start = time.time()
-for u, v, QJ in zip(us, vs, QJs):
+for u, v, QJ in zip(us, vs, QJs, strict=True):
     ec.add_jac(_mult(u, ec.GJ, ec), _mult(v, QJ, ec))
 elapsed1 = time.time() - start
 
 start = time.time()
-for u, v, QJ in zip(us, vs, QJs):
+for u, v, QJ in zip(us, vs, QJs, strict=True):
     _double_mult_var(u, ec.GJ, v, QJ, ec)
 elapsed2 = time.time() - start
 

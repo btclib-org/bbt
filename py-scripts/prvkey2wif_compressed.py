@@ -35,7 +35,10 @@ checksummed_payload = payload + h2[:4]
 print(checksummed_payload.hex())
 
 print("\n*** [7] Base58 encoding")
-wif = base58._b58encode(checksummed_payload)
+# the private encoder alone, on purpose: base58.encode() bundles this step
+# with the checksum step [6] above already walked, and calling it here would
+# retrace step [6] rather than showing what step [7] alone does
+wif = base58._b58encode(checksummed_payload)  # noqa: SLF001
 print(wif)
 assert wif == b"KwdMAjGmerYanjeui5SHS7JkmpZvVipYvB2LJGU1ZxJwYvP98617", "failure"
 assert (
@@ -50,7 +53,10 @@ compressed = len(wif) - 51
 print("compressed" if (compressed == 1) else "uncompressed")
 
 print("\n*** [2] Base58 decoding")
-checksummed_payload = base58._b58decode(wif)
+# the private decoder alone, on the same grounds as _b58encode above: it
+# returns the payload before checksum verification, which step [3] below
+# walks separately
+checksummed_payload = base58._b58decode(wif)  # noqa: SLF001
 print(checksummed_payload.hex())
 
 print("\n*** [3] Extended key (checksum verified)")

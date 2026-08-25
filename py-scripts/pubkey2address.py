@@ -57,7 +57,10 @@ addr = vh160 + h4[:4]
 print(addr.hex())
 
 print("\n** [9] Base58 encoded address from uncompressed PubKey")
-address = base58._b58encode(addr)
+# the private encoder alone, on purpose: base58.encode() bundles this step
+# with the checksum steps [5]-[8] above already walked, and calling it here
+# would retrace them rather than showing what step [9] alone does
+address = base58._b58encode(addr)  # noqa: SLF001
 print(address)
 assert address == b"16UwLL9Risc3QfPqBUvKofHmBQ7wMtjvM"
 assert base58.encode(vh160) == b"16UwLL9Risc3QfPqBUvKofHmBQ7wMtjvM"
@@ -77,21 +80,21 @@ print("\n*** HASH160 from address")
 print(hash_160_from_address(address).hex())
 
 
-def pubkey_bytes_from_prvkey(prvkey: int, compressed: bool = True) -> bytes:
+def pubkey_bytes_from_prvkey(prvkey: int, *, compressed: bool = True) -> bytes:
     """Redo steps [0]-[1] above as a function, compressed or not."""
-    PubKey = mult(prvkey)
+    pub_key = mult(prvkey)
     if compressed:
-        prefix = b"\x02" if (PubKey[1] % 2 == 0) else b"\x03"
-        return prefix + PubKey[0].to_bytes(32, byteorder="big")
+        prefix = b"\x02" if (pub_key[1] % 2 == 0) else b"\x03"
+        return prefix + pub_key[0].to_bytes(32, byteorder="big")
     return (
         b"\x04"
-        + PubKey[0].to_bytes(32, byteorder="big")
-        + PubKey[1].to_bytes(32, byteorder="big")
+        + pub_key[0].to_bytes(32, byteorder="big")
+        + pub_key[1].to_bytes(32, byteorder="big")
     )
 
 
 print("\n** [1] Public Key compressed:")
-PubKey_bytes = pubkey_bytes_from_prvkey(prvkey, True)
+PubKey_bytes = pubkey_bytes_from_prvkey(prvkey, compressed=True)
 print(PubKey_bytes.hex())
 
 

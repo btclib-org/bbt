@@ -24,7 +24,7 @@ hlen = hsize * 8
 n_sig = [4, 8, 16, 32, 64, 128, 256, 512]
 m = [random.getrandbits(hlen).to_bytes(hsize, "big") for _ in range(max(n_sig))]
 q = [random.getrandbits(ec.nlen) % ec.n for _ in m]
-sig = [sign_(msg, qq) for msg, qq in zip(m, q)]
+sig = [sign_(msg, qq) for msg, qq in zip(m, q, strict=True)]
 Q = [mult(qq, ec.G)[0] for qq in q]
 
 for n in n_sig:

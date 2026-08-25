@@ -16,8 +16,8 @@ mprvkey = 1 + secrets.randbelow(ec.n - 1)
 print(f"\nmaster private key = {hex(mprvkey).upper()}")
 
 mprvkey_bytes = mprvkey.to_bytes(ec.nlen, "big")
-nKeys = 3
-for i in range(nKeys):
+n_keys = 3
+for i in range(n_keys):
     ibytes = i.to_bytes(ec.nlen, "big")
     hd = hf(ibytes + mprvkey_bytes).digest()
     q = int_from_bits(hd, ec.nlen) % ec.n

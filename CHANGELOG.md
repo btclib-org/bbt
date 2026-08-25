@@ -30,6 +30,39 @@ behind.
   list, `claude-review.yml`'s ack of record and `REVIEWING.md`'s own
   sentence about it — stay open here.
 
+### `pyproject.toml` selects every ruff rule family, not a hand-picked list
+
+- **`select = ["ALL"]`, per section 5 of the organization's standard,
+  with every exclusion moved into `ignore` or a `per-file-ignores`
+  entry and argued beside it** (issue btclib-org/bbt#98). A hand-picked
+  list rots the day ruff ships a family nobody has looked at yet; `ALL`
+  brings a new one in on the pull request that bumps ruff's own pinned
+  revision instead.
+
+- **The `select` comment no longer claims `D` is left out, or that no
+  site carries a docstring** (closes btclib-org/bbt#99). Both halves
+  were false: `D` has been selected, and every public module, script
+  and notebook cell already carries one, since `01b67d6`. `select =
+  ["ALL"]` retires the comment block that line lived in.
+
+- **What `ALL` newly surfaces and does not fit teaching material is
+  declined by name, each with the reason beside it**: `print` because a
+  script's or a notebook cell's output is the point, `assert` because a
+  walkthrough asserts what it just computed, `implicit-namespace-package`
+  because no file here is part of a package, `commented-out-code`
+  because what it flags is kept for the reader on purpose, `TD` because
+  unfinished work belongs in the tracker and none is here, and the
+  crypto and Bitcoin notation `pep8-naming` already argues for
+  elsewhere in the organization. `py-scripts/ellipticcurves.py`'s table
+  of curve literals and the notebooks' own untyped functions each get a
+  narrower `per-file-ignores` entry instead.
+
+- **What `ALL` surfaces and is a real finding is fixed where it is
+  found**: a bare `except Exception` narrowed to the `ValueError`
+  `mod_sqrt_var` actually raises, `requests.get` given an explicit
+  timeout, a boolean parameter made keyword-only, and every mixedCase
+  name that was not crypto notation renamed to what PEP 8 asks.
+
 ### The suppressed spell-checker strings have no substitute
 
 - **`CLAUDE.md` says what fixes the extended keys and the WIF under

@@ -9,7 +9,6 @@ Times how long each extra zero takes to find, and plots the counts.
 
 import hashlib
 import time
-from typing import List, Optional
 
 import matplotlib.pyplot as plt
 
@@ -25,22 +24,22 @@ print(f"\nstring is: {msg}")
 print(f"{zeros} required zeros")
 
 # n[i] is used to count the results starting with i+1 zeros
-n: List[int] = []
-maxEval = pow(16, zeros + 1)
+n: list[int] = []
+max_eval = pow(16, zeros + 1)
 i = j = 0
 # None rather than 0, which is a nonce the search can return: with 0 as
 # the sentinel a hash found at i == 0 leaves the loop running and the
 # report reading the exhausted values instead of the found ones
-nonce: Optional[int] = None
+nonce: int | None = None
 # the loop below binds these, and the report at the end reads them: what
-# says the loop runs is that maxEval is at least 256, which is arithmetic
+# says the loop runs is that max_eval is at least 256, which is arithmetic
 # rather than control flow, so bind them here and let the report be safe
-string = hashValue = ""
+string = hash_value = ""
 start = time.time()
-while i < maxEval and nonce is None:
+while i < max_eval and nonce is None:
     string = msg + str(i)
-    hashValue = hashlib.sha256(string.encode()).hexdigest()
-    while hashValue[j] == "0":
+    hash_value = hashlib.sha256(string.encode()).hexdigest()
+    while hash_value[j] == "0":
         if j < len(n):
             n[j] += 1
         else:
@@ -66,7 +65,7 @@ while i < maxEval and nonce is None:
 if nonce is not None:
     print("nonce:", nonce)
     print(string)
-    print(hashValue)
+    print(hash_value)
 else:
     print("nonce not found")
 

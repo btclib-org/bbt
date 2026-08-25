@@ -25,7 +25,7 @@ xint = 15
 print("int", xint)
 xhexstr = format(xint, "04x")
 print(
-    "hexstring", xhexstr, "(how many hexdigits, i.e. bytes, must be known in advance)"
+    "hexstring", xhexstr, "(how many hexdigits, i.e. bytes, must be known in advance)",
 )
 assert xint == int(xhexstr, 16)
 xint = int(xhexstr, 16)
