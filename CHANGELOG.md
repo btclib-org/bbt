@@ -8,6 +8,24 @@ behind.
 
 ## Unreleased
 
+### `py-scripts/ssa_example2.py` signs the way BIP340 says
+
+- **The script left the even-`y` requirement on the ephemeral point out
+  of both the signing and the verification** (btclib-org/bbt#67). It
+  normalised the public key onto its even root and not the ephemeral
+  point, and its verification compared x coordinates alone; the two
+  omissions agreed with each other, so it printed `True` for signatures
+  `btclib.ecc.ssa.verify_` rejects. It negates `k` where `K` lands on
+  the odd root, and prints the parity of the recovered point alongside
+  the x comparison. `ssa.verify_` answers `True` for both signatures it
+  produces and `False` for `(r, n - s)`, and the values it prints agree
+  with `ipynb/SSA.ipynb`'s committed outputs.
+
+- **The challenge is computed here rather than imported from
+  `btclib.ecc.ssa`**: the tagged hash is written out, the way
+  `ipynb/SSA.ipynb` writes it. A script demonstrating ECSSA by hand
+  imports nothing from the module that implements it.
+
 ### The union driver's damage repairs itself
 
 - **`CHANGELOG.md` turned MD022 and MD032 off for itself**
