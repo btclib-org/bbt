@@ -8,6 +8,21 @@ behind.
 
 ## Unreleased
 
+### `CLAUDE.md` names two traps `select = ["ALL"]` and the union merge left behind
+
+- **`uvx ruff check --select ALL .` on the command line is not what the
+  gate runs.** The CLI flag overrides `pyproject.toml`'s own `ignore`
+  list rather than adding to it; the command that reproduces the pinned
+  `ruff-check` hook is the plain `uvx ruff check --preview --statistics
+  .`, with no `--select` override.
+- **`CHANGELOG.md` carries no `markdownlint-disable` directive**, so
+  `markdownlint-cli2 --fix` repairs the blank line a rebase's
+  `merge=union` join eats between two headings, with nothing to restore
+  by hand.
+- **The `pyproject.toml` bullet in *Non-obvious facts* now says
+  `select = ["ALL"]`**, matching what btclib-org/bbt#99 and one checkbox
+  of btclib-org/bbt#98 landed.
+
 ### `check_notebooks.py` reads every notebook, a raised cell included
 
 - **A code cell that raises no longer stops the run**

@@ -115,10 +115,21 @@ Do not use Fable unless explicitly instructed.
   all: a line on stdin, a display, or the network.
 - **`pyproject.toml` is not a distribution's.** `package = false`, no
   build backend and no wheel, so the standard's section 3 describes a
-  file this one is not. Its ruff `select` is short *on purpose* and every
-  family left out carries the reason and the command: adding one back is
-  a claim that the tree now answers zero to it, which is a measurement
-  and not an edit.
+  file this one is not. Its ruff `select` is `["ALL"]`, section 5's
+  prescribed shape, and every family it excludes sits in `ignore`,
+  `per-file-ignores` or a site `# noqa`, each with its own reason and,
+  where the reason is that the tree already answers zero to the rule,
+  the command that measures it: removing an entry or narrowing a `noqa`
+  is a claim about what the tree answers, which is a measurement and not
+  an edit.
+- **`uvx ruff check --select ALL .` on the command line is not what the
+  gate runs, once `select` is already `["ALL"]` in `pyproject.toml`.**
+  The CLI flag overrides the config file's `ignore` list rather than
+  adding to it, so it reports every family the config declines as a
+  fresh finding. The command that reproduces what `pre-commit`'s
+  `ruff-check` hook actually runs is the plain `uvx ruff check
+  --preview --statistics .`, with no `--select` override, reading
+  `pyproject.toml`'s own `ignore`/`per-file-ignores` as it stands.
 - **The extended keys and the WIF in `pyproject.toml`'s `typos` table
   cannot be traded for cleaner ones.** `py-scripts/bip32_testvector1.py`
   and `bip32_testvector3.py` are named for the BIP32 vectors they walk,
@@ -211,6 +222,11 @@ Do not use Fable unless explicitly instructed.
 - **This repository is a fork**, so its history reaches back past the
   fork point and its contributor graph carries authors who never pushed
   here. `AUTHORS.md` says so.
+- **`CHANGELOG.md` carries no `markdownlint-disable` directive**, so
+  after a rebase that lands an entry under a heading `merge=union`
+  joined without a blank line, `markdownlint-cli2`'s `--fix` restores
+  the line itself. Nothing here needs the hand-restoration a tree
+  carrying the directive would.
 
 ## Conventions to match
 
