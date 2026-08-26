@@ -283,8 +283,9 @@ them here is what keeps a regenerated baseline the same baseline.
 `main`'s required check — which `REPOSITORY.md` reads back from the
 endpoint rather than restating here. `claude-review.yml` runs beside it
 and reports: its verdict is the ack of record the section above names,
-posted as a comment, and its check is red when no ack of the head was
-posted — which gates nothing, the check not being required. `links.yml`
+posted as a pull request review of type `COMMENT`, and its check is red
+when no ack of the head was posted — which gates nothing, the check not
+being required. `links.yml`
 reaches a pull request only when that pull request touches the workflow
 or the ignore list beside it, and gates nothing either, for the reason
 its own header gives. There is no suite, no documentation build and no

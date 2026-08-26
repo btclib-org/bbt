@@ -8,6 +8,27 @@ behind.
 
 ## Unreleased
 
+### `claude-review.yml` matches the organization's current copy
+
+- **The `review` and `mention` jobs now run only when the organization
+  variable `CLAUDE_REVIEW_ENABLED` is `true`.** The gate sits on each
+  job rather than on a step, so a switched-off review skips cleanly
+  instead of leaving a red check behind a runner line no step wrote
+  (issue btclib-org/.github#364).
+- **The guard step that runs after the review step reads
+  `api_error_status`, `stop_reason` and the SDK's own `result` text out
+  of the execution file** before reporting that the step's outcome was
+  not `success`, rather than reporting the outcome alone with the cause
+  hidden inside the action's own sanitized log
+  (issue btclib-org/.github#385).
+- **The verdict is posted as a pull request review of type `COMMENT`**
+  (`gh pr review --comment`), never `--approve` or `--request-changes`,
+  and the guard that checks for an ack now reads
+  `repos/<owner>/<repo>/pulls/<n>/reviews` instead of the issue's own
+  comments, matched against the head sha the same way as before. A
+  `NACK <sha>` verdict is a third case the guard now reports distinctly
+  from `CHANGES REQUESTED <sha>` (issue btclib-org/.github#340).
+
 ### `.pre-commit-config.yaml`'s ruff comment says `select = ["ALL"]`
 
 - **The comment above the `ruff-check` hook no longer describes a short,
