@@ -8,6 +8,27 @@ behind.
 
 ## Unreleased
 
+### The keywords are the GitHub topics, in a tree that publishes nothing
+
+- **`pyproject.toml` declares `keywords`, and they are this
+  repository's GitHub topics** (closes #2). Section 3 of the standard
+  has the two lists be the same names in the same lowercase spelling.
+  It writes no publishing condition on that, where it writes one
+  explicitly for `name` and for `license-files`, so the reading taken
+  here is that a tree with nothing to upload owes the list all the same
+  — a reading, and btclib-org/.github#465 is where the standard is
+  asked to say so in as many words. The comment above
+  the block gave no upload as the reason there were no keywords, and
+  gives instead what the topics do, which is let a reader of
+  github.com/btclib-org find course material.
+- **`REPOSITORY.md`'s *Features* reads the topics back and records no
+  divergence in them** (closes #2). The reason it gave for the empty
+  array — that a tree shipping no package has no keyword list for the
+  topics to be read against — is gone rather than moved, since it is the
+  reason the standard's rule does not take; what nothing being shipped
+  still decides is the classifiers, the urls and the license expression,
+  and that sits in `pyproject.toml` beside the keywords.
+
 ### The fork prose is replaced or dropped, and reporting is read back
 
 - **`AUTHORS.md` explains the contributor graph from the age of the
