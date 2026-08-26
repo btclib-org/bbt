@@ -8,6 +8,24 @@ behind.
 
 ## Unreleased
 
+### `claude-review.yml`'s `mention` job refuses in its own words
+
+- **The step guarding `mention` is `Refuse to answer without a
+  credential` and its message ends `this workflow answers nothing`** —
+  that job answers an `@claude` comment and reviews nothing
+  (issue btclib-org/.github#402).
+- **The comment above that step points at the review job's reason
+  rather than restating it** (issue btclib-org/.github#410). The
+  restatement narrated a measurement made on the review job — a token
+  found empty, a review reported successful — inside the job that
+  reviews nothing. Both strings are `portanode`'s, read from its blob.
+
+### `claude-review.yml`'s `claude_args` comment names the subcommands used
+
+- **The comment above `claude_args` names `diff`, `review` and `view`**,
+  which is what `grep -n 'gh pr ' .github/workflows/claude-review.yml`
+  answers (issue btclib-org/.github#398).
+
 ### `claude-review.yml` matches the organization's current copy
 
 - **The `review` and `mention` jobs now run only when the organization
