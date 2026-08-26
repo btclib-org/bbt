@@ -8,6 +8,25 @@ behind.
 
 ## Unreleased
 
+### The `typos` hooks are `repo: local`, pinned through `additional_dependencies`
+
+- **`.pre-commit-config.yaml`'s two `typos` hooks no longer name
+  `repo: https://github.com/crate-ci/typos` with a `rev:`; both sit
+  under `repo: local` and pin the version through
+  `additional_dependencies: [typos==1.49.0]`.** `autoupdate` walks every
+  `repo:` entry except `local` and `meta`, so a local hook is the one
+  shape it cannot reach, where a mirror entry is reachable by the moving
+  `v1` alias `crate-ci/typos` re-tags onto each release's commit (issue
+  btclib-org/.github#399).
+- **Both hooks restate upstream's `stages`**, a local hook inheriting no
+  manifest to take them from. Without them the hooks run at every stage,
+  and the first of the two carries `--write-changes`: at `commit-msg`
+  that is a spell checker rewriting the commit message, where the mirror
+  form answers that it has no hook for that stage.
+- **`CLAUDE.md`'s two references to the hook's `rev:` name the
+  `additional_dependencies` pin instead**, there being no `rev:` left to
+  point at, and say that the pin moves only when a hand edit moves it.
+
 ### `claude-review.yml`'s `mention` job refuses in its own words
 
 - **The step guarding `mention` is `Refuse to answer without a

@@ -139,14 +139,16 @@ Do not use Fable unless explicitly instructed.
   substitute leaves a script deriving what no published document
   confirms. Nor is a cleaner vector on offer: extract the extended keys
   of each test vector `bip-0032.mediawiki` publishes and run the binary
-  pre-commit installed for the pinned `rev:` over them a vector at a
-  time — every vector is reported. Run it `--isolated`: `typos` reads
+  pre-commit installed for the hook's `additional_dependencies` pin over
+  them a vector at a time — every vector is reported. Run it
+  `--isolated`: `typos` reads
   `pyproject.toml` from any parent directory, so an extraction written
   in the worktree is checked with this tree's own suppressions in force,
   and the vectors those suppressed keys come from answer clean. Re-take
   that rather than believe it, the checker gaining and losing dictionary
-  entries between releases and its `rev:` in `.pre-commit-config.yaml`
-  moving too.
+  entries between releases and its pin in `.pre-commit-config.yaml`
+  moving whenever a hand edit moves it — `autoupdate` cannot, a
+  `repo: local` hook being the one shape it skips.
 - **The gate is a `uvx` although `uv.lock` is tracked.** pre-commit is
   in no dependency group, so there is no project environment for
   `uv run --only-group lint pre-commit` to resolve it from. A session
