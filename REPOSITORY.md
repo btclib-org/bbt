@@ -14,13 +14,21 @@ true. What is here instead is the answer this repository gives —
 including where that is not the answer the sibling repositories give,
 and there is more of that here than elsewhere.
 
-**This repository is a fork**, which changes nothing above and explains
-some of what is below:
+**This repository is not a fork**, which is no setting of this file's
+but a property the standard reads an obligation off:
 
 ```shell
 gh api repos/btclib-org/bbt --jq '{fork, parent: .parent.full_name}'
-# {"fork":true,"parent":"fametrano/bbt"}
+# {"fork":false,"parent":null}
 ```
+
+Public and not a fork is what [keys the `scorecard` sentinel][s10-owes],
+so `.github/workflows/scorecard.yml` is here, its schedule is section
+10's calendar, and what its job elevates is read back under *Token
+permissions* below. Nothing else here turns on the answer: the
+divergences from the sibling repositories recorded further down each
+carry their own reason where they are read back, and no parent
+repository is in any of them.
 
 ## Required checks on main
 
@@ -38,11 +46,14 @@ required check needs][s10-check] being what a matrix needs. Renaming that
 job leaves the context reporting nothing, which blocks every pull
 request, so the name belongs to the rule as much as to the file.
 
-Neither of the other two workflows is a candidate, for two different
-reasons. `claude-review.yml` is the ack of record and must not become a
+No other workflow here is a candidate, and each is out for a reason of
+its own. `claude-review.yml` is the ack of record and must not become a
 branch rule, for the reason its own header gives. `links.yml` reports
 whether somebody else's host is answering, which is not a fact about this
-tree and not one a landing should wait on.
+tree and not one a landing should wait on. `scorecard.yml` could not be
+required whatever it reported: `push` and `schedule` are its only
+triggers, so it produces no check on a pull request, and [a rule can
+name only a context a pull request produces][s10-check].
 
 `15368` is the Actions app, and a check bound to it cannot be reported by
 anything else. Changing the list is a `PATCH` of
@@ -193,9 +204,15 @@ gh api repos/btclib-org/bbt/actions/permissions/workflow
 ```
 
 `read`, which is what `lint.yml` needs: it checks the tree out and runs
-hooks over it, and nothing here publishes, attests or writes back.
-`claude-review.yml` posts a comment, and the `pull-requests: write` that
-takes is elevated in that job alone rather than in this default.
+hooks over it, and pushes nothing back.
+
+A job that needs more elevates there and not in this default.
+`claude-review.yml` posts a comment, which takes
+`pull-requests: write`. `scorecard.yml`'s analysis job takes `id-token:
+write` for the transparency-log entry its published score rests on and
+`security-events: write` to file its result as code-scanning alerts,
+with `actions: read` beside them; it writes nothing to the tree either,
+so `contents` stays at the workflow default.
 
 ```shell
 gh api repos/btclib-org/bbt/actions/permissions
@@ -263,6 +280,7 @@ yaml and not as what it is.
 [s8]: https://github.com/btclib-org/.github#8-coverage-at-100
 [s10]: https://github.com/btclib-org/.github#what-every-workflow-does
 [s10-check]: https://github.com/btclib-org/.github#the-aggregate-job-and-the-required-check
+[s10-owes]: https://github.com/btclib-org/.github#which-trees-owe-which-sentinel
 [s11-deps]: https://github.com/btclib-org/.github#dependabot-and-pre-commitci
 [s11-merge]: https://github.com/btclib-org/.github#merge-method
 [s11-sigs]: https://github.com/btclib-org/.github#signatures

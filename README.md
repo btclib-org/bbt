@@ -3,8 +3,12 @@
 <!-- The badges are what the reader decides with, one property of the
 tree per badge, in the fixed order btclib-org/.github's README.md
 section 2 gives: the licence, the lint workflow, pre-commit.ci, then
-the sentinels this tree runs, in section 10's calendar order -- here
-only links. This tree publishes nothing (`package = false`, no
+the sentinels this tree runs, in section 10's calendar order -- links,
+then scorecard. The OpenSSF Scorecard badge takes its place in that
+order like any other: section 10 gives scorecard a day and an hour row,
+and the exception that section states for it -- its triggers are the
+action's own -- is to the trigger rule rather than to the calendar.
+This tree publishes nothing (`package = false`, no
 `release.yml`), holds no suite (no `tests/`) and builds no
 documentation (no `docs/`), so the version, downloads, development
 status, supported Python versions, wheel, implementation,
@@ -17,6 +21,7 @@ them. -->
 [![lint workflow status](https://github.com/btclib-org/bbt/actions/workflows/lint.yml/badge.svg)](https://github.com/btclib-org/bbt/actions/workflows/lint.yml)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/btclib-org/bbt/main.svg)](https://results.pre-commit.ci/latest/github/btclib-org/bbt/main)
 [![links workflow status](https://github.com/btclib-org/bbt/actions/workflows/links.yml/badge.svg)](https://github.com/btclib-org/bbt/actions/workflows/links.yml)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/btclib-org/bbt/badge)](https://scorecard.dev/viewer/?uri=github.com/btclib-org/bbt)
 
 The course is taught at:
 
