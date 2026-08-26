@@ -48,9 +48,6 @@ concurrency:
   # What the number survives and head_ref does not is two pull requests
   # whose head branches carry the same name, two forks each pushing
   # "patch-1", which share one head_ref group and cancel each other.
-  # This repository is a fork and is forked in turn -- `gh api
-  # repos/btclib-org/bbt --jq .forks_count` -- so a branch name arriving
-  # twice is the ordinary case here rather than the unlucky one.
   #
   # A run with no pull request -- a push to main, a dispatch -- has no
   # number and falls back to github.ref, which is what gives it a group

@@ -259,6 +259,18 @@ it. The gate runs
 `check-dependabot` over the file, since `check-yaml` alone reads it as
 yaml and not as what it is.
 
+```shell
+gh api repos/btclib-org/bbt/private-vulnerability-reporting
+# {"enabled":true}
+```
+
+**Private vulnerability reporting is on**, so *Report a vulnerability* on
+this repository's Security tab opens an advisory only the maintainers
+see. [The standard gives the policy file to tier 1 and this setting to
+every tier][s2-root], and this tree carries no `SECURITY.md` of its own:
+the policy its Security tab shows is `btclib-org/.github`'s, and the
+button that file sends a reporter to is what this setting puts there.
+
 ## What is not configured, and why
 
 - **No publishing and no release workflow.** `CONTRIBUTING.md`'s *A
@@ -276,6 +288,7 @@ yaml and not as what it is.
   the first is a person reading what a script printed.
 
 [std]: https://github.com/btclib-org/.github
+[s2-root]: https://github.com/btclib-org/.github#root-files
 [s3]: https://github.com/btclib-org/.github#3-pyprojecttoml-is-the-configuration
 [s8]: https://github.com/btclib-org/.github#8-coverage-at-100
 [s10]: https://github.com/btclib-org/.github#what-every-workflow-does
