@@ -8,6 +8,42 @@ behind.
 
 ## Unreleased
 
+### This repository is not a fork, so it runs the Scorecard sentinel
+
+- **`.github/workflows/scorecard.yml` runs the OpenSSF Scorecard on
+  every push to `main` and on Saturday at 03:32 UTC** (issue #2).
+  Section 10 of the standard keys that sentinel on a repository that is
+  public and is not a fork, and `gh api repos/btclib-org/bbt --jq
+  '.fork, .private'` answers `false` to both; the day and the hour are
+  the `scorecard` row of that section's calendar and the minute is this
+  repository's row of the table beside it. The workflow carries no
+  `workflow_dispatch` and no `pull_request`, its triggers being
+  `ossf/scorecard-action`'s own, which is the one exception section 10
+  states to its own trigger rule.
+- **`README.md`'s badge row gains the OpenSSF Scorecard badge, after
+  `links`** (issue #2). The sentinels sit in section 10's calendar
+  order, where the `links` row is Monday and the `scorecard` row is
+  Saturday.
+- **`REPOSITORY.md` reads the fork answer back as `false` and says what
+  that decides here** (issue #2). It decides the sentinel above and
+  nothing else: the divergences from the sibling repositories recorded
+  further down — the wiki, the projects board, the empty `topics` —
+  are each argued from what this tree holds, where a parent repository
+  was never part of the argument. *Required checks on main* names
+  `scorecard.yml` as a workflow no branch rule could require, `push`
+  and `schedule` being its only triggers, which is a reason of a
+  different kind from the two that section already carries; and *Token
+  permissions* names the analysis job's `id-token: write` and
+  `security-events: write` beside `claude-review.yml`'s
+  `pull-requests: write`, the elevation-per-job rule now having more
+  than one instance to point at.
+- One of the issue's checkboxes is a setting rather than a file and
+  stays open here: `gh api repos/btclib-org/bbt --jq '.topics | length'`
+  answers `0`, which is the divergence `REPOSITORY.md` records with its
+  own reason — an argument that the divergence is justified, not that
+  the box is ticked. So the entry above cites that issue and does not
+  close it.
+
 ### `REVIEWING.md` converges on the standard's current verdict, with `NACK`
 
 - **`REVIEWING.md`'s *The verdict* converges on the standard's current
