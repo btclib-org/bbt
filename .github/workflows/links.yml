@@ -42,10 +42,8 @@ permissions:
 
 concurrency:
   # keyed on the pull request's number rather than on github.head_ref,
-  # for the reason lint.yml's own group gives: this repository is a fork
-  # and is forked in turn, so two branches arriving with one name is the
-  # ordinary case here. A run with no pull request falls back to
-  # github.ref
+  # for the reason lint.yml's own group gives. A run with no pull request
+  # falls back to github.ref
   group: links-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 

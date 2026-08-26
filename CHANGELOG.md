@@ -8,6 +8,42 @@ behind.
 
 ## Unreleased
 
+### The fork prose is replaced or dropped, and reporting is read back
+
+- **`AUTHORS.md` explains the contributor graph from the age of the
+  history rather than from a fork point** (issue #3). The graph carries
+  authors who never pushed here because the history is older than the
+  repository — `git log --format=%ad main | tail -1` dates the first
+  commit and `gh api repos/btclib-org/bbt --jq .created_at` dates the
+  repository — where the call the file handed a reader,
+  `gh api repos/btclib-org/bbt --jq .parent.full_name`, exits `0` and
+  prints an empty line.
+- **`CLAUDE.md`'s bullet states that same fact and keeps its pointer at
+  `AUTHORS.md`** (issue #3). The two move together, one holding the
+  commands and the other the pointer.
+- **`lint.yml`'s concurrency comment keeps the design and drops the
+  example under it** (issue #3). Keying the group on the pull request's
+  number rather than on `github.head_ref` is what survives two pull
+  requests whose head branches carry one name, which the sentence above
+  the example gives; what the example added was how ordinary that
+  collision is here, and the design does not turn on how ordinary it is.
+- **`links.yml` keeps its pointer at `lint.yml`'s group and drops the
+  half it repeated** (issue #3). A pointer is the whole of what that
+  comment needs, the reason being one file's to state.
+- **`REPOSITORY.md`'s *Secret scanning and Dependabot* reads private
+  vulnerability reporting back** (closes #4). `gh api
+  repos/btclib-org/bbt/private-vulnerability-reporting` answers
+  `{"enabled":true}`; the standard gives the policy file to tier 1 and
+  this setting to every tier, and this tree carries no `SECURITY.md` of
+  its own, so the button the organization's policy sends a reporter to
+  is what this setting puts on the Security tab here.
+- The fifth place issue #3 names,
+  `.github/workflows/claude-review.yml`, is not touched here and that
+  issue stays open. Its comment prefers `full_name` to `.fork` from an
+  example that has retired, so the ground for the preference wants
+  restating rather than deleting, and the same comment is in every copy
+  of that workflow — tracking issue: btclib-org/.github#456.
+
 ### This repository is not a fork, so it runs the Scorecard sentinel
 
 - **`.github/workflows/scorecard.yml` runs the OpenSSF Scorecard on

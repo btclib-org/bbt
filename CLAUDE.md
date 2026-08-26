@@ -207,9 +207,9 @@ Do not use Fable unless explicitly instructed.
   answer here. Parse the document.
 - **`calc/` and `excel/` are binaries** and a diff of one says nothing.
   A change to a spreadsheet is verified by opening it.
-- **This repository is a fork**, so its history reaches back past the
-  fork point and its contributor graph carries authors who never pushed
-  here. `AUTHORS.md` says so.
+- **The history is older than this repository**, so the contributor
+  graph carries authors who never pushed here. `AUTHORS.md` says so,
+  with the command that dates each.
 - **`CHANGELOG.md` carries no `markdownlint-disable` directive**, so
   after a rebase that lands an entry under a heading `merge=union`
   joined without a blank line, `markdownlint-cli2`'s `--fix` restores
