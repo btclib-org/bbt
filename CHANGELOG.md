@@ -8,6 +8,33 @@ behind.
 
 ## Unreleased
 
+### `REVIEWING.md` converges on the standard's current verdict, with `NACK`
+
+- **`REVIEWING.md`'s *The verdict* converges on the standard's current
+  text, with `NACK` as a third verdict alongside `ACK` and
+  `CHANGES REQUESTED`** (issue #98). The ack of record is posted as a
+  review of type COMMENT, never a forge approval; this tree's own copy
+  argued only from the refusal of a self-approval, which never covered
+  the workflow's own verdict. The issue's other checkbox, the
+  workflow's own ack becoming a review, stays open here:
+  `anthropics/claude-code-action` cannot submit an approving review by
+  design, and the credential such a step would need is an
+  organization-level decision outside this tree.
+
+### `lint.yml` and `CLAUDE.md` name what actually pins each hook
+
+- **`lint.yml`'s cache-key comment says what pins each pre-commit
+  environment: a `rev:` for most of them, `additional_dependencies` for
+  the two `typos` hooks** (closes #110). The comment argued from `rev:`
+  alone, which the `typos` hooks left behind when they converged onto
+  `repo: local`; the cache key itself already hashes
+  `.pre-commit-config.yaml` whole, so what it keys on does not change.
+- **`CLAUDE.md`'s codespell-version bullet points at the standard's
+  section 4 for the mechanism, rather than restating it** (closes
+  #100). The mechanism is pre-commit's own fetch strategy and not this
+  tree's; what stays here is this tree's own `[tool.codespell]` block
+  and `typos` word table, re-derived by running the checker.
+
 ### What moves each pin is named by category, not counted
 
 - **`.github/dependabot.yml`'s header and `REPOSITORY.md`'s Dependabot

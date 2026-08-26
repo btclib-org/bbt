@@ -105,10 +105,12 @@ jobs:
           path: ~/.cache/pre-commit
           # the hook config alone, where the sibling repositories hash
           # .python-version beside it: every environment pre-commit
-          # builds is named by a rev that file pins, and the hook that
-          # shells out to uv is language: system -- pre-commit builds
-          # nothing for it, so nothing under this path depends on the
-          # interpreter uv resolves
+          # builds is named by what .pre-commit-config.yaml pins -- a
+          # rev for most of them, additional_dependencies for the two
+          # typos hooks -- and the hook that shells out to uv is
+          # language: system -- pre-commit builds nothing for it, so
+          # nothing under this path depends on the interpreter uv
+          # resolves
           key: >-
             pre-commit-${{ runner.os }}-${{ steps.image.outputs.os }}-${{
             hashFiles('.pre-commit-config.yaml') }}

@@ -160,25 +160,11 @@ Do not use Fable unless explicitly instructed.
   documented command a session runs would otherwise leave the tree
   dirty.
 - **`codespell --version` names no release, and `typos --version` names
-  one.** pre-commit's first strategy fetches one named ref and checks
-  out `FETCH_HEAD`, so the clone carries no local ref for
-  `setuptools_scm` to describe and codespell falls back to
-  `0.1.dev1+g<sha>`; its fallback fetches `--tags`, and a clone made
-  that way has the tag to describe. The field after `+g` abbreviates the
-  commit `rev:` resolved to, so that string is evidence of the sha
-  rather than of the version, and the pin it appears to contradict is
-  honoured. `typos` installs a released package rather than building its
-  clone, so of the two spell checkers configured side by side only that
-  one says which version ran. What codespell's string does not say, the
-  sha does: `sqlite3 ~/.cache/pre-commit/db.db 'select * from repos'`
-  maps every pinned `rev:` to its clone, `git -C <clone> rev-parse HEAD`
-  is the sha that ran, and the sha the pin names is the last line's
-  first field from
-  `git ls-remote --exit-code --tags <url> '<ref>' '<ref>^{}'`, whose
-  second pattern is what an annotated tag needs and whose `--exit-code`
-  makes a ref that is not there a non-zero exit rather than an empty
-  answer. Read that last field by eye rather than piping it: a
-  `tail`/`cut` pipeline exits zero whatever `ls-remote` did.
+  one — section 4's spelling bullet of the standard has the mechanism,**
+  pre-commit's own fetch strategy producing the mismatch rather than
+  anything this tree does. `pyproject.toml`'s `[tool.codespell]` block
+  and the `typos` word table are this tree's own, re-derived by running
+  the checker rather than read off either version string.
 - **A notebook carries its outputs, and three of the four are
   transcripts**: `DSA.ipynb`, `SSA.ipynb` and `field_table.ipynb` each
   reproduce every stored output byte for byte when executed, so a cell
