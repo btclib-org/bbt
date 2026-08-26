@@ -10,10 +10,17 @@
 # on a `[project]` with that key set and no build backend named creates
 # the environment and installs the dependencies without asking for one.
 #
-# So none of section 3's metadata for a package that ships is here -- no
-# keywords, no classifiers, no urls, no license expression. What a reader
-# of this repository is given instead is README.md, and what an index
-# would be given is nothing, there being no upload.
+# So section 3's metadata that only an index reads is not here -- no
+# classifiers, no urls, no license expression -- there being no upload
+# for any of them to describe, and README.md is what a reader of this
+# repository is given instead.
+#
+# `keywords` is here all the same, and not as an exception to that
+# reason: section 3 has the keywords be the GitHub topics, the same
+# names in the same lowercase spelling, and the topics are how a reader
+# of github.com/btclib-org finds course material. What the rule turns on
+# is the repository and not the index, so a tree that uploads nothing
+# owes the list all the same.
 
 [project]
 name = "bbt"
@@ -49,6 +56,28 @@ dependencies = [
     "matplotlib",
     "pandas",
     "requests",
+]
+keywords = [
+    # the GitHub topics, the same names in the same lowercase spelling.
+    # The order is this file's alone -- `gh api repos/btclib-org/bbt
+    # --jq '.topics'` sorts what it is given, so the two sequences are
+    # compared by nothing -- and it runs from what the material is to
+    # what the tree holds: ipynb/ the notebooks, calc/ and excel/ the
+    # spreadsheets, regtest-lab/ the Bitcoin Core walk-through. Each
+    # name is read against the tree rather than taken from a sibling's
+    # list
+    "bitcoin",
+    "blockchain",
+    "course-materials",
+    "lecture-notes",
+    "teaching",
+    "cryptography",
+    "elliptic-curves",
+    "digital-signatures",
+    "bitcoin-core",
+    "regtest",
+    "jupyter-notebook",
+    "spreadsheet",
 ]
 
 [dependency-groups]

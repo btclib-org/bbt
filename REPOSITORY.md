@@ -181,7 +181,11 @@ gh api repos/btclib-org/bbt \
          discussions: .has_discussions, pages: .has_pages,
          visibility: .visibility, topics: .topics}'
 # {"discussions":false,"issues":true,"pages":false,"projects":true,
-#  "topics":[],"visibility":"public","wiki":true}
+#  "topics":["bitcoin","bitcoin-core","blockchain","course-materials",
+#            "cryptography","digital-signatures","elliptic-curves",
+#            "jupyter-notebook","lecture-notes","regtest","spreadsheet",
+#            "teaching"],
+#  "visibility":"public","wiki":true}
 ```
 
 The wiki and the projects board are on, where the sibling repositories
@@ -189,11 +193,11 @@ turn both off. The standard states no rule about either, so this is a
 divergence rather than a decision, and closing it is a settings change
 with no diff to review.
 
-**`topics` is empty**, where [the standard has the topics answer to what
-the tree holds][s3] and be the same names as `pyproject.toml`'s
-`keywords`. Neither exists here: this tree ships no package, so there is
-no keyword list for the topics to be read against, and what a reader
-searching GitHub for a Bitcoin course finds is nothing.
+**The topics are `pyproject.toml`'s `keywords`**, which is what [the
+standard asks][s3]; the call above sorts them, where that file orders
+them by relevance and says why. Half the pair is a repository setting
+and half a tracked file, so no command here reads both and a drift
+between them is caught by somebody comparing the two.
 
 ## Token permissions
 
