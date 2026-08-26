@@ -29,6 +29,21 @@ behind.
   still decides is the classifiers, the urls and the license expression,
   and that sits in `pyproject.toml` beside the keywords.
 
+### The review job's fork condition argues from what the secret turns on
+
+- **`.github/workflows/claude-review.yml`'s job header gives a ground
+  for comparing `full_name` that does not turn on this repository being
+  a fork** (closes #3). What withholds the secret is the head repository
+  not being this one, where `.fork` asks whether the head repository has
+  a parent; the two part on a repository that is itself a fork, whose
+  own branches are handed the secret and answer `.fork` true, and
+  `gh api repos/btclib-org/bbt --jq .fork` answers `false`, so here they
+  decide alike and a swap between them would show up in no run. The
+  lines this replaces are the ones every copy of that workflow carries —
+  `grep -c 'itself a fork'` answers 1 in each of the eight — which is
+  what makes the restated ground a question for all of them and not
+  only for this tree (issue btclib-org/.github#456).
+
 ### The fork prose is replaced or dropped, and reporting is read back
 
 - **`AUTHORS.md` explains the contributor graph from the age of the
