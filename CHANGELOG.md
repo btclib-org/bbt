@@ -8,6 +8,19 @@ behind.
 
 ## Unreleased
 
+### What moves each pin is named by category, not counted
+
+- **`.github/dependabot.yml`'s header and `REPOSITORY.md`'s Dependabot
+  paragraph say what Dependabot moves, what an autoupdate moves, and
+  that a version pinned in a hook's `additional_dependencies` is
+  reached by neither** (issue btclib-org/.github#422). `autoupdate`
+  walks every `repo:` entry except `local` and `meta`, so the version
+  the two `typos` hooks pin moves when a hand edit moves it, which is
+  what `CLAUDE.md` says of that pin.
+- **Neither text counts what this tree pins.** An ordinal census — two
+  things watched, a third somebody else's job — takes an edit for every
+  pin written outside a `rev:`, where naming the categories takes none.
+
 ### The `typos` hooks are `repo: local`, pinned through `additional_dependencies`
 
 - **`.pre-commit-config.yaml`'s two `typos` hooks no longer name

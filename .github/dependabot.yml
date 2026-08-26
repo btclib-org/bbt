@@ -1,8 +1,12 @@
 ---
-# Two of the three things this repository pins, and the third is
-# somebody else's job: the pre-commit hook revisions have no Dependabot
-# ecosystem, and the `ci:` block of .pre-commit-config.yaml has
-# pre-commit.ci bumping them weekly instead.
+# What Dependabot can move here, which is not everything this repository
+# pins: the pre-commit hook revisions have no Dependabot ecosystem, and
+# the `ci:` block of .pre-commit-config.yaml has pre-commit.ci bumping
+# them weekly instead. A version pinned in a hook's
+# `additional_dependencies` is reached by neither -- `autoupdate`
+# rewrites `rev:` lines and nothing else, and a `repo: local` hook has
+# no `rev:` at all, on purpose and for the reason written beside the
+# `typos` entries, so a hand edit is what moves that pin.
 #
 # This tree publishes nothing and is course material, and section 2 of
 # the standard lists this file for a repository that ships a package.

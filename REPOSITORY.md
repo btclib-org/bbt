@@ -228,16 +228,19 @@ Dependabot security updates][s11-tokens], and the call answers `enabled`
 to each. What answers `disabled` is plan-gated rather than declined, so
 this call reports the setting and not the request.
 
-`.github/dependabot.yml` watches the two things this tree pins and
-nothing else moves: the actions the workflows pin by SHA, and `uv.lock`,
-which the `uv-lock` hook keeps in step with `pyproject.toml` without
-moving what it resolves to. Weekly on Thursday,
-grouped and with the seven-day cooldown, as [section 11][s11-deps]
-asks; the file's own header says why no sentinel pre-validates what it
-opens. The pre-commit revisions are the third thing pinned here and have
-pre-commit.ci's weekly autoupdate instead, per the `ci:` block of
-`.pre-commit-config.yaml`. The gate runs `check-dependabot` over the
-file, since `check-yaml` alone reads it as yaml and not as what it is.
+`.github/dependabot.yml` watches what Dependabot can move here: the
+actions the workflows pin by SHA, and `uv.lock`, which the `uv-lock`
+hook keeps in step with `pyproject.toml` without moving what it resolves
+to. Weekly on Thursday, grouped and with the seven-day cooldown, as
+[section 11][s11-deps] asks; the file's own header says why no sentinel
+pre-validates what it opens. A pre-commit `rev:` is what an autoupdate
+moves, and pre-commit.ci runs one weekly, per the `ci:` block of
+`.pre-commit-config.yaml`. A version pinned in a hook's
+`additional_dependencies` is reached by neither, an autoupdate
+rewriting `rev:` lines and nothing else, so a hand edit is what moves
+it. The gate runs
+`check-dependabot` over the file, since `check-yaml` alone reads it as
+yaml and not as what it is.
 
 ## What is not configured, and why
 
