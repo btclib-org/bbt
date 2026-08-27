@@ -1,17 +1,16 @@
 # Bitcoin and Blockchain Technology
 
 <!-- The badges are what the reader decides with, one property of the
-tree per badge, in the fixed order btclib-org/.github's README.md
-section 2 gives: the licence, the lint workflow, pre-commit.ci, then
-the sentinels this tree runs, in section 10's calendar order -- links,
-then scorecard. The OpenSSF Scorecard badge takes its place in that
-order like any other: section 10 gives scorecard a day and an hour row,
-and the exception that section states for it -- its triggers are the
-action's own -- is to the trigger rule rather than to the calendar.
-This tree publishes nothing (`package = false`, no
-`release.yml`), holds no suite (no `tests/`) and builds no
-documentation (no `docs/`), so the version, downloads, development
-status, supported Python versions, wheel, implementation,
+tree per badge, in the three groups btclib-org/.github's README.md
+section 2 fixes: what the software is, whether it works, and what the
+OpenSSF makes of it. Inside the second the gates come first, in the
+order a commit meets them -- pre-commit.ci, then the lint workflow --
+and the sentinels follow in the order section 10's calendar schedules
+them. The day and the hour a sentinel owns are that section's and are
+not copied into this file. This tree publishes nothing
+(`package = false`, no `release.yml`), holds no suite (no `tests/`) and
+builds no documentation (no `docs/`), so the version, downloads,
+development status, supported Python versions, wheel, implementation,
 github/v/release, test, docs and Read the Docs badges have no state to
 report. One badge per line keeps a change to one line and every line
 inside MD013, whose 80 columns bind only where a space follows

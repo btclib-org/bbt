@@ -8,6 +8,22 @@ behind.
 
 ## Unreleased
 
+### The sentinel schedule and the badge comment follow the calendar
+
+- **`links.yml` and `scorecard.yml` carry the day and the hour section
+  10 of the standard gives their workflow, at this repository's own
+  minute** (issue btclib-org/.github#480). `.github/dependabot.yml` is
+  not touched: that section puts Dependabot on Thursday, and the reorder
+  leaves `deps-latest` on the Wednesday that keeps the sentence true.
+- **`.lycheeignore`'s Stack Overflow entry weighs the cadence rather
+  than the weekday** (issue btclib-org/.github#480). What would teach a
+  reader to stop reading `links.yml`'s output is a rot report every
+  week, whichever day the calendar puts it on.
+- **`README.md`'s badge comment gives section 2's three groups and the
+  order the gates take inside the second** (issue
+  btclib-org/.github#480). The badge order is the calendar order over
+  the sentinels, so the row and the schedule are one decision.
+
 ### The keywords are the GitHub topics, in a tree that publishes nothing
 
 - **`pyproject.toml` declares `keywords`, and they are this
