@@ -21,7 +21,7 @@ on:
     # https://github.com/btclib-org/.github, the minute is this
     # repository's row of the table beside it, and neither is this
     # file's to choose or to restate
-    - cron: "32 4 * * 1"
+    - cron: "32 4 * * 6"
   # the escape hatch, and how a branch asks before a documentation change
   # that adds links is merged
   workflow_dispatch:

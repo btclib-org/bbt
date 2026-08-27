@@ -15,18 +15,19 @@ including where that is not the answer the sibling repositories give,
 and there is more of that here than elsewhere.
 
 **This repository is not a fork**, which is no setting of this file's
-but a property the standard reads an obligation off:
+but a property the standard reads a sentinel's bar off:
 
 ```shell
 gh api repos/btclib-org/bbt --jq '{fork, parent: .parent.full_name}'
 # {"fork":false,"parent":null}
 ```
 
-Public and not a fork is what [keys the `scorecard` sentinel][s10-owes],
-so `.github/workflows/scorecard.yml` is here, its schedule is section
-10's calendar, and what its job elevates is read back under *Token
-permissions* below. Nothing else here turns on the answer: the
-divergences from the sibling repositories recorded further down each
+Public and not a fork is the bar the `scorecard` sentinel asks, and
+clearing it leaves a tree able to run the sentinel rather than owing it:
+[the record of which trees carry which sentinel][s10-carries] does not
+name this repository, so there is no `scorecard.yml` here and no
+Scorecard badge in `README.md`. Nothing else here turns on the answer:
+the divergences from the sibling repositories recorded further down each
 carry their own reason where they are read back, and no parent
 repository is in any of them.
 
@@ -50,10 +51,7 @@ No other workflow here is a candidate, and each is out for a reason of
 its own. `claude-review.yml` is the ack of record and must not become a
 branch rule, for the reason its own header gives. `links.yml` reports
 whether somebody else's host is answering, which is not a fact about this
-tree and not one a landing should wait on. `scorecard.yml` could not be
-required whatever it reported: `push` and `schedule` are its only
-triggers, so it produces no check on a pull request, and [a rule can
-name only a context a pull request produces][s10-check].
+tree and not one a landing should wait on.
 
 `15368` is the Actions app, and a check bound to it cannot be reported by
 anything else. Changing the list is a `PATCH` of
@@ -211,12 +209,10 @@ gh api repos/btclib-org/bbt/actions/permissions/workflow
 hooks over it, and pushes nothing back.
 
 A job that needs more elevates there and not in this default.
-`claude-review.yml` posts a comment, which takes
-`pull-requests: write`. `scorecard.yml`'s analysis job takes `id-token:
-write` for the transparency-log entry its published score rests on and
-`security-events: write` to file its result as code-scanning alerts,
-with `actions: read` beside them; it writes nothing to the tree either,
-so `contents` stays at the workflow default.
+`claude-review.yml` is the only workflow here whose jobs do, and its
+review job and its mention job take the same pair: `pull-requests:
+write` to post the comment, and `id-token: write` for the OIDC token
+the action mints during its own startup.
 
 ```shell
 gh api repos/btclib-org/bbt/actions/permissions
@@ -297,7 +293,7 @@ button that file sends a reporter to is what this setting puts there.
 [s8]: https://github.com/btclib-org/.github#8-coverage-at-100
 [s10]: https://github.com/btclib-org/.github#what-every-workflow-does
 [s10-check]: https://github.com/btclib-org/.github#the-aggregate-job-and-the-required-check
-[s10-owes]: https://github.com/btclib-org/.github#which-trees-owe-which-sentinel
+[s10-carries]: https://github.com/btclib-org/.github#which-trees-carry-which-sentinel
 [s11-deps]: https://github.com/btclib-org/.github#dependabot-and-pre-commitci
 [s11-merge]: https://github.com/btclib-org/.github#merge-method
 [s11-sigs]: https://github.com/btclib-org/.github#signatures

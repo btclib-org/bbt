@@ -1,21 +1,25 @@
 # Bitcoin and Blockchain Technology
 
 <!-- The badges are what the reader decides with, one property of the
-tree per badge, in the fixed order btclib-org/.github's README.md
-section 2 gives: the licence, the lint workflow, pre-commit.ci, then
-the sentinels this tree runs, in section 10's calendar order -- links,
-then scorecard. The OpenSSF Scorecard badge takes its place in that
-order like any other: section 10 gives scorecard a day and an hour row,
-and the exception that section states for it -- its triggers are the
-action's own -- is to the trigger rule rather than to the calendar.
-This tree publishes nothing (`package = false`, no
-`release.yml`), holds no suite (no `tests/`) and builds no
-documentation (no `docs/`), so the version, downloads, development
-status, supported Python versions, wheel, implementation,
-github/v/release, test, docs and Read the Docs badges have no state to
-report. One badge per line keeps a change to one line and every line
-inside MD013, whose 80 columns bind only where a space follows
-them. -->
+tree per badge, in the three groups btclib-org/.github's README.md
+section 2 fixes: what the software is, whether it works, and what the
+OpenSSF makes of it. Inside the second the gates come in the order that
+section lists them -- pre-commit.ci, then the lint workflow -- and the
+sentinels follow in the order section 10's calendar schedules them,
+which is the order and not the instants: the day and the hour a
+sentinel owns are that section's and are not restated here. Which
+sentinels this tree carries is section 10's record rather than a choice
+made here, the badge and the workflow being one membership: `links` is
+every repository's and the record gives this tree no other, so there is
+no Scorecard badge and no `scorecard.yml` behind it. This tree
+publishes nothing (`package = false`, no `release.yml`), holds no suite
+(no `tests/`) and builds no documentation (no `docs/`), so the badges
+section 2 keys on publishing, on a suite and on a documentation build
+-- the version, the downloads, the development status, the supported
+Python versions, wheel, implementation, github/v/release, the licence,
+test, docs and Read the Docs -- are not here. One badge per line keeps
+a change to one line and every line inside MD013, whose 80 columns bind
+only where a space follows them. -->
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/btclib-org/bbt/main.svg)](https://results.pre-commit.ci/latest/github/btclib-org/bbt/main)
 [![lint workflow status](https://github.com/btclib-org/bbt/actions/workflows/lint.yml/badge.svg)](https://github.com/btclib-org/bbt/actions/workflows/lint.yml)
 [![links workflow status](https://github.com/btclib-org/bbt/actions/workflows/links.yml/badge.svg)](https://github.com/btclib-org/bbt/actions/workflows/links.yml)
