@@ -8,6 +8,35 @@ behind.
 
 ## Unreleased
 
+### The sentinel goes with its badge, and `links` follows the calendar
+
+- **`.github/workflows/scorecard.yml` is gone** (issue
+  btclib-org/.github#492). Section 10 of the standard records which
+  trees carry which sentinel, and the badge and the workflow are one
+  membership rather than two: the `scorecard` entry does not name this
+  repository, and `README.md` carries no Scorecard badge.
+- **`REPOSITORY.md` reads no obligation off this repository being no
+  fork** (issue btclib-org/.github#492). Public and not a fork is the
+  bar that sentinel asks rather than what gives a tree one, so what the
+  answer settles here is that the record's silence is the whole of the
+  reason; neither *Required checks on main* nor *Token permissions*
+  names a workflow the tree does not hold.
+- **`REPOSITORY.md`'s *Token permissions* names both elevations
+  `claude-review.yml`'s jobs take** (issue btclib-org/.github#492).
+  `pull-requests: write` posts the comment and `id-token: write` is for
+  the OIDC token the action mints during its own startup.
+- **`README.md`'s badge comment gives section 2's three groups, and
+  which sentinels this tree carries is read off the record** (issue
+  btclib-org/.github#492). The badge order over the sentinels is the
+  calendar order, so the row and the schedule are one decision.
+- **`.github/workflows/links.yml` carries the day and the hour section
+  10 gives `links`, at this repository's own minute** (issue
+  btclib-org/.github#480).
+- **`.lycheeignore`'s Stack Overflow entry weighs the cadence rather
+  than the weekday** (issue btclib-org/.github#480). What would teach a
+  reader to stop reading `links.yml`'s output is a rot report every
+  week, whichever day the calendar puts it on.
+
 ### The keywords are the GitHub topics, in a tree that publishes nothing
 
 - **`pyproject.toml` declares `keywords`, and they are this
