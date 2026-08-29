@@ -1344,3 +1344,14 @@ behind.
   child's public key come from the master public key alone, which
   `det_keychain_type1.py` cannot do — and its docstring named the wrong
   one, copied from its sibling and never corrected.
+
+### `REPOSITORY.md`'s *Features* answers what the endpoint answers
+
+- **The wiki and the projects board are this repository's own answer,
+  not a divergence from the family** (closes btclib-org/.github#507).
+  `gh api repos/btclib-org/$r --jq '[(.has_wiki|tostring),
+  (.has_projects|tostring)]'` answers `true` twice for every sibling but
+  `btclib-benchmarks`, so the sentence had the direction backwards: this
+  repository was agreeing with the family, and `btclib-benchmarks` is
+  the one that turns both off. `btclib-org/btclib-node`'s copy already
+  read the same call correctly.

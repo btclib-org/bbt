@@ -186,10 +186,11 @@ gh api repos/btclib-org/bbt \
 #  "visibility":"public","wiki":true}
 ```
 
-The wiki and the projects board are on, where the sibling repositories
-turn both off. The standard states no rule about either, so this is a
-divergence rather than a decision, and closing it is a settings change
-with no diff to review.
+The wiki and the projects board are on, and the standard states no rule
+about either, so each is this repository's own answer rather than a
+divergence from one. `btclib-benchmarks` is the sibling that turns both
+off, its own `REPOSITORY.md` giving the reason under *Features that are
+off*.
 
 **The topics are `pyproject.toml`'s `keywords`**, which is what [the
 standard asks][s3]; the call above sorts them, where that file orders
