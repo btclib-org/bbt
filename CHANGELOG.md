@@ -1379,3 +1379,58 @@ behind.
   `web_commit_signoff_required`, about which the standard states no
   rule; the price is that a change to any of them shows up here in
   nothing.
+
+### The scripts are run, and each exclusion says why
+
+- **`lint.yml` gains a step that runs every script under `py-scripts/`
+  it does not exclude, and requires exit 0** (issue
+  btclib-org/.github#301). What course material fails at is not an
+  untested line: `py-scripts/` imports `btclib`, so a release renaming
+  something breaks a demonstration, and the exit code is what says so.
+  `.github/scripts/check_scripts.py` is what the step runs, beside the
+  notebook step and for the reason that one's comment gives.
+- **The scripts are discovered rather than listed** (issue
+  btclib-org/.github#301). One added later is gated without an edit, one
+  removed leaves no dangling name, and the script fails where it reads
+  none — a gate that opened no file is otherwise silent in exactly the
+  way a gate that found no defect is.
+- **The `speedup_*.py` benchmarks are among them, for their exit code
+  alone** (issue btclib-org/.github#301). What breaks a benchmark is the
+  same `AttributeError` a renamed `btclib` gives any other script, rather
+  than its becoming slow, so the timing output is ignored: a shared
+  runner cannot honestly answer how fast one is.
+- **`py-scripts/getutxo.py` and `py-scripts/ec_explorer.py` are excluded
+  by name, each with its reason beside it** (issue
+  btclib-org/.github#301). The first queries a third party's block
+  explorer, so a red there would be that service's maintenance rather
+  than this tree's defect; the second searches every `(a, b)` of a fixed
+  range against every `x` below each prime it lists, and overruns the
+  ceiling the gate gives a script rather than merely being slow. An
+  excluded name that is not there is a failure, so a rename cannot
+  quietly leave a script ungated.
+- **`py-scripts/hash_puzzle.py` is fed two newlines and run under
+  `MPLBACKEND=Agg`** (issue btclib-org/.github#301). Each of its two
+  prompts documents the default an empty line takes, and its
+  `plt.show()` calls block until a window is closed on any interactive
+  backend, so without it the script does not terminate and what ends it
+  is the gate's ceiling.
+- **`CLAUDE.md` and `CONTRIBUTING.md` name the new gate** (issue
+  btclib-org/.github#301). mypy resolving the names a script imports is
+  no longer the whole of what is asked of `py-scripts/`, and the command
+  an author runs before pushing sits beside the notebook one.
+- **`REPOSITORY.md` and `REVIEWING.md` say what the gate answers and
+  what is left to a person** (issue btclib-org/.github#301). *What is
+  not configured, and why* counts running a script among what `lint.yml`
+  automates, and `REVIEWING.md`'s question about a script a diff touched
+  asks the reviewer for what the gate does not read: whether the output
+  is what the material says.
+- **`pyproject.toml`'s `print` ignore names `.github/scripts/` rather
+  than one file in it** (issue btclib-org/.github#301). Both checkers
+  there print, and `uvx ruff check --preview --select T201 .` is what
+  lists the sites the entry covers.
+- **`claude-review.yml`'s prompt says what runs a script** (issue
+  btclib-org/.github#301). That prompt is the whole of what the
+  reviewing model is told about this tree before it opens
+  `REVIEWING.md`, and a review told that nothing runs a script does not
+  ask what an exit code covers: the step reads nothing a script prints,
+  and there is where a reviewer's own reading starts.

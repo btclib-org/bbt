@@ -475,9 +475,11 @@ this heading.
 Each of these is a question, and the document that answers it is named
 because that document, and not this one, is where the rule lives.
 
-- **Did the diff run the script it touched?** The `mypy` hook resolves
-  the names a script imports and says nothing about what it computes,
-  and there is no suite here that would: a script is verified by
+- **Did the diff run the script it touched?** `lint.yml` runs
+  `.github/scripts/check_scripts.py`, which requires exit 0 and reads
+  nothing a script prints, and the `mypy` hook resolves the names a
+  script imports: what the demonstration computes is answered by
+  neither, so a script is verified by
   `uv run python py-scripts/<name>.py` and by reading what it prints
   against what the material says it prints. `py-scripts/README.md` names
   what a script needs before it will run at all.

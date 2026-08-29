@@ -3,19 +3,19 @@ name: lint
 
 # what this workflow runs is .pre-commit-config.yaml itself, never a
 # second list of the same tools: a commit and CI then enforce one thing,
-# and a hook added to that file needs no edit here. The notebook step at
-# the foot of the job is the one thing beside it, and its own comment
-# says why it is not a hook.
+# and a hook added to that file needs no edit here. The two steps at the
+# foot of the job are what runs beside it, one for the notebooks and one
+# for the scripts, and each one's own comment says why it is not a hook.
 #
 # It is the only workflow here that gates: claude-review.yml reports a
 # verdict rather than a check, and links.yml asks whether somebody
 # else's host is answering. The reason this one gates is that without it
 # the hook config gates nothing at all: a contributor who does not run
 # the gate by hand is refused by nothing, and the tree this repository
-# ships is prose and notebooks, which nothing compiles and nothing
-# imports. What the standard would otherwise ask for -- a test workflow,
-# a docs build, a release -- has no subject here: there is no suite, no
-# documentation build and nothing published.
+# ships is prose, notebooks and scripts, which nothing compiles and
+# nothing imports. What the standard would otherwise ask for -- a test
+# workflow, a docs build, a release -- has no subject here: there is no
+# suite, no documentation build and nothing published.
 
 on:
   push:
@@ -155,3 +155,24 @@ jobs:
         run: >
           uv run --locked --with nbclient --with nbformat
           python .github/scripts/check_notebooks.py
+
+      # what no hook covers either, and a different question from the one
+      # above it: mypy resolves the names a script imports, where this
+      # asks whether the script still runs. py-scripts/ imports btclib,
+      # so a release renaming something breaks a demonstration.
+      # CONTRIBUTING.md's last section documents the same command for an
+      # author to run first.
+      #
+      # A step rather than a hook, for the reason the notebook step
+      # gives: a hook would run every script at every commit where this
+      # runs them once per push.
+      #
+      # Nothing arrives through `--with` here, unlike the step above:
+      # what the scripts import is what pyproject.toml declares, so the
+      # environment `uv sync --locked` builds is the one they run in.
+      #
+      # `!cancelled()` so that one push answers for the hooks, the
+      # notebooks and the scripts alike
+      - name: Check that the scripts still run
+        if: ${{ !cancelled() }}
+        run: uv run --locked python .github/scripts/check_scripts.py

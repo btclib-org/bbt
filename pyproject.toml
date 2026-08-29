@@ -124,10 +124,10 @@ explicit-preview-rules = true
 select = ["ALL"]
 ignore = [
     # a script's or a notebook cell's output is the whole of what it
-    # produces, and .github/scripts/check_notebooks.py's own three
-    # prints are the one line of its log worth reading when lint.yml
-    # fails. `uvx ruff check --preview --select T201 .` lists every site,
-    # and every one is py-scripts, ipynb or that one CI script
+    # produces, and what the checkers under .github/scripts/ print is
+    # the part of a lint.yml log worth reading when one of them fails.
+    # `uvx ruff check --preview --select T201 .` lists every site, and
+    # every one is under py-scripts, ipynb or .github/scripts
     "print",
     # assert used to state what a step shows, throughout py-scripts and
     # the notebooks alike -- a walkthrough asserting what it just
