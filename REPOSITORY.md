@@ -5,8 +5,13 @@ and the answer that call gives today. A setting recorded as prose alone
 is one nobody can check; recorded this way, a drift is one command away
 from being seen.
 
-The rules and the settings live *outside* the tree, so this file is the
-whole of them: nothing below is recoverable by reading the repository.
+The rules and the settings live *outside* the tree: nothing below is
+recoverable by reading the repository. What this file covers is the
+settings [the standard][std] asks about — the ones [section 16's
+checklist][s16] sets on a new repository, and the ones a section of it
+states a rule for — together with whatever a call quoted for one of
+those answers alongside it. Where that scope ends is *What this file
+passes over*, at the foot.
 
 **Where a setting has a reason, the reason is in [the standard][std] and
 this file links to it.** Two copies of an argument are two things to keep
@@ -288,6 +293,49 @@ button that file sends a reporter to is what this setting puts there.
   reproduces its committed outputs; `lint.yml` automates the second, and
   the first is a person reading what a script printed.
 
+## What this file passes over
+
+*What is not configured, and why* above records what this repository
+decided against. This section is the other edge of the scope at the top:
+what the API answers for and no section here reaches.
+
+**What no call sets.** `gh api repos/btclib-org/bbt` answers the whole
+repository document, most of which is URLs, counts and state GitHub
+derives from the tree. None of that is a setting, and nothing here reads
+it back.
+
+**A facility nobody reached for.** Actions secrets and variables,
+Dependabot secrets, self-hosted runners, webhooks, deploy keys,
+autolinks and custom property values each answer empty here, and an
+empty answer records no decision. Whichever of them a workflow needs one
+day arrives with the section that uses it.
+
+**A field the standard states no rule about, and no call above answers
+alongside one it does.** `allow_forking`, `has_downloads`, `is_template`
+and `web_commit_signoff_required` are in the repository document and in
+none of the `--jq` objects here:
+
+```shell
+std=$(gh api repos/btclib-org/.github/contents/README.md --jq .content \
+  | base64 -d)
+for f in allow_forking has_downloads is_template \
+         web_commit_signoff_required; do
+  printf '%s %s\n' "$f" "$(printf '%s' "$std" | grep -c "$f")"   # 0 each
+done
+printf '%s' "$std" | grep -c 'default branch'   # not 0, so those zeros
+                                                # are absences
+```
+
+Recording a field on no rule grows this file with GitHub's API rather
+than with the standard. `merge_commit_title` and `merge_commit_message`
+are that case read from the other end: they compose a merge commit
+*Merge methods* above reads back as a button this repository does not
+offer.
+
+What the scope costs is a silent flip. A change to any of the above
+shows up in nothing here, and what would find it is somebody reading the
+repository document against this file rather than a command.
+
 [std]: https://github.com/btclib-org/.github
 [s2-root]: https://github.com/btclib-org/.github#root-files
 [s3]: https://github.com/btclib-org/.github#3-pyprojecttoml-is-the-configuration
@@ -299,3 +347,4 @@ button that file sends a reporter to is what this setting puts there.
 [s11-merge]: https://github.com/btclib-org/.github#merge-method
 [s11-sigs]: https://github.com/btclib-org/.github#signatures
 [s11-tokens]: https://github.com/btclib-org/.github#tokens-publishing-scanning
+[s16]: https://github.com/btclib-org/.github#16-checklists
