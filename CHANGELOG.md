@@ -1355,3 +1355,12 @@ behind.
   repository was agreeing with the family, and `btclib-benchmarks` is
   the one that turns both off. `btclib-org/btclib-node`'s copy already
   read the same call correctly.
+
+### `[project].authors` names the collective, not a per-tree literal
+
+- **`pyproject.toml` gains
+  `authors = [{ name = "The btclib developers", email = "devs@btclib.org" }]`**
+  (issue btclib-org/.github#534). The name and address are `COPYRIGHT`'s,
+  the same pair the publishing trees already carry in their own
+  `[project]` tables, and the key lands here too though `package = false`
+  and this tree ships nothing.

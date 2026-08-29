@@ -29,6 +29,7 @@ name = "bbt"
 # agree with. Section 12's calendar versioning applies to what a release
 # publishes
 version = "0"
+authors = [{ name = "The btclib developers", email = "devs@btclib.org" }]
 # there is no matrix here and no library covering the interpreters still
 # in support: one person builds one environment to run a notebook or a
 # script in. So the rule for an application applies -- the newest the
