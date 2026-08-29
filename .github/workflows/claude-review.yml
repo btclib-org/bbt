@@ -192,12 +192,13 @@ jobs:
 
             What this repository ships is course material -- pages,
             notebooks with their outputs committed, spreadsheets and
-            scripts -- and nothing runs a page, a spreadsheet or a
-            script. lint.yml executes the transcript notebooks beside
-            you and compares every output. CLAUDE.md says what a change
-            to each is verified by, and a review that reasons about what
-            a script would do says so in those words rather than
-            reporting a trace as a run.
+            scripts -- and nothing runs a page or a spreadsheet.
+            lint.yml executes the transcript notebooks beside you and
+            compares every output, and runs each script it does not
+            exclude for its exit code alone, reading nothing the script
+            prints. CLAUDE.md says what a change to each is verified by,
+            and a review that reasons about what a script would do says
+            so in those words rather than reporting a trace as a run.
 
             Do not run the gates. lint.yml runs this repository's
             gate, `uvx pre-commit run --all-files`, beside you on this

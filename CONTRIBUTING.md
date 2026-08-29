@@ -236,6 +236,21 @@ material runs in. The script names every file it reads and fails where it
 reads none, `ipynb/PartialHashInversion.ipynb` excepted — that file's own
 paragraph in `ipynb/README.md` says why it cannot be a transcript.
 
+`py-scripts/` has a gate of its own for a related reason: mypy resolves
+the names a script imports, and whether the script still runs is a
+different question, which nothing else here asks.
+
+```shell
+uv run --locked python .github/scripts/check_scripts.py
+```
+
+Nothing arrives through `--with` there: what the scripts import is what
+`pyproject.toml` declares, so the environment `uv sync --locked` builds
+is the one they run in. That script names every file it reads and fails
+where it reads none too; `py-scripts/getutxo.py` and
+`py-scripts/ec_explorer.py` are excluded by name, each with its reason
+written beside it, and an excluded name that is not there is a failure.
+
 `uv.lock` is tracked and the `uv-lock` hook keeps it in step with
 `pyproject.toml`. `--locked` above is what makes a mismatch a failure
 rather than a silent re-resolution; plain `uv sync` rewrites the lock,

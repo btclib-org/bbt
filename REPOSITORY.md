@@ -289,9 +289,11 @@ button that file sends a reporter to is what this setting puts there.
   what this repository ships is read on github.com or cloned.
 - **No suite and no coverage.** [Section 8's ratchet][s8] is a claim
   about a package's own code and this tree ships none. What replaces a
-  test here is that a script can be run and that a transcript notebook
-  reproduces its committed outputs; `lint.yml` automates the second, and
-  the first is a person reading what a script printed.
+  test here is that a script exits 0, that a transcript notebook
+  reproduces its committed outputs, and that what a script prints is
+  what the material says it prints; `lint.yml` automates the first two,
+  minus the exclusions `CONTRIBUTING.md` names, and the third is a
+  person reading what a script printed.
 
 ## What this file passes over
 

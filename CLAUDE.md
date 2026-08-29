@@ -107,12 +107,17 @@ Do not use Fable unless explicitly instructed.
 
 ## Non-obvious facts that will otherwise waste a session
 
-- **A script that imports is not a script that runs, and the gate only
-  asks the first question.** mypy resolves the names; whether the
-  demonstration still prints what the lecture shows is answered by
+- **A script that imports is not a script that runs, and the gate asks
+  each question with its own tool.** mypy resolves the names;
+  `.github/scripts/check_scripts.py`, which `lint.yml` runs, requires
+  exit 0. Neither reads what a script prints, so whether the
+  demonstration still shows what the lecture shows is answered by
   `uv run python py-scripts/<name>.py` and by reading the output.
   `py-scripts/README.md` names what a script wants before it will run at
-  all: a line on stdin, a display, or the network.
+  all: a line on stdin, a display, or the network — and
+  `check_scripts.py` supplies the stdin `hash_puzzle.py` prompts for and
+  a headless matplotlib backend, its own `EXCLUSIONS` naming what it
+  does not run and why.
 - **`pyproject.toml` is not a distribution's.** `package = false`, no
   build backend and no wheel, so the standard's section 3 describes a
   file this one is not. Its ruff `select` is `["ALL"]`, section 5's
