@@ -1364,3 +1364,18 @@ behind.
   the same pair the publishing trees already carry in their own
   `[project]` tables, and the key lands here too though `package = false`
   and this tree ships nothing.
+
+### `REPOSITORY.md` says what it covers, and what it passes over
+
+- **The claim that this file is the whole of what is set outside the
+  tree is gone** (issue btclib-org/.github#551). Section 11 of the
+  standard bounds a `REPOSITORY.md` at the settings the standard asks
+  about — section 16's checklist, and the sections that state a rule for
+  a setting — and rejects the blanket claim, which no command checks.
+- **A *What this file passes over* section says what falls outside that
+  scope** (issue btclib-org/.github#551). The repository document's
+  fields no section here quotes, the facilities that answer empty, and
+  `allow_forking`, `has_downloads`, `is_template` and
+  `web_commit_signoff_required`, about which the standard states no
+  rule; the price is that a change to any of them shows up here in
+  nothing.
