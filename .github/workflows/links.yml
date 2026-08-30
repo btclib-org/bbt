@@ -97,11 +97,25 @@ jobs:
           # lychee's default of 20 seconds. btclib raised it to 45
           # against a host measured timing out on a runner while
           # answering in under a second elsewhere, and that number
-          # belongs here when a run here measures the same, not before
+          # belongs here when a run here measures the same, not before.
+          # --include-fragments, or a heading renamed in the tree a link
+          # here points into breaks that link with nothing red anywhere:
+          # the forge serves the page and drops a fragment it cannot
+          # resolve, so the run that notices is the linking tree's. The
+          # check reads the page already fetched for the link, so it adds
+          # no request. What can override it is the token below: on a
+          # failed github.com/<owner>/<repo> link lychee falls back to the
+          # repositories API, so a missing fragment on that shape -- the
+          # one REPOSITORY.md and CONTRIBUTING.md cite the standard by --
+          # is read, found missing, and then answered OK because the
+          # repository exists; the same anchor on the blob/main/README.md
+          # page carries a path the API declines and stays red.
+          # btclib-org/.github#630 is where that is weighed.
           args: >-
             --no-progress
             --retry-wait-time 10
             --accept 100..=103,200..=299,429
+            --include-fragments
             "**/*.md"
           # fail the job rather than only summarizing: a green run that
           # found a dead link is the state this workflow exists to end
