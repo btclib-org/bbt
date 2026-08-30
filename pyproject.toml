@@ -46,8 +46,7 @@ requires-python = ">=3.14"
 # from the `matplotlib` that py-scripts/hash_puzzle.py and
 # ipynb/PartialHashInversion.ipynb import -- an environment built from
 # that file had the plotting library it needed only by accident of
-# jupyter pulling one in. It also left out `requests`, which
-# py-scripts/getutxo.py imports
+# jupyter pulling one in.
 dependencies = [
     "btclib",
     # imported by nothing, and not a mistake: it is the kernel jupyter
@@ -56,7 +55,6 @@ dependencies = [
     "ipykernel",
     "matplotlib",
     "pandas",
-    "requests",
 ]
 keywords = [
     # the GitHub topics, the same names in the same lowercase spelling.
@@ -144,9 +142,7 @@ ignore = [
     "implicit-namespace-package",
     # what this finds is deliberately kept for the reader, not left over
     # from a refactor: an alternative computation commented out beside
-    # the one that runs in ec_explorer.py and conversions.py, and
-    # getutxo.py's own comment walking the shape of the JSON the API
-    # returns, which happens to read as Python and is not
+    # the one that runs in ec_explorer.py and conversions.py
     "commented-out-code",
     # the crypto and Bitcoin notation exemption section 5 argues for
     # pep8-naming: `cG`, `x_K`, `y_K` and `sK` in dsa_example2.py name a
