@@ -21,8 +21,8 @@ test, docs and Read the Docs -- are not here. One badge per line keeps
 a change to one line and every line inside MD013, whose 80 columns bind
 only where a space follows them. -->
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/btclib-org/bbt/main.svg)](https://results.pre-commit.ci/latest/github/btclib-org/bbt/main)
-[![lint workflow status](https://github.com/btclib-org/bbt/actions/workflows/lint.yml/badge.svg)](https://github.com/btclib-org/bbt/actions/workflows/lint.yml)
-[![links workflow status](https://github.com/btclib-org/bbt/actions/workflows/links.yml/badge.svg)](https://github.com/btclib-org/bbt/actions/workflows/links.yml)
+[![lint workflow status](https://github.com/btclib-org/bbt/actions/workflows/lint.yml/badge.svg?branch=main)](https://github.com/btclib-org/bbt/actions/workflows/lint.yml)
+[![links workflow status](https://github.com/btclib-org/bbt/actions/workflows/links.yml/badge.svg?branch=main)](https://github.com/btclib-org/bbt/actions/workflows/links.yml)
 
 The course is taught at:
 
