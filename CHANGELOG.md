@@ -1479,3 +1479,39 @@ behind.
   `?branch=main`** (issue btclib-org/.github#579): `lint` and `links`
   answer for `main` or answer `no status`, where the unqualified badge
   falls back to another branch's run when `main` has none.
+
+### `REPOSITORY.md`'s perimeter is section 11's
+
+- **The scope statement carries section 11's three limbs in the
+  standard's own words** (issue btclib-org/.github#582): the pronoun
+  whose nearest antecedent was section 16's checklist now names the
+  standard, and the third limb -- the settings a behaviour the standard
+  describes rests on -- is what keeps `has_issues` and `.visibility`
+  under *Features*.
+- **The opening no longer claims that nothing in the file is recoverable
+  by reading the tree** (issue btclib-org/.github#571): the topics have
+  a copy in `pyproject.toml`, which *Features* already said, so the
+  clause names them and holds of the rest.
+- **`has_wiki`, `has_projects` and `has_discussions` leave *Features***
+  (issue btclib-org/.github#550): section 11 puts the first two outside
+  the perimeter, so the sentence explaining them as this repository's
+  own answer goes with the read-back, and the third joins the foot's
+  list of fields the standard states no rule about.
+- **`.fork` is not read back** (issue btclib-org/.github#584): nothing
+  sets it, and section 10 states that half of the `scorecard` bar once;
+  the half a copy records, `.visibility`, stays under *Features* with
+  the sentinel's reasoning beside it.
+- **`.default_branch` and the absence of a Pages site are read back**
+  (issue btclib-org/.github#549), the first under *Branch protection
+  and the rulesets*, the second in the *No Pages* bullet.
+- **A *Plan-gated settings* section carries the ceiling's figure beside
+  the plan command and GitHub's table** (issue btclib-org/.github#569,
+  issue btclib-org/.github#412): section 10 names that section as the
+  figure's one home, and `CONTRIBUTING.md`'s shared half already
+  pointed at it. The two plan-gated secret-scanning settings stay under
+  *Secret scanning and Dependabot*, with a pointer.
+- **The Actions and Dependabot secret stores answer empty by the
+  standard's decision, not for want of use** (issue
+  btclib-org/.github#572): the token is the organization's, at
+  `visibility=all`, so the two stores leave the facility bullet and get
+  the organization store read back beside them.

@@ -5,36 +5,24 @@ and the answer that call gives today. A setting recorded as prose alone
 is one nobody can check; recorded this way, a drift is one command away
 from being seen.
 
-The rules and the settings live *outside* the tree: nothing below is
-recoverable by reading the repository. What this file covers is the
-settings [the standard][std] asks about — the ones [section 16's
-checklist][s16] sets on a new repository, and the ones a section of it
-states a rule for — together with whatever a call quoted for one of
+The rules and the settings live *outside* the tree. What this file
+covers is the settings [the standard][std] asks about — the ones
+[section 16's checklist][s16] sets on a new repository, the ones a
+section of the standard states a rule for, and the ones a behaviour it
+describes rests on — together with whatever a call quoted for one of
 those answers alongside it. Where that scope ends is *What this file
 passes over*, at the foot.
+
+The topics have a second form in the tree, `pyproject.toml`'s
+`keywords`, so they are read back here for comparison rather than as
+the only place the answer lives, which is what *Features* says of them.
+Nothing else here is recoverable by reading the tree.
 
 **Where a setting has a reason, the reason is in [the standard][std] and
 this file links to it.** Two copies of an argument are two things to keep
 true. What is here instead is the answer this repository gives —
 including where that is not the answer the sibling repositories give,
 and there is more of that here than elsewhere.
-
-**This repository is not a fork**, which is no setting of this file's
-but a property the standard reads a sentinel's bar off:
-
-```shell
-gh api repos/btclib-org/bbt --jq '{fork, parent: .parent.full_name}'
-# {"fork":false,"parent":null}
-```
-
-Public and not a fork is the bar the `scorecard` sentinel asks, and
-clearing it leaves a tree able to run the sentinel rather than owing it:
-[the record of which trees carry which sentinel][s10-carries] does not
-name this repository, so there is no `scorecard.yml` here and no
-Scorecard badge in `README.md`. Nothing else here turns on the answer:
-the divergences from the sibling repositories recorded further down each
-carry their own reason where they are read back, and no parent
-repository is in any of them.
 
 ## Required checks on main
 
@@ -69,8 +57,15 @@ section; `Lint` would not.
 
 ## Branch protection and the rulesets
 
-`main` is the only branch, and everything reaches it through a pull
-request. Rules aggregate rather than replace each other, so what holds is
+`main` is the repository's default branch and its only one:
+
+```shell
+gh api repos/btclib-org/bbt --jq '.default_branch'
+# main
+```
+
+Everything reaches it through a pull request. Rules aggregate rather
+than replace each other, so what holds is
 the classic protection *and* the rulesets together:
 
 ```shell
@@ -180,22 +175,23 @@ offered; a stale branch is rebased from a checkout instead.
 
 ```shell
 gh api repos/btclib-org/bbt \
-  --jq '{wiki: .has_wiki, projects: .has_projects, issues: .has_issues,
-         discussions: .has_discussions, pages: .has_pages,
-         visibility: .visibility, topics: .topics}'
-# {"discussions":false,"issues":true,"pages":false,"projects":true,
+  --jq '{issues: .has_issues, visibility: .visibility, topics: .topics}'
+# {"issues":true,
 #  "topics":["bitcoin","bitcoin-core","blockchain","course-materials",
 #            "cryptography","digital-signatures","elliptic-curves",
 #            "jupyter-notebook","lecture-notes","regtest","spreadsheet",
 #            "teaching"],
-#  "visibility":"public","wiki":true}
+#  "visibility":"public"}
 ```
 
-The wiki and the projects board are on, and the standard states no rule
-about either, so each is this repository's own answer rather than a
-divergence from one. `btclib-benchmarks` is the sibling that turns both
-off, its own `REPOSITORY.md` giving the reason under *Features that are
-off*.
+`has_issues` is what `CONTRIBUTING.md`'s *The issue tracker* rests on:
+an issue about this tree alone stays here.
+
+Public is the half of section 10's `scorecard` bar a copy reads back,
+and clearing it leaves a tree able to run the sentinel rather than
+owing it: [the record of which trees carry which sentinel][s10-carries]
+does not name this repository, so there is no `scorecard.yml` here and
+no Scorecard badge in `README.md`.
 
 **The topics are `pyproject.toml`'s `keywords`**, which is what [the
 standard asks][s3]; the call above sorts them, where that file orders
@@ -277,6 +273,28 @@ every tier][s2-root], and this tree carries no `SECURITY.md` of its own:
 the policy its Security tab shows is `btclib-org/.github`'s, and the
 button that file sends a reporter to is what this setting puts there.
 
+## Plan-gated settings
+
+The ceiling on concurrent jobs is a number the plan decides rather than
+anything this repository configures, and section 10 of the standard
+makes this section its one home in the tree, beside the command that
+re-derives it:
+
+```shell
+gh api orgs/btclib-org --jq .plan.name    # free
+```
+
+[GitHub's own table](https://docs.github.com/en/actions/reference/limits)
+turns that answer into a number, twenty concurrent jobs on the free
+plan, shared across every repository of the organization. `lint.yml`'s
+one job is what a pull request here spends against it, and
+`CONTRIBUTING.md`'s *The landing queue* is what points here for the
+figure.
+
+The two secret-scanning settings that answer `disabled` under *Secret
+scanning and Dependabot* above are the other plan-gated pair, and that
+section is where they are read back.
+
 ## What is not configured, and why
 
 - **No publishing and no release workflow.** `CONTRIBUTING.md`'s *A
@@ -286,7 +304,8 @@ button that file sends a reporter to is what this setting puts there.
   `gh api repos/btclib-org/bbt/environments --jq .total_count` answers
   `0`.
 - **No Pages and no Read the Docs.** There is no documentation build:
-  what this repository ships is read on github.com or cloned.
+  what this repository ships is read on github.com or cloned, and
+  `gh api repos/btclib-org/bbt/pages` answers `404`.
 - **No suite and no coverage.** [Section 8's ratchet][s8] is a claim
   about a package's own code and this tree ships none. What replaces a
   test here is that a script exits 0, that a transcript notebook
@@ -306,21 +325,41 @@ repository document, most of which is URLs, counts and state GitHub
 derives from the tree. None of that is a setting, and nothing here reads
 it back.
 
-**A facility nobody reached for.** Actions secrets and variables,
-Dependabot secrets, self-hosted runners, webhooks, deploy keys,
-autolinks and custom property values each answer empty here, and an
-empty answer records no decision. Whichever of them a workflow needs one
-day arrives with the section that uses it.
+**A credential this repository spends and does not hold.**
+`claude-review.yml` reads `secrets.CLAUDE_CODE_OAUTH_TOKEN`, and both
+secret stores here answer empty for it:
+
+```shell
+gh api repos/btclib-org/bbt/actions/secrets --jq .total_count
+gh api repos/btclib-org/bbt/dependabot/secrets --jq .total_count
+# 0, both
+gh api orgs/btclib-org/actions/secrets \
+  --jq '.secrets[] | [.name, .visibility]'
+gh api orgs/btclib-org/dependabot/secrets \
+  --jq '.secrets[] | [.name, .visibility]'
+# ["CLAUDE_CODE_OAUTH_TOKEN","all"], both
+```
+
+Those two zeros record a decision, and it is [the standard's][s11-tokens]:
+the token is an organization secret at `visibility=all`, in both stores,
+so a repository adopting the workflow configures nothing for it, and a
+copy of it in a store here would be that decision undone.
+
+**A facility nobody reached for.** Actions variables, self-hosted
+runners, webhooks, deploy keys, autolinks and custom property values
+each answer empty here, and an empty answer there records no decision.
+Whichever of them a workflow needs one day arrives with the section
+that uses it.
 
 **A field the standard states no rule about, and no call above answers
-alongside one it does.** `allow_forking`, `has_downloads`, `is_template`
-and `web_commit_signoff_required` are in the repository document and in
-none of the `--jq` objects here:
+alongside one it does.** `allow_forking`, `has_discussions`,
+`has_downloads`, `is_template` and `web_commit_signoff_required` are in
+the repository document and in none of the `--jq` objects here:
 
 ```shell
 std=$(gh api repos/btclib-org/.github/contents/README.md --jq .content \
   | base64 -d)
-for f in allow_forking has_downloads is_template \
+for f in allow_forking has_discussions has_downloads is_template \
          web_commit_signoff_required; do
   printf '%s %s\n' "$f" "$(printf '%s' "$std" | grep -c "$f")"   # 0 each
 done
@@ -333,6 +372,11 @@ than with the standard. `merge_commit_title` and `merge_commit_message`
 are that case read from the other end: they compose a merge commit
 *Merge methods* above reads back as a button this repository does not
 offer.
+
+`has_wiki` and `has_projects` are outside the perimeter by section 11's
+own sentence, which states no rule about either, so this file neither
+reads them back nor explains an answer to them; that sentence is what
+the loop above would count, which is why the pair is not in its list.
 
 What the scope costs is a silent flip. A change to any of the above
 shows up in nothing here, and what would find it is somebody reading the
