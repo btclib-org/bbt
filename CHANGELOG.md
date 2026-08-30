@@ -1515,3 +1515,16 @@ behind.
   btclib-org/.github#572): the token is the organization's, at
   `visibility=all`, so the two stores leave the facility bullet and get
   the organization store read back beside them.
+
+### `links.yml` asks lychee for the fragment too
+
+- **`.github/workflows/links.yml` passes `--include-fragments`** (issue
+  btclib-org/.github#583). A link into a heading is then checked as an
+  anchor and not only as a page, where the forge serves the page and
+  drops a fragment it cannot resolve, so a heading renamed in the tree
+  a link here points into is red in this run rather than nowhere. The
+  check reads the page already fetched for the link and adds no
+  request; run over the tree as it stands, it found no broken anchor.
+  With the workflow's token the `github.com/btclib-org/.github#<heading>`
+  anchors `REPOSITORY.md` and `CONTRIBUTING.md` carry are not caught by
+  it; btclib-org/.github#630 is where that is weighed.
