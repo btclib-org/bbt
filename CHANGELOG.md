@@ -1472,3 +1472,10 @@ behind.
   up short. Among them, *The landing queue* points at `REPOSITORY.md`'s
   *Plan-gated settings* for the ceiling's figure (issue
   btclib-org/.github#412).
+
+### The badge row carries the qualifier section 2 asks of it
+
+- **Every workflow-status badge at the head of `README.md` carries
+  `?branch=main`** (issue btclib-org/.github#579): `lint` and `links`
+  answer for `main` or answer `no status`, where the unqualified badge
+  falls back to another branch's run when `main` has none.
