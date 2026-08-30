@@ -1283,7 +1283,7 @@ behind.
   btclib-org/.github and differing only where this tree does — there is
   no package, no suite and one gating workflow — so a pull request here
   gets the ack of record a landing reads instead of its author's own,
-  which was [btclib-org/bbt#29](https://github.com/btclib-org/bbt/issues/29).
+  which was btclib-org/bbt#29.
   Its check is red when no ack names the head, and it is not required:
   `REPOSITORY.md` says why it must not become one.
 
