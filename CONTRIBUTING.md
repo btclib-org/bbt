@@ -247,9 +247,9 @@ uv run --locked python .github/scripts/check_scripts.py
 Nothing arrives through `--with` there: what the scripts import is what
 `pyproject.toml` declares, so the environment `uv sync --locked` builds
 is the one they run in. That script names every file it reads and fails
-where it reads none too; `py-scripts/getutxo.py` and
-`py-scripts/ec_explorer.py` are excluded by name, each with its reason
-written beside it, and an excluded name that is not there is a failure.
+where it reads none too; `py-scripts/ec_explorer.py` is excluded by
+name, with its reason written beside it, and an excluded name that is
+not there is a failure.
 
 `uv.lock` is tracked and the `uv-lock` hook keeps it in step with
 `pyproject.toml`. `--locked` above is what makes a mismatch a failure

@@ -47,10 +47,6 @@ CEILING_SECONDS = 300
 # Excluded by name, and a name that is not there is a failure, so that
 # renaming a script cannot quietly leave it ungated.
 EXCLUSIONS = {
-    "getutxo.py": (
-        "it queries a third party's block explorer, so a red here would "
-        "be that service's maintenance rather than this tree's defect"
-    ),
     "ec_explorer.py": (
         "it searches every (a, b) of a fixed range against every x below "
         "each prime it lists, and overruns the ceiling above rather than "

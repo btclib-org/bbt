@@ -1434,3 +1434,23 @@ behind.
   `REVIEWING.md`, and a review told that nothing runs a script does not
   ask what an exit code covers: the step reads nothing a script prints,
   and there is where a reviewer's own reading starts.
+
+### `py-scripts/getutxo.py` is gone
+
+- **The script and its `EXCLUSIONS` entry in
+  `.github/scripts/check_scripts.py` are removed** (closes #15).
+  [btclib-org/.github#301](https://github.com/btclib-org/.github/issues/301)
+  reserved a question for `getutxo.py` — run it on a schedule, run it
+  under a named switch, or write down that it runs nowhere — and this
+  closes it by deleting the script instead. A schedule would answer
+  whether blockchain.info still shapes its reply the way the script
+  expects, not whether the script's own printed output still teaches
+  what the material claims, and that second question — the one a reader
+  answers for every other script here — was never measured for this
+  one.
+- **`pyproject.toml` drops the `requests` dependency**, imported by
+  nothing else under `py-scripts/` or `ipynb/`, and `uv.lock` moves with
+  it.
+- **`py-scripts/README.md`, `CONTRIBUTING.md` and the
+  `commented-out-code` ignore's justification in `pyproject.toml` no
+  longer mention the script.**

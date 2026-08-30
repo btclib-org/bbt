@@ -19,5 +19,4 @@ before running one:
 - `ec_explorer.py` searches every curve over each prime it lists, which
   takes minutes, and prints only once a prime is done;
 - the `speedup_*.py` scripts are benchmarks: they print ratios, so what
-  they answer depends on what else the machine is doing;
-- `getutxo.py` queries blockchain.info, so it needs the network.
+  they answer depends on what else the machine is doing.
