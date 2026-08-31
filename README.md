@@ -24,11 +24,12 @@ only where a space follows them. -->
 [![lint workflow status](https://github.com/btclib-org/bbt/actions/workflows/lint.yml/badge.svg?branch=main)](https://github.com/btclib-org/bbt/actions/workflows/lint.yml)
 [![links workflow status](https://github.com/btclib-org/bbt/actions/workflows/links.yml/badge.svg?branch=main)](https://github.com/btclib-org/bbt/actions/workflows/links.yml)
 
-The course is taught at:
+The course is or has been taught at:
 
-- University of Milano-Bicocca
+- Università di Milano-Bicocca
 - Politecnico di Milano
-- University of Milano
+- Università Statale di Milano
+- ESSEC (Paris)
 
 The latest version of the course slides is available from the course page
 at <http://www.ametrano.net/bbt/>.
