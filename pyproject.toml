@@ -19,8 +19,8 @@
 # reason: section 3 has the keywords be the GitHub topics, the same
 # names in the same lowercase spelling, and the topics are how a reader
 # of github.com/btclib-org finds course material. What the rule turns on
-# is the repository and not the index, so a tree that uploads nothing
-# owes the list all the same.
+# is the `[project]` table this tree declares and not the index, so a
+# tree that uploads nothing owes the list all the same.
 
 [project]
 name = "bbt"

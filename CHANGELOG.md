@@ -1547,3 +1547,13 @@ behind.
   each of a merge and a rebase calls `ours`, and premises the driver on
   an entry arriving at one shared anchor rather than a bullet appended
   to one of a few changelog groups** (issue btclib-org/.github#646).
+
+### The keywords comment names the `[project]` table, not the repository
+
+- **The comment above `pyproject.toml`'s `keywords` names the
+  `[project]` table as what section 3's rule turns on** (closes
+  btclib-org/.github#670). The previous wording named the repository, a
+  conclusion right for this tree only because it happens to declare a
+  `[project]` table. A repository with no `pyproject.toml` has no table
+  and so no key to write, and section 16's checklist is where its topics
+  are recorded instead.
