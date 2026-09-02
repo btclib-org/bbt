@@ -1540,3 +1540,10 @@ behind.
   running here unchanged but for the repository name, and it exits
   nonzero on a drift. The sentences beside it are theirs too: what an
   empty right-hand side means, and why both sides are sorted.
+
+### `.gitattributes`'s comment names the driver's sides and one anchor
+
+- **The comment keeps `ours` first and `theirs` second, names which side
+  each of a merge and a rebase calls `ours`, and premises the driver on
+  an entry arriving at one shared anchor rather than a bullet appended
+  to one of a few changelog groups** (issue btclib-org/.github#646).
