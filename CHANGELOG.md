@@ -1528,3 +1528,15 @@ behind.
   With the workflow's token the `github.com/btclib-org/.github#<heading>`
   anchors `REPOSITORY.md` and `CONTRIBUTING.md` carry are not caught by
   it; btclib-org/.github#630 is where that is weighed.
+
+### The topics and the keywords are compared by a command
+
+- **`REPOSITORY.md`'s *Features* carries the `diff` that reads the
+  topics and `pyproject.toml`'s `keywords` together** (closes
+  btclib-org/.github#636). What stood there said no command here reads
+  both, half the pair being a repository setting and half a tracked
+  file, and left the comparison to whoever thought to make it by eye.
+  The command is the one sibling copies of this file already carry,
+  running here unchanged but for the repository name, and it exits
+  nonzero on a drift. The sentences beside it are theirs too: what an
+  empty right-hand side means, and why both sides are sorted.
