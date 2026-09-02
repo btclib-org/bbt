@@ -1528,3 +1528,32 @@ behind.
   With the workflow's token the `github.com/btclib-org/.github#<heading>`
   anchors `REPOSITORY.md` and `CONTRIBUTING.md` carry are not caught by
   it; btclib-org/.github#630 is where that is weighed.
+
+### The topics and the keywords are compared by a command
+
+- **`REPOSITORY.md`'s *Features* carries the `diff` that reads the
+  topics and `pyproject.toml`'s `keywords` together** (closes
+  btclib-org/.github#636). What stood there said no command here reads
+  both, half the pair being a repository setting and half a tracked
+  file, and left the comparison to whoever thought to make it by eye.
+  The command is the one sibling copies of this file already carry,
+  running here unchanged but for the repository name, and it exits
+  nonzero on a drift. The sentences beside it are theirs too: what an
+  empty right-hand side means, and why both sides are sorted.
+
+### `.gitattributes`'s comment names the driver's sides and one anchor
+
+- **The comment keeps `ours` first and `theirs` second, names which side
+  each of a merge and a rebase calls `ours`, and premises the driver on
+  an entry arriving at one shared anchor rather than a bullet appended
+  to one of a few changelog groups** (issue btclib-org/.github#646).
+
+### The keywords comment names the `[project]` table, not the repository
+
+- **The comment above `pyproject.toml`'s `keywords` names the
+  `[project]` table as what section 3's rule turns on** (closes
+  btclib-org/.github#670). The previous wording named the repository, a
+  conclusion right for this tree only because it happens to declare a
+  `[project]` table. A repository with no `pyproject.toml` has no table
+  and so no key to write, and section 16's checklist is where its topics
+  are recorded instead.
