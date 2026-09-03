@@ -1,0 +1,37 @@
+---
+name: Question
+description: Ask how something here works, or why it is shown that way
+labels: [question]
+
+body:
+  - type: markdown
+    attributes:
+      value: >
+        Discussions are not enabled here, so a question is an issue: this
+        form is what keeps one from having to be filed as a bug.
+        `README.md` and the README of the directory the material sits in
+        come first, `py-scripts/README.md` saying what a script wants
+        before it will run at all.
+
+
+        The slides are not in this repository. What the course *says* is
+        at <http://www.ametrano.net/bbt/>, and a question about a
+        lecture is answered there rather than here.
+
+  - type: textarea
+    id: question
+    attributes:
+      label: The question
+      description: >
+        What you are trying to follow, and what you have already read or
+        run. What a script printed and what you expected instead is a
+        sharper question than a description of either.
+    validations:
+      required: true
+
+  - type: input
+    id: file
+    attributes:
+      label: Which file, where it is about one
+      description: The path from the repository root.
+      placeholder: "lab-tutorial/01.md"

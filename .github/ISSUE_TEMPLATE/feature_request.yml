@@ -1,0 +1,61 @@
+---
+name: Feature request
+description: Add material, or change how something here is taught
+labels: [enhancement]
+
+body:
+  - type: markdown
+    attributes:
+      value: >
+        This repository is course material, and what belongs in it is
+        what a reader can follow: a computation shown step by step, a
+        walk-through of software somebody else wrote, a spreadsheet of
+        the arithmetic. The slides are not here —
+        <http://www.ametrano.net/bbt/> is where the course text is — so a
+        change to what the *course* says is not one this tree can make.
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What is missing
+      description: >
+        What a reader would be able to follow that they cannot today.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: material
+    attributes:
+      label: Where it would go
+      description: >
+        A spreadsheet is carried in two formats and a change to one is a
+        change to both, and a notebook that is a transcript has to
+        reproduce its own committed outputs, so where it goes decides
+        most of the work.
+      options:
+        - lab-tutorial
+        - regtest-lab
+        - ipynb (the notebooks)
+        - py-scripts
+        - calc and excel (the spreadsheets)
+        - the repository's own prose
+    validations:
+      required: true
+
+  - type: textarea
+    id: why
+    attributes:
+      label: Why it belongs here
+      description: >
+        What nothing already here shows, and where a reader would meet
+        it.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: >
+        Other ways of showing the same thing, and what somebody teaching
+        from the material as it stands would have to change.

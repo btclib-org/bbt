@@ -1,0 +1,102 @@
+---
+name: Bug report
+description: A page, a notebook, a spreadsheet or a script does not do what it says
+labels: [bug]
+
+body:
+  - type: markdown
+    attributes:
+      value: >
+        What is reported here is the material: a step of `lab-tutorial/`
+        or `regtest-lab/` that cannot be followed as written, a script
+        that fails or prints something its page does not describe, a
+        notebook whose committed outputs its own run does not reproduce,
+        a spreadsheet that computes something else. A defect in the
+        library the scripts import is
+        [btclib](https://github.com/btclib-org/btclib/issues)'s. If in
+        doubt, report it here.
+
+
+        The keys this repository prints are published on purpose, and
+        [*Limitations, not
+        vulnerabilities*](https://github.com/btclib-org/bbt#limitations-not-vulnerabilities)
+        is where `README.md` says so — and where the case that is worth
+        reporting is named, a key committed that was not meant to be
+        published. A key of your own is never one of those: redact it
+        before pasting output.
+
+  - type: dropdown
+    id: material
+    attributes:
+      label: Which material
+      description: >
+        Each is read or run differently, and the same defect means
+        something else in each.
+      options:
+        - lab-tutorial
+        - regtest-lab
+        - ipynb (the notebooks)
+        - py-scripts
+        - calc and excel (the spreadsheets)
+        - the repository's own prose
+    validations:
+      required: true
+
+  - type: input
+    id: file
+    attributes:
+      label: Which file
+      description: >
+        The path from the repository root. A spreadsheet is carried in
+        two formats, so name the one you opened.
+      placeholder: "py-scripts/dsa_example1.py"
+    validations:
+      required: true
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What happens
+      description: What you observed, and what the page led you to expect.
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: How to reproduce it
+      description: >
+        The commands, in order, from a state somebody else can reach, and
+        the whole of what they print where there is a traceback. A script
+        is run from a checkout, in the environment `uv sync --locked`
+        builds.
+      render: shell
+    validations:
+      required: true
+
+  - type: input
+    id: platform
+    attributes:
+      label: Platform and interpreter
+      description: >
+        `python -VV` and the operating system, architecture included,
+        where the report is about something that runs.
+      placeholder: "CPython 3.13.5, macOS 15.6 arm64"
+
+  - type: input
+    id: commit
+    attributes:
+      label: Commit
+      description: >
+        `git rev-parse --short HEAD` on a checkout. Nothing here is
+        released, so a commit is what dates a report; a page read on
+        github.com is `main`.
+      placeholder: "7e9225c"
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Anything else
+      description: >
+        The version of the wallet, the node or the browser a page walks
+        through, and the commit this last worked on.
