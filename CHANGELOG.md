@@ -1613,3 +1613,15 @@ behind.
   having a form of its own, and the links beside the forms send a defect
   in the library the scripts import to `btclib` and a question about the
   lectures to the course page.
+
+### The worktree command ends in its placeholder
+
+- **`CLAUDE.md`'s `git worktree add` line carries `-b <branch>` after the
+  path and the commit-ish** (issue btclib-org/.github#687). Section 9 of
+  the standard puts a bare placeholder at the end of its command, where
+  the `>` closing it has no target and the line is a parse error before
+  it is a command. With the placeholder ahead of `"$WT"` that `>` takes
+  the path as its target, so a paste made where nothing stands at that
+  path creates a file there and `git` runs with the flag's argument
+  eaten. Removing the worktree is part of finishing, which is what
+  leaves that path empty.
