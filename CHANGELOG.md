@@ -1592,3 +1592,24 @@ behind.
   btclib-org/.github#688): `markdownlint-cli2` carries neither `files:`
   nor `exclude:` in `.pre-commit-config.yaml`, and that file declares no
   top-level `exclude:`, so the hook id is all that narrows the run.
+
+### The new-issue page carries this repository's own forms
+
+- **`.github/ISSUE_TEMPLATE/` carries `bug_report.yml`,
+  `feature_request.yml`, `question.yml` and `config.yml`** (issue
+  btclib-org/.github#632). Section 2 of the standard gives `.github/` to
+  every tier and names the directory among what it holds, and section
+  16's checklist gives every repository one. A form the organization
+  serves to a repository keeping none of its own is written without
+  knowing the tree it renders in; these ask what this material can
+  answer.
+- **A report says which part of the material it is about, and a commit
+  dates it** (issue btclib-org/.github#632). A tutorial page is
+  followed, a notebook reproduces its own committed outputs and a script
+  is run from a checkout, so the same defect means something else in
+  each and the form asks which part before anything else. Nothing here
+  is released, so `git rev-parse --short HEAD` stands where a tree that
+  publishes would ask for a version. Blank issues are off, a question
+  having a form of its own, and the links beside the forms send a defect
+  in the library the scripts import to `btclib` and a question about the
+  lectures to the course page.
