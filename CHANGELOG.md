@@ -1625,3 +1625,27 @@ behind.
   path creates a file there and `git` runs with the flag's argument
   eaten. Removing the worktree is part of finishing, which is what
   leaves that path empty.
+
+### A trailing `#` comment goes above its fence, and a placeholder bare
+
+- **`CLAUDE.md`'s `WT=` line carries no trailing comment** (issue
+  btclib-org/.github#786, issue btclib-org/.github#771). An interactive
+  `zsh` leaves `INTERACTIVE_COMMENTS` unset, so the comment gives the
+  line's final `>` a word to take as its target, and the line parses and
+  runs instead of failing at the parse — the `>` closing `<scratchpad>`
+  then writes `/wt-`. The worked example moves into the prose above the
+  fence, alongside the `cd "$WT"` line's own comment, and the `git fetch`
+  line's trailing comment is dropped where the prose above its own fence
+  already says the same thing.
+- **`CONTRIBUTING.md` and `REPOSITORY.md` carry no trailing `#` comment on
+  a command line inside a `shell` fence** (issue btclib-org/.github#771).
+  Where a comment recorded a measured answer or a reason the prose did
+  not already give, it becomes a sentence beside the fence; the plan
+  read's one-word answer stands as a comment line of its own below the
+  command instead: a line whose first character is `#` is harmless,
+  unlike a trailing comment sharing a line with a command.
+- **`REVIEWING.md`'s two placeholders in *Every collateral finding becomes
+  an issue*'s filing block go unquoted** (issue btclib-org/.github#772),
+  taking the standard's own copy byte for byte. Quoted, a paste made
+  before either is filled in reaches `gh` rather than failing at the
+  shell, and the second files an issue titled the placeholder.

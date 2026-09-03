@@ -51,7 +51,7 @@ Where the checkout has to be current rather than merely readable, a
 fast-forward of a clean `main` brings it up:
 
 ```shell
-git fetch origin && git merge --ff-only origin/main   # clean main only
+git fetch origin && git merge --ff-only origin/main
 ```
 
 That writes no commit, switches no branch and runs no hook, so it is on
@@ -78,11 +78,16 @@ this way also sorts every worktree of one issue together. `role` covers
 the narrower case of a coder and its reviewer holding a worktree at
 once, which the ordinary sequence avoids by each removing its own.
 
+An issue of `btclib-org/.github`'s tracker worked in `btclib` by a coder
+names its worktree `wt-github-255-btclib-coder`. No `uv sync` follows
+the `cd`: it is needed only to run something by hand, since the gate's
+own first command is `uv sync --locked`, and the editing, the gates and
+the commits all happen in the worktree before the push.
+
 ```shell
-WT=<scratchpad>/wt-<tracker>-<issue>-<repo>-<role>  # wt-github-255-btclib-coder
+WT=<scratchpad>/wt-<tracker>-<issue>-<repo>-<role>
 git worktree add "$WT" origin/main -b <branch>
-cd "$WT"                     # uv sync --locked only to run something
-# edit, gate and commit here, then
+cd "$WT"
 git push origin HEAD:refs/heads/<branch>
 ```
 
