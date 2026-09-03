@@ -1579,3 +1579,16 @@ behind.
   when it answers needing one to show the call reached it. Actions
   variables leave the list of facilities whose empty answer records no
   decision, that zero now being half of what records this one.
+
+### The single-hook gate line lints from a clean tree
+
+- **`uvx pre-commit run markdownlint-cli2` reads the staged files, so
+  from a clean tree it reports `(no files to check)Skipped` and exits 0**
+  (issue btclib-org/.github#688): `CONTRIBUTING.md`'s single-hook line
+  carries `--all-files`, which is how the type check's own line in that
+  section is written, and hook scope is the whole of what separates it
+  from the line above.
+- **`--all-files` reaches every markdown file this tree tracks** (issue
+  btclib-org/.github#688): `markdownlint-cli2` carries neither `files:`
+  nor `exclude:` in `.pre-commit-config.yaml`, and that file declares no
+  top-level `exclude:`, so the hook id is all that narrows the run.

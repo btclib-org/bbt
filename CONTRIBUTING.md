@@ -241,18 +241,22 @@ directory of scripts that demonstrate one thing each.
 
 ```shell
 uv sync --locked                        # the environment the tree runs in
-uvx pre-commit run --all-files          # every hook
-uvx pre-commit run markdownlint-cli2    # one hook
+uvx pre-commit run --all-files                    # every hook
+uvx pre-commit run --all-files markdownlint-cli2  # one hook
 uvx pre-commit validate-config .pre-commit-config.yaml
 ```
 
 `uvx` and not the `uv run --only-group lint pre-commit` a sibling's lint
 job uses: pre-commit is in no dependency group here, so there is no
 project environment for it to be resolved from, and `lint.yml` runs this
-same command for the reason its own header gives. The last one is worth
-running before pushing a change to the hook config: it catches what a
-wrong `types_or` tag or a malformed entry would otherwise turn into a red
-lint job.
+same command for the reason its own header gives. A `pre-commit run`
+naming no files of its own reads the staged ones, so from a clean tree it
+reports `(no files to check)Skipped` and exits 0: the single-hook line
+carries `--all-files` for that reason, and hook scope is the whole of
+what separates it from the line above it. The last one is worth running
+before pushing a change to the hook config: it catches what a wrong
+`types_or` tag or a malformed entry would otherwise turn into a red lint
+job.
 
 The hooks are not the whole of what `lint.yml` runs. `ipynb/README.md`
 promises that executing a transcript notebook gives back every output
