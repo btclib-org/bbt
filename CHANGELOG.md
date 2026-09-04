@@ -1662,3 +1662,17 @@ behind.
   repository in particular* documents, rather than the standard's own
   `uv run pre-commit run --all-files` and `uv run pytest`, neither of
   which this tree runs.
+
+### `CLAUDE.md`'s worktree-removal fence refuses an unset `WT`
+
+- **The fence closes with `git worktree remove --force "${WT:?}"`**
+  (issue btclib-org/.github#790). It stands alone, so a paste of it by
+  itself is a command that runs with whatever `$WT` the shell holds, and
+  section 9 of the standard has such a fence write each value the reader
+  was to set as `${name:?}`: unset, the expansion fails and the removal
+  does not run.
+- **The prose above the fence says what the `:?` is doing there** (issue
+  btclib-org/.github#790), which section 9 asks for because a reader who
+  is not told deletes it. Whether it should also name what the guard
+  does not catch — a `$WT` an earlier session left set — is
+  btclib-org/.github#797.
