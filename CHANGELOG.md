@@ -1676,3 +1676,12 @@ behind.
   is not told deletes it. Whether it should also name what the guard
   does not catch — a `$WT` an earlier session left set — is
   btclib-org/.github#797.
+
+### The uv floor catches up to Dependabot's ceiling
+
+- **`pyproject.toml`'s `[tool.uv] required-version` moves from
+  `>=0.12.1` to `>=0.12.7`, the uv Dependabot's own bundled updater
+  ships today** (issue btclib-org/.github#448). Section 1 sets the
+  floor at the ceiling rather than below it: the failure guarded
+  against is an older uv rewriting `uv.lock`, and raising the floor as
+  the ceiling rises is always safe.
