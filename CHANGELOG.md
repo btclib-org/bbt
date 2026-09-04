@@ -1649,3 +1649,16 @@ behind.
   taking the standard's own copy byte for byte. Quoted, a paste made
   before either is filled in reaches `gh` rather than failing at the
   shell, and the second files an issue titled the placeholder.
+
+### A tree carries its own `PULL_REQUEST_TEMPLATE.md`, with its own Checks
+
+- **`.github/PULL_REQUEST_TEMPLATE.md` is tracked** (issue
+  btclib-org/.github#781). Section 2 of the standard gives every tree
+  the file, and section 16's checklist gives it to a repository being
+  set up.
+- **Its Checks list names `uvx pre-commit run --all-files`, the
+  transcript-notebook check and the script check** (issue
+  btclib-org/.github#785), the commands `CONTRIBUTING.md`'s *This
+  repository in particular* documents, rather than the standard's own
+  `uv run pre-commit run --all-files` and `uv run pytest`, neither of
+  which this tree runs.
