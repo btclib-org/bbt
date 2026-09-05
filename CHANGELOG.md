@@ -1685,3 +1685,11 @@ behind.
   floor at the ceiling rather than below it: the failure guarded
   against is an older uv rewriting `uv.lock`, and raising the floor as
   the ceiling rises is always safe.
+
+### The badge links open the runs page filtered to `main`
+
+Each workflow-status badge link carries `?query=branch%3Amain` (issue
+btclib-org/.github#762). Section 2 of the standard gives the link that
+filter in the spelling the runs page takes, the image's `?branch=main`
+being ignored there: the row audits `main`, and so does the page a click
+on it opens.
