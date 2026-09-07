@@ -281,8 +281,9 @@ repos:
   # the width of a toml comment, which taplo above does not settle: it
   # aligns a comment that trails a value and rewraps none. Section 3 of
   # the standard names this hook as what holds pyproject.toml's comments
-  # to 80 columns. A trailing unbreakable link is exempt, the pattern
-  # asking for whitespace after the eightieth column
+  # to 80 columns. `.{80}\S*[ \t]` reports a line only when whitespace
+  # is left past column 80: a comment whose overflow is one unbroken
+  # token is exempt
   - repo: local
     hooks:
       - id: toml-comment-width

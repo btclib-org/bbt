@@ -1734,3 +1734,26 @@ on it opens.
   paragraphs are that tree's bytes, and the create paragraph is those
   bytes from *With the placeholder ahead of* onward, its citation clause
   naming the standard as the rest of this file does.
+
+### `toml-comment-width`'s comment states the pattern's own predicate
+
+- **The comment above the hook no longer says a trailing unbreakable
+  link is exempt** (issue btclib-org/.github#843). The pattern
+  `^(?=[ \t]*#).{80}\S*[ \t]` has no notion of a link; it reports a line
+  only where whitespace is left past column 80. Run by pre-commit over a
+  planted toml file, the hook passes over a 64-character unbreakable
+  token opening at column 63 and reports the same token opening at
+  column 93, so the exemption is conditional on a position the sentence
+  did not name. What replaces it states that predicate and names no
+  other tool, which is what btclib-org/.github#843 settles for the trees
+  carrying the hook and what btclib-org/btclib-node carries at
+  `71f6aee1`.
+- **MD013 is not named beside the hook, its amnesty being stated
+  already** (issue btclib-org/.github#843). `.yamllint.yaml`'s note on
+  `allow-non-breakable-words` gives a line that is one long token as the
+  exemption MD013 already makes, so naming it here would be the second
+  site section 9 of the standard refuses.
+- **The `name:` is left alone** (issue btclib-org/.github#843). It reads
+  *80 columns, unbreakable links exempt*, the same lexical wording
+  against the same positional pattern, and that is one decision for the
+  trees carrying the hook rather than this one's to take alone.
