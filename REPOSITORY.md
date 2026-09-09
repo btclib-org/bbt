@@ -297,7 +297,8 @@ makes this section its one home in the tree, beside the command that
 re-derives it:
 
 ```shell
-gh api orgs/btclib-org --jq .plan.name    # free
+gh api orgs/btclib-org --jq .plan.name
+# free
 ```
 
 [GitHub's own table](https://docs.github.com/en/actions/reference/limits)
@@ -400,11 +401,14 @@ std=$(gh api repos/btclib-org/.github/contents/README.md --jq .content \
   | base64 -d)
 for f in allow_forking has_discussions has_downloads is_template \
          web_commit_signoff_required; do
-  printf '%s %s\n' "$f" "$(printf '%s' "$std" | grep -c "$f")"   # 0 each
+  printf '%s %s\n' "$f" "$(printf '%s' "$std" | grep -c "$f")"
 done
-printf '%s' "$std" | grep -c 'default branch'   # not 0, so those zeros
-                                                # are absences
+printf '%s' "$std" | grep -c 'default branch'
 ```
+
+The last line is a positive control: `default branch` occurs in the
+same blob, so its count is not `0`, which is what says the five `0`s
+above it are absences rather than a `grep` that matched nothing.
 
 Recording a field on no rule grows this file with GitHub's API rather
 than with the standard. `merge_commit_title` and `merge_commit_message`

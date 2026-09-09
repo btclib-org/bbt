@@ -1625,3 +1625,135 @@ behind.
   path creates a file there and `git` runs with the flag's argument
   eaten. Removing the worktree is part of finishing, which is what
   leaves that path empty.
+
+### A trailing `#` comment goes above its fence, and a placeholder bare
+
+- **`CLAUDE.md`'s `WT=` line carries no trailing comment** (issue
+  btclib-org/.github#786, issue btclib-org/.github#771). An interactive
+  `zsh` leaves `INTERACTIVE_COMMENTS` unset, so the comment gives the
+  line's final `>` a word to take as its target, and the line parses and
+  runs instead of failing at the parse — the `>` closing `<scratchpad>`
+  then writes `/wt-`. The worked example moves into the prose above the
+  fence, alongside the `cd "$WT"` line's own comment, and the `git fetch`
+  line's trailing comment is dropped where the prose above its own fence
+  already says the same thing.
+- **`CONTRIBUTING.md` and `REPOSITORY.md` carry no trailing `#` comment on
+  a command line inside a `shell` fence** (issue btclib-org/.github#771).
+  Where a comment recorded a measured answer or a reason the prose did
+  not already give, it becomes a sentence beside the fence; the plan
+  read's one-word answer stands as a comment line of its own below the
+  command instead: a line whose first character is `#` is harmless,
+  unlike a trailing comment sharing a line with a command.
+- **`REVIEWING.md`'s two placeholders in *Every collateral finding becomes
+  an issue*'s filing block go unquoted** (issue btclib-org/.github#772),
+  taking the standard's own copy byte for byte. Quoted, a paste made
+  before either is filled in reaches `gh` rather than failing at the
+  shell, and the second files an issue titled the placeholder.
+
+### A tree carries its own `PULL_REQUEST_TEMPLATE.md`, with its own Checks
+
+- **`.github/PULL_REQUEST_TEMPLATE.md` is tracked** (issue
+  btclib-org/.github#781). Section 2 of the standard gives every tree
+  the file, and section 16's checklist gives it to a repository being
+  set up.
+- **Its Checks list names `uvx pre-commit run --all-files`, the
+  transcript-notebook check and the script check** (issue
+  btclib-org/.github#785), the commands `CONTRIBUTING.md`'s *This
+  repository in particular* documents, rather than the standard's own
+  `uv run pre-commit run --all-files` and `uv run pytest`, neither of
+  which this tree runs.
+
+### `CLAUDE.md`'s worktree-removal fence refuses an unset `WT`
+
+- **The fence closes with `git worktree remove --force "${WT:?}"`**
+  (issue btclib-org/.github#790). It stands alone, so a paste of it by
+  itself is a command that runs with whatever `$WT` the shell holds, and
+  section 9 of the standard has such a fence write each value the reader
+  was to set as `${name:?}`: unset, the expansion fails and the removal
+  does not run.
+- **The prose above the fence says what the `:?` is doing there** (issue
+  btclib-org/.github#790), which section 9 asks for because a reader who
+  is not told deletes it. Whether it should also name what the guard
+  does not catch — a `$WT` an earlier session left set — is
+  btclib-org/.github#797.
+
+### The uv floor catches up to Dependabot's ceiling
+
+- **`pyproject.toml`'s `[tool.uv] required-version` moves from
+  `>=0.12.1` to `>=0.12.7`, the uv Dependabot's own bundled updater
+  ships today** (issue btclib-org/.github#448). Section 1 sets the
+  floor at the ceiling rather than below it: the failure guarded
+  against is an older uv rewriting `uv.lock`, and raising the floor as
+  the ceiling rises is always safe.
+
+### The badge links open the runs page filtered to `main`
+
+Each workflow-status badge link carries `?query=branch%3Amain` (issue
+btclib-org/.github#762). Section 2 of the standard gives the link that
+filter in the spelling the runs page takes, the image's `?branch=main`
+being ignored there: the row audits `main`, and so does the page a click
+on it opens.
+
+### The worktree fence's create, push and guard take the standard's form
+
+- **The fence pushes with `git -C "$WT"`, and the `cd "$WT"` line above
+  it is gone** (issue btclib-org/.github#824). A `cd` binds the shell
+  that runs it, so a session running each line as its own command pushes
+  from the directory it began in, the primary checkout. The paragraph
+  giving that binding is `btclib-org/.github`'s `CLAUDE.md` at `20ad654`
+  byte for byte, so its limit lands with it: `git(1)` says an empty `-C`
+  leaves the working directory unchanged, and `git -C "" rev-parse
+  --show-toplevel` answers for wherever it was run.
+- **The sentence above the fence hangs the absent `uv sync` on `git
+  worktree add` rather than on the `cd`.** It read *No `uv sync` follows
+  the `cd`*, and the fence holds no `cd` for that to point at. What it
+  says about the sync is unchanged: it is needed only to run something
+  by hand, the gate's own first command being `uv sync --locked`.
+- **The create's condition is the reader's own directory already holding
+  the placeholder's name.** With the placeholder ahead of `"$WT"` the
+  `<` has to succeed before the `>` is reached, and a directory of that
+  name serves as well as a file; a directory holding neither ends the
+  line with nothing created, measured in `/bin/zsh`, `/bin/bash`,
+  `/bin/sh` and `/bin/dash`, which do not all print the same diagnostic.
+  *The worktree command ends in its placeholder* above says a paste made
+  where nothing stands at that path creates a file there, with no
+  condition on it, and this entry supersedes that sentence.
+- **The removal guard is stated as refusing an unset or empty `WT`**,
+  which is what `${WT:?}` does, where the sentence read *with no `$WT`
+  set*. Under `/bin/zsh` 5.9 and the `bash` 3.2.57 macOS ships as
+  `/bin/bash` and `/bin/sh`, unset and empty both refuse, where a space,
+  a word and a stale path each run — those being the control. The
+  standard's next sentence comes with it, naming what the guard does not
+  catch, so the question *`CLAUDE.md`'s worktree-removal fence refuses
+  an unset `WT`* above left to btclib-org/.github#797 is answered in the
+  file rather than deferred.
+- **A sentence below the removal fence names `btclib-org/.github`'s
+  `CLAUDE.md` at `20ad654` as what the create, the push and the removal
+  converged on**, so a later reader compares against a tree rather than
+  against an issue's quotation of one. The push and the removal
+  paragraphs are that tree's bytes, and the create paragraph is those
+  bytes from *With the placeholder ahead of* onward, its citation clause
+  naming the standard as the rest of this file does.
+
+### `toml-comment-width`'s comment states the pattern's own predicate
+
+- **The comment above the hook no longer says a trailing unbreakable
+  link is exempt** (issue btclib-org/.github#843). The pattern
+  `^(?=[ \t]*#).{80}\S*[ \t]` has no notion of a link; it reports a line
+  only where whitespace is left past column 80. Run by pre-commit over a
+  planted toml file, the hook passes over a 64-character unbreakable
+  token opening at column 63 and reports the same token opening at
+  column 93, so the exemption is conditional on a position the sentence
+  did not name. What replaces it states that predicate and names no
+  other tool, which is what btclib-org/.github#843 settles for the trees
+  carrying the hook and what btclib-org/btclib-node carries at
+  `71f6aee1`.
+- **MD013 is not named beside the hook, its amnesty being stated
+  already** (issue btclib-org/.github#843). `.yamllint.yaml`'s note on
+  `allow-non-breakable-words` gives a line that is one long token as the
+  exemption MD013 already makes, so naming it here would be the second
+  site section 9 of the standard refuses.
+- **The `name:` is left alone** (issue btclib-org/.github#843). It reads
+  *80 columns, unbreakable links exempt*, the same lexical wording
+  against the same positional pattern, and that is one decision for the
+  trees carrying the hook rather than this one's to take alone.

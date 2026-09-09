@@ -240,9 +240,9 @@ package — notebooks, spreadsheets, a regtest walk-through and a
 directory of scripts that demonstrate one thing each.
 
 ```shell
-uv sync --locked                        # the environment the tree runs in
-uvx pre-commit run --all-files                    # every hook
-uvx pre-commit run --all-files markdownlint-cli2  # one hook
+uv sync --locked
+uvx pre-commit run --all-files
+uvx pre-commit run --all-files markdownlint-cli2
 uvx pre-commit validate-config .pre-commit-config.yaml
 ```
 
@@ -356,12 +356,13 @@ placeholder version. So this tree carries no `RELEASING.md` and no
 standard](https://github.com/btclib-org/.github/blob/main/README.md) has
 why a tier-2 repository carries neither — and a file whose content is its
 own absence is this section instead. Measured rather than asserted, and
-re-derivable:
+re-derivable, the releases and tags each answering `0` and `git tag`
+printing nothing:
 
 ```shell
-gh api repos/btclib-org/bbt/releases --jq 'length'   # 0
-gh api repos/btclib-org/bbt/tags --jq 'length'       # 0
-git tag                                              # nothing
+gh api repos/btclib-org/bbt/releases --jq 'length'
+gh api repos/btclib-org/bbt/tags --jq 'length'
+git tag
 ```
 
 A release would first need something to publish — the tree is notebooks,
