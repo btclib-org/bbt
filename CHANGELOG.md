@@ -1757,3 +1757,30 @@ on it opens.
   *80 columns, unbreakable links exempt*, the same lexical wording
   against the same positional pattern, and that is one decision for the
   trees carrying the hook rather than this one's to take alone.
+
+### The worktree name's order has a reason, and the advance clause its ref
+
+- **The worktree paragraph gives the reason its four parts are in that
+  order** (issue btclib-org/.github#854). It named each part and the
+  collision that part answers and stopped there, so a reader asking why
+  `repo` sits after `issue` found four collision arguments, none of
+  which decides a position. The sentence is `btclib-org/.github`'s
+  `CLAUDE.md` at `1d81bf7`: most general part first, an issue being the
+  key and the repository a detail of it. *This tracker* is written out
+  as `btclib-org/.github`'s and the two example issues are qualified
+  with it, this file being read in a different repository from the one
+  the standard's sentence is written in. The sentence naming what that
+  order buys moves out of the `repo` clause to sit after it, where the
+  standard has it and where it carries *which is what a port leaves
+  behind*: stated in the `repo` clause the benefit reads as a property
+  of that part being present, and the sorting wants the order as well.
+- **The advance clause names `origin/main` as what `refs/heads/main` may
+  move onto** (issue btclib-org/.github#919). It read *or advance it
+  with work that is not yours*, which reaches the
+  `git merge --ff-only origin/main` this same section prescribes for
+  bringing the primary checkout forward. The paragraph is
+  `btclib-org/.github`'s `CLAUDE.md` at `5b9d76f` byte for byte, the sha
+  that issue records as the converged form and unchanged there at
+  `1d81bf7`, so the prohibition is stated as a permission: no ruleset
+  reaches a name in a clone, and the pull request is what moves
+  `origin/main` rather than `main`.
