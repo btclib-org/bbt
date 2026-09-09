@@ -356,7 +356,7 @@ repos:
   # resolution is Dependabot's uv ecosystem, per .github/dependabot.yml;
   # this hook re-locks and does not upgrade
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.12.7
+    rev: 0.12.10
     hooks:
       - id: uv-lock
   # the selection is pyproject.toml's: select = ["ALL"], with every
@@ -367,7 +367,7 @@ repos:
   # taught from and not a lint fix. What that costs is recorded where
   # E501 is ignored
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.16.5
+    rev: v0.16.6
     hooks:
       - id: ruff-check
         name: ruff check (in place fixes)
