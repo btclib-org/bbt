@@ -1685,3 +1685,75 @@ behind.
   floor at the ceiling rather than below it: the failure guarded
   against is an older uv rewriting `uv.lock`, and raising the floor as
   the ceiling rises is always safe.
+
+### The badge links open the runs page filtered to `main`
+
+Each workflow-status badge link carries `?query=branch%3Amain` (issue
+btclib-org/.github#762). Section 2 of the standard gives the link that
+filter in the spelling the runs page takes, the image's `?branch=main`
+being ignored there: the row audits `main`, and so does the page a click
+on it opens.
+
+### The worktree fence's create, push and guard take the standard's form
+
+- **The fence pushes with `git -C "$WT"`, and the `cd "$WT"` line above
+  it is gone** (issue btclib-org/.github#824). A `cd` binds the shell
+  that runs it, so a session running each line as its own command pushes
+  from the directory it began in, the primary checkout. The paragraph
+  giving that binding is `btclib-org/.github`'s `CLAUDE.md` at `20ad654`
+  byte for byte, so its limit lands with it: `git(1)` says an empty `-C`
+  leaves the working directory unchanged, and `git -C "" rev-parse
+  --show-toplevel` answers for wherever it was run.
+- **The sentence above the fence hangs the absent `uv sync` on `git
+  worktree add` rather than on the `cd`.** It read *No `uv sync` follows
+  the `cd`*, and the fence holds no `cd` for that to point at. What it
+  says about the sync is unchanged: it is needed only to run something
+  by hand, the gate's own first command being `uv sync --locked`.
+- **The create's condition is the reader's own directory already holding
+  the placeholder's name.** With the placeholder ahead of `"$WT"` the
+  `<` has to succeed before the `>` is reached, and a directory of that
+  name serves as well as a file; a directory holding neither ends the
+  line with nothing created, measured in `/bin/zsh`, `/bin/bash`,
+  `/bin/sh` and `/bin/dash`, which do not all print the same diagnostic.
+  *The worktree command ends in its placeholder* above says a paste made
+  where nothing stands at that path creates a file there, with no
+  condition on it, and this entry supersedes that sentence.
+- **The removal guard is stated as refusing an unset or empty `WT`**,
+  which is what `${WT:?}` does, where the sentence read *with no `$WT`
+  set*. Under `/bin/zsh` 5.9 and the `bash` 3.2.57 macOS ships as
+  `/bin/bash` and `/bin/sh`, unset and empty both refuse, where a space,
+  a word and a stale path each run — those being the control. The
+  standard's next sentence comes with it, naming what the guard does not
+  catch, so the question *`CLAUDE.md`'s worktree-removal fence refuses
+  an unset `WT`* above left to btclib-org/.github#797 is answered in the
+  file rather than deferred.
+- **A sentence below the removal fence names `btclib-org/.github`'s
+  `CLAUDE.md` at `20ad654` as what the create, the push and the removal
+  converged on**, so a later reader compares against a tree rather than
+  against an issue's quotation of one. The push and the removal
+  paragraphs are that tree's bytes, and the create paragraph is those
+  bytes from *With the placeholder ahead of* onward, its citation clause
+  naming the standard as the rest of this file does.
+
+### `toml-comment-width`'s comment states the pattern's own predicate
+
+- **The comment above the hook no longer says a trailing unbreakable
+  link is exempt** (issue btclib-org/.github#843). The pattern
+  `^(?=[ \t]*#).{80}\S*[ \t]` has no notion of a link; it reports a line
+  only where whitespace is left past column 80. Run by pre-commit over a
+  planted toml file, the hook passes over a 64-character unbreakable
+  token opening at column 63 and reports the same token opening at
+  column 93, so the exemption is conditional on a position the sentence
+  did not name. What replaces it states that predicate and names no
+  other tool, which is what btclib-org/.github#843 settles for the trees
+  carrying the hook and what btclib-org/btclib-node carries at
+  `71f6aee1`.
+- **MD013 is not named beside the hook, its amnesty being stated
+  already** (issue btclib-org/.github#843). `.yamllint.yaml`'s note on
+  `allow-non-breakable-words` gives a line that is one long token as the
+  exemption MD013 already makes, so naming it here would be the second
+  site section 9 of the standard refuses.
+- **The `name:` is left alone** (issue btclib-org/.github#843). It reads
+  *80 columns, unbreakable links exempt*, the same lexical wording
+  against the same positional pattern, and that is one decision for the
+  trees carrying the hook rather than this one's to take alone.
