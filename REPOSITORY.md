@@ -175,13 +175,14 @@ offered; a stale branch is rebased from a checkout instead.
 
 ```shell
 gh api repos/btclib-org/bbt \
-  --jq '{issues: .has_issues, visibility: .visibility, topics: .topics}'
-# {"issues":true,
+  --jq '{issues: .has_issues, visibility: .visibility,
+         wiki: .has_wiki, projects: .has_projects, topics: .topics}'
+# {"issues":true,"projects":true,
 #  "topics":["bitcoin","bitcoin-core","blockchain","course-materials",
 #            "cryptography","digital-signatures","elliptic-curves",
 #            "jupyter-notebook","lecture-notes","regtest","spreadsheet",
 #            "teaching"],
-#  "visibility":"public"}
+#  "visibility":"public","wiki":true}
 ```
 
 `has_issues` is what `CONTRIBUTING.md`'s *The issue tracker* rests on:
@@ -192,6 +193,12 @@ and clearing it leaves a tree able to run the sentinel rather than
 owing it: [the record of which trees carry which sentinel][s10-carries]
 does not name this repository, so there is no `scorecard.yml` here and
 no Scorecard badge in `README.md`.
+
+[The standard turns the wiki and the projects board off on every
+tree][s11], an unused wiki being a second place a reader can land looking
+for what the tracker already records and the projects board a per-user
+view of the same issues. The call above still answers `true` for both:
+neither has been turned off here yet.
 
 **The topics are `pyproject.toml`'s `keywords`**, which is what [the
 standard asks][s3]; the call above sorts them, where that file orders
@@ -416,11 +423,6 @@ are that case read from the other end: they compose a merge commit
 *Merge methods* above reads back as a button this repository does not
 offer.
 
-`has_wiki` and `has_projects` are outside the perimeter by section 11's
-own sentence, which states no rule about either, so this file neither
-reads them back nor explains an answer to them; that sentence is what
-the loop above would count, which is why the pair is not in its list.
-
 What the scope costs is a silent flip. A change to any of the above
 shows up in nothing here, and what would find it is somebody reading the
 repository document against this file rather than a command.
@@ -432,6 +434,7 @@ repository document against this file rather than a command.
 [s10]: https://github.com/btclib-org/.github#what-every-workflow-does
 [s10-check]: https://github.com/btclib-org/.github#the-aggregate-job-and-the-required-check
 [s10-carries]: https://github.com/btclib-org/.github#which-trees-carry-which-sentinel
+[s11]: https://github.com/btclib-org/.github#11-github-settings
 [s11-deps]: https://github.com/btclib-org/.github#dependabot-and-pre-commitci
 [s11-merge]: https://github.com/btclib-org/.github#merge-method
 [s11-sigs]: https://github.com/btclib-org/.github#signatures
