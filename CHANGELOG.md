@@ -1808,3 +1808,47 @@ on it opens.
   `51f717e` now, the push paragraph there carries the BSD-`env`/exit-125
   sentences `20ad654` lacked, and the sentence naming `20ad654` below
   the removal fence is gone from the section.
+
+### The gate runs section 4's local hooks
+
+- **The gate runs `reasonless-coverage-pragma`** (issue btclib-org/.github#965).
+  Section 4 lists it among the local hooks a Python tree owes, `types:
+  [python]` rather than a narrower set, and `.pre-commit-config.yaml` ran
+  none of it: this tree carries no bare `# pragma: no cover` or `# pragma:
+  no branch` today, which is the tree in which the first reasonless one is
+  refused by nothing. Run over a planted script carrying one with nothing
+  after it on its line, the hook reports it; over the same line with a
+  reason added, it passes. `tests/__init__.py`'s `BACKLOG` row for
+  `tests/hooks_test.py`'s `test_the_local_hooks_run` cell also names the
+  other Python trees the port has not yet reached.
+- **The gate runs `unquoted-placeholder`** (issue btclib-org/.github#706).
+  Section 9 of the standard is the rule the hook enforces and section 4 is
+  where it sits; `.pre-commit-config.yaml` ran none of it, and this tree's
+  markdown carries no placeholder standing as a whole, quoted argument
+  today. Run over a planted line where a placeholder stands alone inside
+  quotes, the hook reports it; over the same placeholder inside a
+  spaced assignment, which section 9 exempts as another language's value,
+  it passes. `CHANGELOG.md` is excluded, an append-only section having no
+  repair for a shape already landed. The row for this repository also
+  names the other Python trees the port has not yet reached.
+- **The gate runs `check-changelog`** (issue btclib-org/.github#21).
+  `.github/scripts/check_changelog.py` is copied byte for byte from
+  `btclib-org/.github`, proved with `cmp`, and the hook entry runs it
+  ahead of `markdownlint-cli2` in `.pre-commit-config.yaml`, whose `--fix`
+  would otherwise repair the very seam the third of its checks exists to
+  name. Run over a copy of the open section with a heading and a `(closes
+  #N)` doubled, both checks report; over this file's own open section as
+  it stands, the hook passes. The row for this repository also names the
+  other Python trees the port has not yet reached.
+- **`toml-comment-width`'s `name:` now states the pattern's own
+  predicate, not a lexical amnesty** (issue btclib-org/.github#843): it
+  reads *an unbroken final token exempt* in place of *unbreakable links
+  exempt*, `btclib-org/.github`'s own wording at `51f717e`.
+  *`toml-comment-width`'s comment states the pattern's own predicate*'s
+  entry above named that decision, in its own *The `name:` is left
+  alone* bullet, as the trees carrying the hook's to take together; it
+  is taken here for this tree.
+- **The hook's own width is bytes, and the comment now says so** (issue
+  btclib-org/.github#885): the pattern matches against the raw line, so
+  `.{80}` is eighty bytes and not eighty columns wherever a comment is
+  not ASCII, which is the qualification this tree's copy lacked.
