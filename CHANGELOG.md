@@ -1784,3 +1784,27 @@ on it opens.
   `1d81bf7`, so the prohibition is stated as a permission: no ruleset
   reaches a name in a clone, and the pull request is what moves
   `origin/main` rather than `main`.
+
+### `CLAUDE.md` carries the shared primary-checkout section byte for byte
+
+- **`## The primary checkout is the maintainer's` matches
+  `btclib-org/.github`'s `CLAUDE.md` at `51f717e`, heading to heading**
+  (issue btclib-org/.github#739): the section this tree carried instead
+  named `uv sync` directly, which the canonical's own redirect sentence
+  now covers, and a sentence naming the sha the wording had converged
+  at, which is history rather than a fact about this tree, so the new
+  section drops both rather than moving them.
+- **The entry *The worktree fence's create, push and guard take the
+  standard's form* above says the sentence on the absent `uv sync` is
+  unchanged** (issue btclib-org/.github#739): it is gone now, and the
+  section says nothing about a separate sync at all;
+  `CONTRIBUTING.md`'s *The environment and the gates* names `uv sync
+  --locked` as the first gate command, unaffected by this port.
+- **That same entry's first and last bullets name the push paragraph,
+  and a sentence below the removal fence, as `btclib-org/.github`'s
+  `CLAUDE.md` at `20ad654` byte for byte and as what the create, the
+  push and the removal converged on** (issue btclib-org/.github#739):
+  neither holds any more — the section is `btclib-org/.github`'s at
+  `51f717e` now, the push paragraph there carries the BSD-`env`/exit-125
+  sentences `20ad654` lacked, and the sentence naming `20ad654` below
+  the removal fence is gone from the section.
