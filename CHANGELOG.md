@@ -1872,3 +1872,19 @@ on it opens.
   leaves *Features* because section 11 puts them outside the perimeter.
   That entry read section 11 as it then stood, and this one supersedes
   it.
+
+### The hyphen hook reads Python and rst beside markdown
+
+- **`no-hyphen-at-end-of-line` reads markdown, Python and
+  reStructuredText, the type list section 4 of the standard gives it**
+  (issue btclib-org/.github#921). A docstring reaches a rendered page the
+  way a markdown paragraph does: docutils leaves the source line break
+  inside the paragraph it builds and html collapses it to a space, so a
+  word wrapped at its own hyphen shows the hyphen and then a space on
+  the page while the source reads correctly. The comment above the hook
+  is `btclib-org/.github`'s own with its `README.md` read as the
+  standard, as this file's other hook comments do. The expression
+  answers on no line of this tree's Python, so the widened gate is green
+  with nothing reflowed: `git grep -nE '[A-Za-z0-9]-$' -- '*.py'
+  '*.rst'` prints nothing, and `git grep -cE '[A-Za-z0-9]$' -- '*.py'`
+  is the control saying the pattern can match.
