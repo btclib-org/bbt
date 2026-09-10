@@ -1852,3 +1852,23 @@ on it opens.
   btclib-org/.github#885): the pattern matches against the raw line, so
   `.{80}` is eighty bytes and not eighty columns wherever a comment is
   not ASCII, which is the qualification this tree's copy lacked.
+
+### `REPOSITORY.md` reads the wiki and the projects board back
+
+- ***Features* reads `has_wiki` and `has_projects` back, in the call that
+  reads `has_issues` and `visibility`** (issue btclib-org/.github#550).
+  Section 11 of the standard turns both off on every tree and has a copy
+  record them, so the block carries the answer the call gives, `true`
+  for both, and the paragraph beside it says the rule and that neither
+  has been turned off here yet. The flip is a setting and not a file,
+  and is still owed, which is why the entry cites the issue rather than
+  closing it.
+- **The paragraph under *What this file passes over* that put the pair
+  outside the perimeter is gone** (issue btclib-org/.github#550). It
+  read section 11 as stating no rule about either, and section 11 now
+  states one. The loop's list keeps the fields it had: its predicate is
+  a field the standard names nowhere, and the standard now names both.
+- *`REPOSITORY.md`'s perimeter is section 11's* above says the pair
+  leaves *Features* because section 11 puts them outside the perimeter.
+  That entry read section 11 as it then stood, and this one supersedes
+  it.
