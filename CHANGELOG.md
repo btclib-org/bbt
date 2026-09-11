@@ -1888,3 +1888,17 @@ on it opens.
   with nothing reflowed: `git grep -nE '[A-Za-z0-9]-$' -- '*.py'
   '*.rst'` prints nothing, and `git grep -cE '[A-Za-z0-9]$' -- '*.py'`
   is the control saying the pattern can match.
+
+### The `mention` job's `pull-requests: write` carries its reason
+
+- **`claude-review.yml`'s `mention` job says what its
+  `pull-requests: write` is for**, as the `review` job's grant and the
+  `id-token: write` beside it do (issue btclib-org/.github#915). The
+  comment is the one `btclib-node` and `btclib-benchmarks` carry at the
+  same line, `# what posting the reply takes`, byte for byte. Section 14
+  of the standard keeps `claude-review.yml` out of the comparison
+  `tests/verbatim_test.py` runs — "this repository is the standard the
+  workflow reviews, so its prompt and a receiving copy's differ" — so a
+  copy carrying the comment beside one that does not turns nothing red.
+  The other copies are owed the same line, which is why this entry cites
+  the issue rather than closing it.
