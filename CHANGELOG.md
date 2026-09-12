@@ -1917,3 +1917,32 @@ on it opens.
   reads validates as it stands, so nothing in `ISSUE_TEMPLATE/` moves.
   The other repositories are owed the same pair, which is why this entry
   cites the issue rather than closing it.
+
+### The verbatim files take the standard's copies whole
+
+- **`REVIEWING.md`'s shared half is `btclib-org/.github`'s** (issue
+  btclib-org/.github#353). Section 14 compares the file up to
+  `## This repository in particular`, and the half above that heading is
+  replaced whole rather than each difference applied by hand, a
+  hand-written list of them being what comes up short. The half carries
+  a rule for a finding about the wording of prose no user reads: it is
+  named at the foot of the review and left there, where every other
+  collateral finding is filed as an issue. The questions under that
+  heading are this tree's own and are untouched.
+- **`.yamllint.yaml`'s note on `allow-non-breakable-words` states the
+  setting's own predicate and nothing about MD013** (issue
+  btclib-org/.github#976). MD013 passes over a line whose overflow
+  offers no break, which is a positional exemption that knows nothing of
+  URLs, so calling it a bare URL's was a claim about the other tool that
+  the other tool does not make. *`toml-comment-width`'s comment states
+  the pattern's own predicate* above leaves MD013 unnamed beside that
+  hook on the ground that this note states its amnesty already; the
+  hook's comment stands and that ground goes with the sentence it
+  pointed at.
+- **`.gitattributes` says what the union driver costs at the seam**
+  (issue btclib-org/.github#1026). The driver joins the two sides' added
+  lines directly, so a block opening with a heading loses the blank line
+  above it while the rebase exits 0 and reports nothing, and the comment
+  names section 4's `check-changelog` hook as what reports that seam.
+  This tree runs the hook ahead of the markdownlint autofix, which is
+  the order the paragraph gives its reason for.
