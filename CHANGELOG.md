@@ -1902,3 +1902,18 @@ on it opens.
   copy carrying the comment beside one that does not turns nothing red.
   The other copies are owed the same line, which is why this entry cites
   the issue rather than closing it.
+
+### The issue-form hooks join the `check-jsonschema` block
+
+- **`check-github-issue-config` and `check-github-issue-forms` sit beside
+  `check-dependabot` in the `check-jsonschema` block, at its
+  `rev: 0.38.0`** (issue btclib-org/.github#767). Section 4's *schemas*
+  bullet of the standard names the pair. Both carry `types: [yaml]`: the
+  first selects `.github/ISSUE_TEMPLATE/config.yml`, the second the
+  directory's yaml that is neither `config.yml` nor `config.yaml`, which
+  here is `bug_report.yml`, `feature_request.yml` and `question.yml`, so
+  `check-hooks-apply` finds a file for each. The comment above the pair
+  is `btclib-org/.github`'s own, byte for byte. Every file the pair
+  reads validates as it stands, so nothing in `ISSUE_TEMPLATE/` moves.
+  The other repositories are owed the same pair, which is why this entry
+  cites the issue rather than closing it.
