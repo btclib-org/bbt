@@ -48,77 +48,11 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # the job itself is btclib-org/.github's, called at @main so a fix there
+  # reaches this tree in one landing (section 10 of its README.md); what
+  # stays here is the trigger, the schedule and which files are this
+  # tree's documentation
   links:
-    name: Check the documentation links
-    # the condition lint.yml carries, for the same two reasons: a draft
-    # is work its author is not asking anyone to read yet, and the closed
-    # event is taken above only to supersede a run this pull request's
-    # group is still holding
-    if: ${{ !github.event.pull_request.draft && github.event.action != 'closed' }}
-    runs-on: ubuntu-latest
-    # a run of this tree answers in seconds; a job past this is hung on
-    # one host rather than working
-    timeout-minutes: 15
-    steps:
-      # every action pinned to a commit SHA with the tag in the comment:
-      # a tag, let alone a branch, is a name its owner can move
-      - name: Check out the repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          # the checker reads the tree and nothing pushes it back
-          persist-credentials: false
-
-      - name: Check the links
-        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
-        with:
-          # one glob, because `**/` matches zero directories as well as
-          # any number of them: `lychee --dump-inputs "**/*.md"`
-          # resolves the markdown this tree ships -- the root files, and
-          # the README of every directory that has one, and the three
-          # regtest-lab pages, and lab-tutorial/01.md -- and adding
-          # `"*.md"` beside it names the root files a second time, which
-          # lychee reads a second time. A hidden directory is skipped
-          # unless --hidden is passed, which leaves .claude/ out: those
-          # are a session's instructions rather than prose a reader is
-          # invited to follow, and their links are local, which
-          # `local-link-prefix` and a resolution against the tree already
-          # answer.
-          # --no-progress because the log is not a terminal.
-          # --retry-wait-time, against lychee's default of 1 second,
-          # because a second is no wait at all for the host that
-          # throttled the first request; --max-retries is not passed,
-          # 3 being what `lychee --help` already gives.
-          # --accept replaces lychee's default range rather than
-          # extending it -- `lychee --help` gives that default as
-          # 100..=103,200..=299 -- so the default is written out and 429
-          # is the one code added to it, a rate limit being an answer
-          # from a host that is alive.
-          # No --timeout: run over this tree, every host answered inside
-          # lychee's default of 20 seconds. btclib raised it to 45
-          # against a host measured timing out on a runner while
-          # answering in under a second elsewhere, and that number
-          # belongs here when a run here measures the same, not before.
-          # --include-fragments, or a heading renamed in the tree a link
-          # here points into breaks that link with nothing red anywhere:
-          # the forge serves the page and drops a fragment it cannot
-          # resolve, so the run that notices is the linking tree's. The
-          # check reads the page already fetched for the link, so it adds
-          # no request. What can override it is the token below: on a
-          # failed github.com/<owner>/<repo> link lychee falls back to the
-          # repositories API, so a missing fragment on that shape -- the
-          # one REPOSITORY.md and CONTRIBUTING.md cite the standard by --
-          # is read, found missing, and then answered OK because the
-          # repository exists; the same anchor on the blob/main/README.md
-          # page carries a path the API declines and stays red.
-          # btclib-org/.github#630 is where that is weighed.
-          args: >-
-            --no-progress
-            --retry-wait-time 10
-            --accept 100..=103,200..=299,429
-            --include-fragments
-            "**/*.md"
-          # fail the job rather than only summarizing: a green run that
-          # found a dead link is the state this workflow exists to end
-          fail: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    uses: btclib-org/.github/.github/workflows/reusable-links.yml@main
+    with:
+      targets: '"**/*.md"'
