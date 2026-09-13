@@ -258,6 +258,13 @@ before pushing a change to the hook config: it catches what a wrong
 `types_or` tag or a malformed entry would otherwise turn into a red lint
 job.
 
+**`uv python install` before the first of the commands above, and again
+when `.python-version` moves.** Without it pre-commit builds its Python
+hook environments against whatever interpreter `uvx` resolves, which need
+not be the one `.python-version` names. The command takes no version
+argument, that file being what it reads; `lint.yml` runs it as a step of
+its own, and the comment there carries the rest.
+
 The hooks are not the whole of what `lint.yml` runs. `ipynb/README.md`
 promises that executing a transcript notebook gives back every output
 committed in it, and `check-json` asks only that the file still parses,

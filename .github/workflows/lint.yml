@@ -89,6 +89,20 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
 
+      # the interpreter pre-commit runs under, and so the one it builds
+      # every `language: python` hook environment with --
+      # .pre-commit-config.yaml's local typos entries among them. uvx
+      # resolves an interpreter without reading .python-version, so
+      # without this step those environments are built against the
+      # runner image's own python3 while this tree declares a version of
+      # its own, and the first hook to parse the tree's Python parses it
+      # with an interpreter nothing here names. No version is written:
+      # `uv python install` with no argument installs the one
+      # .python-version gives, which is where section 1 of the standard
+      # keeps it
+      - name: Install the interpreter .python-version names
+        run: uv python install
+
       # the cache key needs the runner image, not only the OS: a
       # pre-commit environment built on one image is not always usable on
       # the next one, and a stale hit fails in the hook rather than here
@@ -100,17 +114,15 @@ jobs:
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.cache/pre-commit
-          # the hook config alone, where the sibling repositories hash
-          # .python-version beside it: every environment pre-commit
-          # builds is named by what .pre-commit-config.yaml pins -- a
-          # rev for most of them, additional_dependencies for the two
-          # typos hooks -- and the hook that shells out to uv is
-          # language: system -- pre-commit builds nothing for it, so
-          # nothing under this path depends on the interpreter uv
-          # resolves
+          # the interpreter beside the hook config: a `language: python`
+          # hook's environment is built against the Python the step
+          # above installs and is cached under a directory naming that
+          # version, so a key over the config alone stands for the
+          # environments of two interpreters at once and restores ones
+          # pre-commit rebuilds rather than runs
           key: >-
             pre-commit-${{ runner.os }}-${{ steps.image.outputs.os }}-${{
-            hashFiles('.pre-commit-config.yaml') }}
+            hashFiles('.pre-commit-config.yaml', '.python-version') }}
           restore-keys: |
             pre-commit-${{ runner.os }}-${{ steps.image.outputs.os }}-
 
