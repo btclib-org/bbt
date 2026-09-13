@@ -1,7 +1,7 @@
 ---
 # The lint gate of this repository, and the whole of it: lint.yml runs
-# this very file, so what CI enforces is exactly what a commit enforces
-# and there is no second list of tools anywhere.
+# this very file, so what CI enforces is exactly what a local run of this
+# file enforces and there is no second list of tools anywhere.
 #
 # What it is asked to cover is what this tree holds -- markdown, yaml,
 # jsonc, toml, notebooks, and a directory of Python scripts that has
@@ -9,7 +9,7 @@
 # sibling's, and pyproject.toml carries the measurement behind every
 # rule left out rather than a claim that the tree is clean.
 #
-# Skip a hook with SKIP=<id>, or all of them with "git commit -n".
+# Skip a hook with SKIP=<id>.
 ci:
   # a bot committing to a branch is at odds with a setup where no
   # workflow token can write: a failing hook is fixed by its author

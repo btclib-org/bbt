@@ -2003,3 +2003,8 @@ on it opens.
 - **`REVIEWING.md`, `CONTRIBUTING.md` and `check_changelog.py` follow
   `btclib-org/.github`** (issue btclib-org/.github#1075): what is filed
   is one test, and an entry's body past three lines is refused.
+
+### The lint gate's prose names a local run, not a commit
+
+- **`.pre-commit-config.yaml` says what a local run enforces and the inert `git
+  commit` recipe goes** (issue btclib-org/.github#966).
