@@ -1946,3 +1946,54 @@ on it opens.
   names section 4's `check-changelog` hook as what reports that seam.
   This tree runs the hook ahead of the markdownlint autofix, which is
   the order the paragraph gives its reason for.
+
+### The lint gate runs the interpreter `.python-version` names
+
+- **`lint.yml` installs that interpreter before it runs the hooks**
+  (issue btclib-org/.github#1067). `uvx` resolves a Python without
+  reading `.python-version`, so pre-commit built every environment of a
+  `language: python` hook with the runner image's own `python3` while
+  this tree declared one of its own. `uv python install` takes no
+  version argument, the one `.python-version` gives being what it
+  installs, so the number stays where section 1 keeps it.
+- **No hook here parses this tree's Python with the interpreter
+  pre-commit builds for it** (issue btclib-org/.github#1067).
+  `ruff-check` takes its target version from `pyproject.toml`'s
+  `requires-python`, and the `mypy` hook runs in the project environment
+  `uv run --locked` resolves, so the gate answers the same either way
+  today and the step above is for the first hook to be given one of
+  pre-commit's own.
+- **The cache key hashes `.python-version` beside the hook config**
+  (issue btclib-org/.github#1067). pre-commit names such an environment
+  for the interpreter it was built with, `py_env-python3.14`, so a key
+  over the hook config alone stands for the environments of two
+  interpreters at once and restores ones pre-commit rebuilds rather
+  than runs. The reason the key gave for naming the config alone --
+  that nothing under that path depends on the interpreter uv resolves
+  -- goes with the step that makes it false.
+- **`default_language_version` in `.pre-commit-config.yaml` is
+  declined** (issue btclib-org/.github#1067). It would name a version
+  `.python-version` already carries with nothing keeping the two equal,
+  and it cannot stand on its own in any case: the runner image carries
+  no interpreter of that version for pre-commit to build an environment
+  with until the step above installs one.
+- **The gate stays a `uvx`** (issue btclib-org/.github#1067). Resolving
+  pre-commit through the project environment is how a sibling's lint
+  job reaches `.python-version` without a step, and it is a different
+  arrangement rather than this one's fix: pre-commit is in no
+  dependency group here, and `lint.yml` runs the command
+  `CONTRIBUTING.md` gives an author for the reason its own header
+  gives.
+- **`CONTRIBUTING.md`'s gate section carries the same command** (issue
+  btclib-org/.github#1067). A local run resolves its interpreter the
+  way the job does, so what puts the two gates on one version is a
+  sentence beside the commands rather than a step a reader of the
+  workflow alone would meet.
+- ***`lint.yml`'s cache-key comment says what pins each pre-commit
+  environment* above is superseded** (issue btclib-org/.github#1067).
+  The comment that entry landed goes with the key it explained, and its
+  reading was short of the interpreter: a `rev:` and an
+  `additional_dependencies` pin what a hook installs, where the version
+  it is installed under is what the step above fixes. Its closing
+  sentence, that the key hashes `.pre-commit-config.yaml` whole so what
+  it keys on does not change, is what the bullet above changes.
