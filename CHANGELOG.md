@@ -2014,3 +2014,8 @@ on it opens.
 - **The lychee job lives in `btclib-org/.github`** (issue
   btclib-org/.github#35): this file keeps the trigger, the schedule and
   the files it checks.
+
+### The wiki and the projects board are off
+
+- **`REPOSITORY.md` records both as `false`** (issue
+  btclib-org/.github#550), the settings having been turned off.
