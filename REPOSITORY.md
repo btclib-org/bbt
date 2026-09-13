@@ -177,12 +177,12 @@ offered; a stale branch is rebased from a checkout instead.
 gh api repos/btclib-org/bbt \
   --jq '{issues: .has_issues, visibility: .visibility,
          wiki: .has_wiki, projects: .has_projects, topics: .topics}'
-# {"issues":true,"projects":true,
+# {"issues":true,"projects":false,
 #  "topics":["bitcoin","bitcoin-core","blockchain","course-materials",
 #            "cryptography","digital-signatures","elliptic-curves",
 #            "jupyter-notebook","lecture-notes","regtest","spreadsheet",
 #            "teaching"],
-#  "visibility":"public","wiki":true}
+#  "visibility":"public","wiki":false}
 ```
 
 `has_issues` is what `CONTRIBUTING.md`'s *The issue tracker* rests on:
@@ -195,10 +195,9 @@ does not name this repository, so there is no `scorecard.yml` here and
 no Scorecard badge in `README.md`.
 
 [The standard turns the wiki and the projects board off on every
-tree][s11], an unused wiki being a second place a reader can land looking
-for what the tracker already records and the projects board a per-user
-view of the same issues. The call above still answers `true` for both:
-neither has been turned off here yet.
+tree][s11], an unused wiki being a second place a reader can land
+looking for what the tracker already records and the projects board a
+per-user view of the same issues.
 
 **The topics are `pyproject.toml`'s `keywords`**, which is what [the
 standard asks][s3]; the call above sorts them, where that file orders
