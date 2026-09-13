@@ -1888,3 +1888,112 @@ on it opens.
   with nothing reflowed: `git grep -nE '[A-Za-z0-9]-$' -- '*.py'
   '*.rst'` prints nothing, and `git grep -cE '[A-Za-z0-9]$' -- '*.py'`
   is the control saying the pattern can match.
+
+### The `mention` job's `pull-requests: write` carries its reason
+
+- **`claude-review.yml`'s `mention` job says what its
+  `pull-requests: write` is for**, as the `review` job's grant and the
+  `id-token: write` beside it do (issue btclib-org/.github#915). The
+  comment is the one `btclib-node` and `btclib-benchmarks` carry at the
+  same line, `# what posting the reply takes`, byte for byte. Section 14
+  of the standard keeps `claude-review.yml` out of the comparison
+  `tests/verbatim_test.py` runs — "this repository is the standard the
+  workflow reviews, so its prompt and a receiving copy's differ" — so a
+  copy carrying the comment beside one that does not turns nothing red.
+  The other copies are owed the same line, which is why this entry cites
+  the issue rather than closing it.
+
+### The issue-form hooks join the `check-jsonschema` block
+
+- **`check-github-issue-config` and `check-github-issue-forms` sit beside
+  `check-dependabot` in the `check-jsonschema` block, at its
+  `rev: 0.38.0`** (issue btclib-org/.github#767). Section 4's *schemas*
+  bullet of the standard names the pair. Both carry `types: [yaml]`: the
+  first selects `.github/ISSUE_TEMPLATE/config.yml`, the second the
+  directory's yaml that is neither `config.yml` nor `config.yaml`, which
+  here is `bug_report.yml`, `feature_request.yml` and `question.yml`, so
+  `check-hooks-apply` finds a file for each. The comment above the pair
+  is `btclib-org/.github`'s own, byte for byte. Every file the pair
+  reads validates as it stands, so nothing in `ISSUE_TEMPLATE/` moves.
+  The other repositories are owed the same pair, which is why this entry
+  cites the issue rather than closing it.
+
+### The verbatim files take the standard's copies whole
+
+- **`REVIEWING.md`'s shared half is `btclib-org/.github`'s** (issue
+  btclib-org/.github#353). Section 14 compares the file up to
+  `## This repository in particular`, and the half above that heading is
+  replaced whole rather than each difference applied by hand, a
+  hand-written list of them being what comes up short. The half carries
+  a rule for a finding about the wording of prose no user reads: it is
+  named at the foot of the review and left there, where every other
+  collateral finding is filed as an issue. The questions under that
+  heading are this tree's own and are untouched.
+- **`.yamllint.yaml`'s note on `allow-non-breakable-words` states the
+  setting's own predicate and nothing about MD013** (issue
+  btclib-org/.github#976). MD013 passes over a line whose overflow
+  offers no break, which is a positional exemption that knows nothing of
+  URLs, so calling it a bare URL's was a claim about the other tool that
+  the other tool does not make. *`toml-comment-width`'s comment states
+  the pattern's own predicate* above leaves MD013 unnamed beside that
+  hook on the ground that this note states its amnesty already; the
+  hook's comment stands and that ground goes with the sentence it
+  pointed at.
+- **`.gitattributes` says what the union driver costs at the seam**
+  (issue btclib-org/.github#1026). The driver joins the two sides' added
+  lines directly, so a block opening with a heading loses the blank line
+  above it while the rebase exits 0 and reports nothing, and the comment
+  names section 4's `check-changelog` hook as what reports that seam.
+  This tree runs the hook ahead of the markdownlint autofix, which is
+  the order the paragraph gives its reason for.
+
+### The lint gate runs the interpreter `.python-version` names
+
+- **`lint.yml` installs that interpreter before it runs the hooks**
+  (issue btclib-org/.github#1067). `uvx` resolves a Python without
+  reading `.python-version`, so pre-commit built every environment of a
+  `language: python` hook with the runner image's own `python3` while
+  this tree declared one of its own. `uv python install` takes no
+  version argument, the one `.python-version` gives being what it
+  installs, so the number stays where section 1 keeps it.
+- **No hook here parses this tree's Python with the interpreter
+  pre-commit builds for it** (issue btclib-org/.github#1067).
+  `ruff-check` takes its target version from `pyproject.toml`'s
+  `requires-python`, and the `mypy` hook runs in the project environment
+  `uv run --locked` resolves, so the gate answers the same either way
+  today and the step above is for the first hook to be given one of
+  pre-commit's own.
+- **The cache key hashes `.python-version` beside the hook config**
+  (issue btclib-org/.github#1067). pre-commit names such an environment
+  for the interpreter it was built with, `py_env-python3.14`, so a key
+  over the hook config alone stands for the environments of two
+  interpreters at once and restores ones pre-commit rebuilds rather
+  than runs. The reason the key gave for naming the config alone --
+  that nothing under that path depends on the interpreter uv resolves
+  -- goes with the step that makes it false.
+- **`default_language_version` in `.pre-commit-config.yaml` is
+  declined** (issue btclib-org/.github#1067). It would name a version
+  `.python-version` already carries with nothing keeping the two equal,
+  and it cannot stand on its own in any case: the runner image carries
+  no interpreter of that version for pre-commit to build an environment
+  with until the step above installs one.
+- **The gate stays a `uvx`** (issue btclib-org/.github#1067). Resolving
+  pre-commit through the project environment is how a sibling's lint
+  job reaches `.python-version` without a step, and it is a different
+  arrangement rather than this one's fix: pre-commit is in no
+  dependency group here, and `lint.yml` runs the command
+  `CONTRIBUTING.md` gives an author for the reason its own header
+  gives.
+- **`CONTRIBUTING.md`'s gate section carries the same command** (issue
+  btclib-org/.github#1067). A local run resolves its interpreter the
+  way the job does, so what puts the two gates on one version is a
+  sentence beside the commands rather than a step a reader of the
+  workflow alone would meet.
+- ***`lint.yml`'s cache-key comment says what pins each pre-commit
+  environment* above is superseded** (issue btclib-org/.github#1067).
+  The comment that entry landed goes with the key it explained, and its
+  reading was short of the interpreter: a `rev:` and an
+  `additional_dependencies` pin what a hook installs, where the version
+  it is installed under is what the step above fixes. Its closing
+  sentence, that the key hashes `.pre-commit-config.yaml` whole so what
+  it keys on does not change, is what the bullet above changes.
