@@ -1997,3 +1997,9 @@ on it opens.
   it is installed under is what the step above fixes. Its closing
   sentence, that the key hashes `.pre-commit-config.yaml` whole so what
   it keys on does not change, is what the bullet above changes.
+
+### A changelog entry is its title and at most three lines
+
+- **`REVIEWING.md`, `CONTRIBUTING.md` and `check_changelog.py` follow
+  `btclib-org/.github`** (issue btclib-org/.github#1075): what is filed
+  is one test, and an entry's body past three lines is refused.
