@@ -2019,3 +2019,9 @@ on it opens.
 
 - **`REPOSITORY.md` records both as `false`** (issue
   btclib-org/.github#550), the settings having been turned off.
+
+### `links.yml`'s `targets:` reaches every tracked markdown file
+
+- **`targets:` left `.github/` and `.claude/` outside lychee's
+  reach** (issue btclib-org/.github#1104): it becomes
+  `"**/*.md" ".github/**/*.md" ".claude/**/*.md"`.
