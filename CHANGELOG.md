@@ -2025,3 +2025,9 @@ on it opens.
 - **`targets:` left `.github/` and `.claude/` outside lychee's
   reach** (issue btclib-org/.github#1104): it becomes
   `"**/*.md" ".github/**/*.md" ".claude/**/*.md"`.
+
+### `CONTRIBUTING.md` gains the command naming an open section's order
+
+- **`CONTRIBUTING.md` gains the `awk` command naming the open section's
+  headings, and `REVIEWING.md` a question asking whether the branch's
+  own entry is last** (issue btclib-org/.github#1097): no gate reads it.
