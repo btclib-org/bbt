@@ -2037,3 +2037,9 @@ on it opens.
 - **`always_run: true`, and no `files:`** (issue
   btclib-org/.github#1138): the script reads the open section off disk,
   and the rebase that eats the seam stages nothing.
+
+### `check_changelog.py` states the rebase discipline it does not run
+
+- **The module docstring cited a `CONTRIBUTING.md` section, *Committing
+  and rebasing*, that no tree carries; it now states the discipline in
+  its own words** (issue btclib-org/.github#1137).
