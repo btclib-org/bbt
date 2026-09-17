@@ -2043,3 +2043,9 @@ on it opens.
 - **The module docstring cited a `CONTRIBUTING.md` section, *Committing
   and rebasing*, that no tree carries; it now states the discipline in
   its own words** (issue btclib-org/.github#1137).
+
+### `claude-review.yml` calls the organization's reusable review workflow
+
+- **Both jobs move to `btclib-org/.github`'s `reusable-claude-review.yml`**
+  (issue btclib-org/.github#35): the pin moves from `9c5ddab2` to `ef8bb1e4`,
+  fixing the stale-verdict jq btclib-org/btclib-secp256k1#394 records.

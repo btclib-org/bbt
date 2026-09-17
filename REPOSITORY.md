@@ -233,10 +233,11 @@ gh api repos/btclib-org/bbt/actions/permissions/workflow
 hooks over it, and pushes nothing back.
 
 A job that needs more elevates there and not in this default.
-`claude-review.yml` is the only workflow here whose jobs do, and its
-review job and its mention job take the same pair: `pull-requests:
-write` to post the comment, and `id-token: write` for the OIDC token
-the action mints during its own startup.
+`claude-review.yml` is the only workflow here whose job does. That job
+calls `btclib-org/.github`'s `reusable-claude-review.yml`, and takes
+`pull-requests: write` to post the review or the mention reply and
+`id-token: write` for the OIDC token minted at startup by the action
+that workflow runs.
 
 ```shell
 gh api repos/btclib-org/bbt/actions/permissions
@@ -368,9 +369,9 @@ the token is an organization secret at `visibility=all`, in both stores,
 so a repository adopting the workflow configures nothing for it, and a
 copy of it in a store here would be that decision undone.
 
-**A switch this repository does not set.** `claude-review.yml` guards
-its jobs with `vars.CLAUDE_REVIEW_ENABLED`, and neither variable store
-holds it:
+**A switch this repository does not set.** `claude-review.yml` calls a
+workflow that guards its two jobs with `vars.CLAUDE_REVIEW_ENABLED`,
+and neither variable store holds it:
 
 ```shell
 gh api repos/btclib-org/bbt/actions/variables --jq .total_count
