@@ -2049,3 +2049,9 @@ on it opens.
 - **Both jobs move to `btclib-org/.github`'s `reusable-claude-review.yml`**
   (issue btclib-org/.github#35): the pin moves from `9c5ddab2` to `ef8bb1e4`,
   fixing the stale-verdict jq btclib-org/btclib-secp256k1#394 records.
+
+### `links.yml`'s `permissions:` comment names lychee, not a position
+
+- **The token's recipient was *the step below*, and is lychee** (issue
+  btclib-org/.github#1177): this job is a bare `uses:` with no `steps:`
+  key, and `reusable-links.yml` is where lychee is handed the token.
