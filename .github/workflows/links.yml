@@ -34,9 +34,9 @@ on:
       - .lycheeignore
 
 # least privilege for the GITHUB_TOKEN, as in lint.yml: nothing here
-# writes, and the token is supplied to the step below for github.com
-# links alone, where an unauthenticated runner is rate limited hard
-# enough to look like rot
+# writes, and the token is supplied to lychee for github.com links
+# alone, where an unauthenticated runner is rate limited hard enough to
+# look like rot
 permissions:
   contents: read
 
