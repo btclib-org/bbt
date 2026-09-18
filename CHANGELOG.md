@@ -2055,3 +2055,9 @@ on it opens.
 - **The token's recipient was *the step below*, and is lychee** (issue
   btclib-org/.github#1177): this job is a bare `uses:` with no `steps:`
   key, and `reusable-links.yml` is where lychee is handed the token.
+
+### `claude-review.yml` takes the `closed` pull request type
+
+- **`types:` gains `closed`** (issue btclib-org/.github#1182): the
+  workflow-level group lets a closed run cancel a review still holding
+  it, and the callee's own job-level `if:` still declines the review.
