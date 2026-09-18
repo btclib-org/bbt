@@ -8,6 +8,13 @@ behind.
 
 ## Unreleased
 
+### `zizmor`'s hook takes the auditor persona, its two findings answered
+
+- **`claude-review.yml`'s `pull-requests: write` and `id-token: write` take
+  trailing comments; `zizmor`'s hook's `args:` line, absent before, now
+  carries `--offline`, `--no-progress` and `--persona=auditor`** (issue
+  btclib-org/.github#1164).
+
 ### The sentinel goes with its badge, and `links` follows the calendar
 
 - **`.github/workflows/scorecard.yml` is gone** (issue

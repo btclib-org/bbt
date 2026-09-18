@@ -105,11 +105,11 @@ jobs:
       # restated, a job's permissions replacing the workflow's
       contents: read
       # what posting the review or the mention reply takes
-      pull-requests: write
+      pull-requests: write # posting the review, and the reply to a mention
       # not for workload identity federation, which this does not use:
       # the action mints a GitHub OIDC token during its own startup.
       # Measured by leaving it out -- the run died before reaching
       # authentication at all, with "Could not fetch an OIDC token. Did
       # you remember to add `id-token: write` to your workflow
       # permissions?"
-      id-token: write
+      id-token: write # the OIDC token the action mints at its own startup
