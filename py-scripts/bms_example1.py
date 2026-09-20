@@ -5,17 +5,19 @@
 """Sign and verify a message under each btclib message-signing address type."""
 
 from btclib.b32 import p2wpkh
-from btclib.b58 import p2pkh, p2wpkh_p2sh, wif_from_prv_key
+from btclib.b58 import p2pkh, p2wpkh_p2sh, prv_key_data_from_wif, wif_from_prv_key
 from btclib.ecc.bms import sign, verify
-from btclib.to_prv_key import prv_keyinfo_from_prv_key
-from btclib.to_pub_key import pub_keyinfo_from_prv_key
 
 msg = b"Paolo is afraid of ephemeral random numbers"
 print("\n0. Message:", msg.decode())
 
 wif = b"Kx45GeUBSMPReYQwgXiKhG9FzNXrnCeutJp4yjTd5kKxCitadm3C"
 print("1. Compressed WIF:", wif.decode())
-pubkey, network = pub_keyinfo_from_prv_key(wif)
+# `sign` below takes the parsed key, not a WIF: `prv_key_data_from_wif`
+# is the read that gives it one, and `.pub.sec` is the public key it
+# derives from it.
+prv_key = prv_key_data_from_wif(wif)
+pubkey = prv_key.pub.sec
 
 print("2. Addresses")
 address1 = p2pkh(pubkey)
@@ -29,7 +31,7 @@ print("     p2wpkh:", address3)
 print(
     "\n3. Sign message with no address (i.e., with default compressed p2pkh address):",
 )
-sig1 = sign(msg, wif)
+sig1 = sign(msg, prv_key)
 print(f"rf1: {sig1.rf}")
 print(f" r1: {hex(sig1.dsa_sig.r).upper()}")
 print(f" s1: {hex(sig1.dsa_sig.r).upper()}")
@@ -46,7 +48,7 @@ print("Electrum p2wpkh     :", verify(msg, address3, sig1))
 
 
 print("\n3. Sign message with p2wpkh_p2sh address (BIP137):")
-sig2 = sign(msg, wif, address2)
+sig2 = sign(msg, prv_key, address2)
 print(f"rf2: {sig2.rf}")
 print(f" r2: {hex(sig2.dsa_sig.r).upper()}")
 print(f" s2: {hex(sig2.dsa_sig.s).upper()}")
@@ -63,7 +65,7 @@ print("BIP137 p2wpkh     :", verify(msg, address3, sig2))
 
 
 print("\n3. Sign message with p2wpkh address (BIP137):")
-sig3 = sign(msg, wif, address3)
+sig3 = sign(msg, prv_key, address3)
 print(f"rf3: {sig3.rf}")
 print(f" r3: {hex(sig3.dsa_sig.r).upper()}")
 print(f" s3: {hex(sig3.dsa_sig.s).upper()}")
@@ -80,16 +82,16 @@ print("BIP137 p2wpkh     :", verify(msg, address3, sig3))
 
 
 # uncompressed WIF / P2PKH address
-q, network, _ = prv_keyinfo_from_prv_key(wif)
-wif2 = wif_from_prv_key(q, network, compressed=False)
+wif2 = wif_from_prv_key(prv_key.q, prv_key.network, compressed=False)
 print("\n1. Uncompressed WIF          :", wif2)
-pubkey, network = pub_keyinfo_from_prv_key(wif2)
+prv_key2 = prv_key_data_from_wif(wif2)
+pubkey = prv_key2.pub.sec
 
 address4 = p2pkh(pubkey)
 print("2. Uncompressed P2PKH address:", address4)
 
 print("3. Sign message with uncompressed p2pkh:")
-sig4 = sign(msg, wif2, address4)
+sig4 = sign(msg, prv_key2, address4)
 print(f"rf4: {sig4.rf}")
 print(f" r4: {hex(sig4.dsa_sig.r).upper()}")
 print(f" s4: {hex(sig4.dsa_sig.s).upper()}")
