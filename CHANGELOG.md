@@ -2080,3 +2080,9 @@ on it opens.
 - **The `uv` ecosystem's group is `dev-tooling`, not `environment`**
   (issue btclib-org/.github#1156): section 11 of the standard fixes the
   name.
+
+### `check_changelog.py` gains a fifth check, an entry misplaced above the rule
+
+- **The script takes `.github`'s own copy, with `_GRANDFATHERED_ENTRIES`
+  set to this tree's own count above `RULE_HEADING`** (issue
+  btclib-org/.github#1215).
