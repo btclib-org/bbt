@@ -7,6 +7,7 @@
 ECDSA, ECSSA and Bitcoin Message Signing, in turn.
 """
 
+from btclib.b58 import prv_key_data_from_wif
 from btclib.ecc import bms, dsa, ssa
 
 msg = b"Hello, I'm Alice!"
@@ -47,7 +48,10 @@ bms_prv, bms_pub = bms.gen_keys()
 print("prv", bms_prv)
 print("pub", bms_pub)
 
-bms_sig = bms.sign(msg, bms_prv)
+# `bms_prv` is a WIF; `sign` takes the parsed key that
+# `prv_key_data_from_wif` reads from it.
+bms_prv_key = prv_key_data_from_wif(bms_prv)
+bms_sig = bms.sign(msg, bms_prv_key)
 print("rf:", hex(bms_sig.rf))
 print("r:", hex(bms_sig.dsa_sig.r))
 print("s:", hex(bms_sig.dsa_sig.r))

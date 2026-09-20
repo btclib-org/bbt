@@ -2068,3 +2068,9 @@ on it opens.
 - **`types:` gains `closed`** (issue btclib-org/.github#1182): the
   workflow-level group lets a closed run cancel a review still holding
   it, and the callee's own job-level `if:` still declines the review.
+
+### `py-scripts`' two signing scripts hand `bms.sign` a parsed key
+
+- **`bms_example1.py` and `signature_schemes.py` parse the WIF into a
+  `PrvKeyData` before calling `bms.sign`, rather than passing the WIF
+  itself** (closes #70): its `prv_key` parameter takes the parsed key.
