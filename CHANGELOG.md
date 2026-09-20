@@ -2074,3 +2074,9 @@ on it opens.
 - **`bms_example1.py` and `signature_schemes.py` parse the WIF into a
   `PrvKeyData` before calling `bms.sign`, rather than passing the WIF
   itself** (closes #70): its `prv_key` parameter takes the parsed key.
+
+### `dependabot.yml`'s `uv` group takes the standard's own name
+
+- **The `uv` ecosystem's group is `dev-tooling`, not `environment`**
+  (issue btclib-org/.github#1156): section 11 of the standard fixes the
+  name.
