@@ -2086,3 +2086,9 @@ on it opens.
 - **The script takes `.github`'s own copy, with `_GRANDFATHERED_ENTRIES`
   set to this tree's own count above `RULE_HEADING`** (issue
   btclib-org/.github#1215).
+
+### The `check-changelog` hook's comment names no count
+
+- **The comment above `check-changelog` cited "the three checks" this
+  script makes; the count is gone rather than corrected** (issue
+  btclib-org/.github#1225), the docstring itself listing every check.
