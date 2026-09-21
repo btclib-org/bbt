@@ -2092,3 +2092,9 @@ on it opens.
 - **The comment above `check-changelog` cited "the three checks" this
   script makes; the count is gone rather than corrected** (issue
   btclib-org/.github#1225), the docstring itself listing every check.
+
+### `[tool.uv]`'s floor equals the `uv` pin `dependabot-core` bundles
+
+- **`required-version` reads `>=0.12.17`, not `>=0.12.7`** (issue
+  btclib-org/.github#1229): a floor below the pin admits a `uv` older
+  than the one Dependabot writes `uv.lock` with.
