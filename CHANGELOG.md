@@ -2104,3 +2104,9 @@ on it opens.
 - **`bms_example1.py`'s `s1:` line and the ECBMS `s:` line of
   `signature_schemes.py` print `dsa_sig.s`, where each printed the `r` shown
   above it** (closes #73).
+
+### `links.yml`'s `cancel-in-progress` takes the conditional
+
+- **`links.yml`'s `cancel-in-progress` reads the conditional, not `true`**
+  (issue btclib-org/.github#1226): the workflow takes `closed` and
+  declares no `push` trigger, the shape section 10 reserves it for.
