@@ -2098,3 +2098,9 @@ on it opens.
 - **`required-version` reads `>=0.12.17`, not `>=0.12.7`** (issue
   btclib-org/.github#1229): a floor below the pin admits a `uv` older
   than the one Dependabot writes `uv.lock` with.
+
+### `bms_example1.py` and `signature_schemes.py` print the `s` they label `s`
+
+- **`bms_example1.py`'s `s1:` line and the ECBMS `s:` line of
+  `signature_schemes.py` print `dsa_sig.s`, where each printed the `r` shown
+  above it** (closes #73).
