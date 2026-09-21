@@ -241,7 +241,7 @@ repos:
   # the one every repository of the organization carries: prose moves
   # between them, and a paragraph that lints in one has to lint here
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.23.2
+    rev: v0.23.3
     hooks:
       - id: markdownlint-cli2
         name: markdownlint-cli2 (in place fixes)
@@ -307,7 +307,7 @@ repos:
         types: [markdown]
         exclude: ^(CHANGELOG|RELEASE_NOTES)\.md$
   - repo: https://github.com/rbubley/mirrors-prettier
-    rev: v3.9.6
+    rev: v3.9.8
     hooks:
       - id: prettier
         name: prettier (yaml and jsonc, in place fixes)
@@ -445,7 +445,7 @@ repos:
   # taught from and not a lint fix. What that costs is recorded where
   # E501 is ignored
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.16.7
+    rev: v0.16.8
     hooks:
       - id: ruff-check
         name: ruff check (in place fixes)
