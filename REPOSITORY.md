@@ -141,6 +141,12 @@ last, and [the rule asks for a valid signature and not for a particular
 signer][s11-sigs] — a squash composed by GitHub carries its web-flow key
 and satisfies it.
 
+The call above answers for whichever commit is at the tip today, so it
+is a fact about a changing world rather than a setting: the next merge
+changes what it answers without anything here having decided
+differently, and [section 11's readback][s11] is not asked of it for
+that reason. Read at 2026-09-21T21:34:52Z.
+
 What no rule covers is a commit before it is pushed:
 `git log -1 --format='%G? %GS'`, an `N` being a defect to fix rather than
 to explain.
@@ -307,6 +313,10 @@ re-derives it:
 gh api orgs/btclib-org --jq .plan.name
 # free
 ```
+
+The plan is a fact about a changing world rather than a setting this
+repository decides, an upgrade being the organization's own choice and
+not a drift this file's readback catches. Read at 2026-09-21T21:34:52Z.
 
 [GitHub's own table](https://docs.github.com/en/actions/reference/limits)
 turns that answer into a number, twenty concurrent jobs on the free

@@ -2110,3 +2110,9 @@ on it opens.
 - **`links.yml`'s `cancel-in-progress` reads the conditional, not `true`**
   (issue btclib-org/.github#1226): the workflow takes `closed` and
   declares no `push` trigger, the shape section 10 reserves it for.
+
+### `REPOSITORY.md` marks the two readings that are not settings
+
+- **`REPOSITORY.md`'s signature check and plan name carry `a fact about
+  a changing world` and a read date** (issue btclib-org/.github#1017):
+  each answers what is true today, not a repository decision.
