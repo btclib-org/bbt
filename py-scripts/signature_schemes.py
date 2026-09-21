@@ -54,7 +54,7 @@ bms_prv_key = prv_key_data_from_wif(bms_prv)
 bms_sig = bms.sign(msg, bms_prv_key)
 print("rf:", hex(bms_sig.rf))
 print("r:", hex(bms_sig.dsa_sig.r))
-print("s:", hex(bms_sig.dsa_sig.r))
+print("s:", hex(bms_sig.dsa_sig.s))
 
 bms_valid = bms.verify(msg, bms_pub, bms_sig)
 print("valid ECBMS sig:", bms_valid)

@@ -34,7 +34,7 @@ print(
 sig1 = sign(msg, prv_key)
 print(f"rf1: {sig1.rf}")
 print(f" r1: {hex(sig1.dsa_sig.r).upper()}")
-print(f" s1: {hex(sig1.dsa_sig.r).upper()}")
+print(f" s1: {hex(sig1.dsa_sig.s).upper()}")
 
 bsmsig1 = sig1.serialize()
 print("4. Serialized signature:")
