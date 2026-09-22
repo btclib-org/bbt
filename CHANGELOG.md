@@ -2116,3 +2116,9 @@ on it opens.
 - **`REPOSITORY.md`'s signature check and plan name carry `a fact about
   a changing world` and a read date** (issue btclib-org/.github#1017):
   each answers what is true today, not a repository decision.
+
+### `REPOSITORY.md`'s shared comments split, one per command
+
+- **Two comments each shared between two commands, and one recording an
+  empty answer as `(nothing)`, now record each command's own output**
+  (issue btclib-org/.github#1262) (issue btclib-org/.github#1263).

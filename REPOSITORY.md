@@ -365,13 +365,15 @@ secret stores here answer empty for it:
 
 ```shell
 gh api repos/btclib-org/bbt/actions/secrets --jq .total_count
+# 0
 gh api repos/btclib-org/bbt/dependabot/secrets --jq .total_count
-# 0, both
+# 0
 gh api orgs/btclib-org/actions/secrets \
   --jq '.secrets[] | [.name, .visibility]'
+# ["CLAUDE_CODE_OAUTH_TOKEN","all"]
 gh api orgs/btclib-org/dependabot/secrets \
   --jq '.secrets[] | [.name, .visibility]'
-# ["CLAUDE_CODE_OAUTH_TOKEN","all"], both
+# ["CLAUDE_CODE_OAUTH_TOKEN","all"]
 ```
 
 Those two zeros record a decision, and it is [the standard's][s11-tokens]:
@@ -387,7 +389,7 @@ and neither variable store holds it:
 gh api repos/btclib-org/bbt/actions/variables --jq .total_count
 # 0
 gh api orgs/btclib-org/actions/variables --jq '.variables[].name'
-# (nothing)
+#
 gh api orgs/btclib-org/actions/variables --jq .total_count
 # 0
 ```
