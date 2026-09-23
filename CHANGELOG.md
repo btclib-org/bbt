@@ -2122,3 +2122,9 @@ on it opens.
 - **Two comments each shared between two commands, and one recording an
   empty answer as `(nothing)`, now record each command's own output**
   (issue btclib-org/.github#1262) (issue btclib-org/.github#1263).
+
+### `check-changelog` is served from `btclib-org/.github`
+
+- **`.github/scripts/check_changelog.py` is gone; the hook now comes from
+  `repo: https://github.com/btclib-org/.github`, its own `args:` carrying
+  the `--grandfathered` count** (issue btclib-org/.github#1293).
