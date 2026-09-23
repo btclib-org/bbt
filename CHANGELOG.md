@@ -2128,3 +2128,9 @@ on it opens.
 - **`.github/scripts/check_changelog.py` is gone; the hook now comes from
   `repo: https://github.com/btclib-org/.github`, its own `args:` carrying
   the `--grandfathered` count** (issue btclib-org/.github#1293).
+
+### `notice-rgx` admits one shebang line ahead of the notice
+
+- **`pyproject.toml`'s `notice-rgx` is `COPYRIGHT` transcribed with an
+  optional `#!` line ahead of it** (issue btclib-org/.github#1294). No
+  file here opens with one, so the value is what changes.
