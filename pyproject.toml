@@ -155,13 +155,19 @@ ignore = [
     "mixed-case-variable-in-global-scope",
     "invalid-argument-name",
     # FIX refuses a TODO, a FIXME, an XXX or a HACK wherever one opens a
-    # comment; TD disciplines the same four markers' format instead and
-    # is not even a superset of what FIX catches -- HACK draws no TD
+    # comment; TD disciplines the first three markers' format instead
+    # and is not even a superset of what FIX catches -- HACK draws no TD
     # diagnostic at all. A repository that finishes what it starts keeps
-    # the refusal and leaves TD here, matching every other tree of the
-    # organization; `grep -rn "TODO\|FIXME\|XXX\|HACK" py-scripts ipynb
+    # the refusal and leaves TD's own rules below, named rather than
+    # coded; `grep -rn "TODO\|FIXME\|XXX\|HACK" py-scripts ipynb
     # .github/scripts` finds none of the four today
-    "TD",
+    "invalid-todo-tag",
+    "missing-todo-author",
+    "missing-todo-link",
+    "missing-todo-colon",
+    "missing-todo-description",
+    "invalid-todo-capitalization",
+    "missing-space-after-todo-colon",
     # what every sibling gets from ruff-format, this tree gets from
     # nothing: that hook is not in .pre-commit-config.yaml, for the
     # reason written beside the ruff hooks there. So selecting this rule
