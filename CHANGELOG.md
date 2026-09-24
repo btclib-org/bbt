@@ -2134,3 +2134,9 @@ on it opens.
 - **`pyproject.toml`'s `notice-rgx` is `COPYRIGHT` transcribed with an
   optional `#!` line ahead of it** (issue btclib-org/.github#1294). No
   file here opens with one, so the value is what changes.
+
+### `ignore`'s TD entry names rules, not the bare code
+
+- **`pyproject.toml`'s `[tool.ruff.lint] ignore` names TD by its rule
+  names, `invalid-todo-tag` through `missing-space-after-todo-colon`,
+  not the bare `"TD"` code** (issue btclib-org/.github#1304).
