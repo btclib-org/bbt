@@ -35,9 +35,9 @@ authors = [{ name = "The btclib developers", email = "devs@btclib.org" }]
 # script in. So the rule for an application applies -- the newest the
 # dependencies allow -- and .python-version names it rather than this
 # comment. Measured with `uv pip compile --python-version <v>` over the
-# dependencies below: every version from 3.9 to 3.14 resolves, so the
+# dependencies below: every version from 3.9 to 3.15 resolves, so the
 # floor is not the dependencies' to set and nothing else here measures one
-requires-python = ">=3.14"
+requires-python = ">=3.15"
 # what the tree imports, read off the tree rather than off the file this
 # replaces: `grep -rn "^import\|^from" py-scripts/*.py` and the `source`
 # arrays of ipynb/*.ipynb are what the list below answers to.
@@ -334,7 +334,7 @@ CPY = "CPY"
 strict = true
 warn_unreachable = true
 show_column_numbers = true
-python_version = "3.14"
+python_version = "3.15"
 # the optional error codes strict does not turn on: the list
 # btclib-org/.github#165 decides for the organization, which is where it
 # is written down until section 6 of the standard carries it. Of the

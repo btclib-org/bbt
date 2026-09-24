@@ -2140,3 +2140,9 @@ on it opens.
 - **`pyproject.toml`'s `[tool.ruff.lint] ignore` names TD by its rule
   names, `invalid-todo-tag` through `missing-space-after-todo-colon`,
   not the bare `"TD"` code** (issue btclib-org/.github#1304).
+
+### The interpreter is 3.15, on its release candidate
+
+- **`.python-version` names 3.15, and `requires-python` and `[tool.mypy]
+  python_version` move with it**, the tree running in one environment
+  rather than across a range (issue btclib-org/.github#1324).
