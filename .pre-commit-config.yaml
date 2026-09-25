@@ -16,10 +16,14 @@ ci:
   autofix_prs: false
   autoupdate_commit_msg: "Update the pinned pre-commit hook revisions"
   autoupdate_schedule: weekly
-  # it shells out to uv, which pre-commit.ci does not have, and
-  # lint.yml covers it there. Every other hook here runs on
-  # pre-commit.ci, which is what the weekly revision bump needs
-  skip: [mypy]
+  # mypy shells out to uv, which pre-commit.ci does not have, and
+  # lint.yml covers it there. uv-lock needs the interpreter
+  # .python-version names, which the pre-commit.ci image does not carry
+  # and, with no network there, cannot download; lint.yml installs that
+  # interpreter and runs the hook (btclib-org/.github#1348). Every other
+  # hook here runs on pre-commit.ci, which is what the weekly revision
+  # bump needs
+  skip: [mypy, uv-lock]
 
 repos:
   # this file checking itself, and the only two hooks with no environment

@@ -2146,3 +2146,9 @@ on it opens.
 - **`.python-version` names 3.15, and `requires-python` and `[tool.mypy]
   python_version` move with it**, the tree running in one environment
   rather than across a range (issue btclib-org/.github#1324).
+
+### pre-commit.ci skips `uv-lock`, lacking the pinned interpreter
+
+- **`.pre-commit-config.yaml`'s `ci: skip:` names `uv-lock` beside `mypy`**,
+  the pre-commit.ci image carrying no 3.15 and having no network to fetch
+  it, while `lint.yml` still runs the hook (issue btclib-org/.github#1348).
