@@ -2158,3 +2158,9 @@ on it opens.
 - **`CONTRIBUTING.md`'s shared part and `README.md`'s closing pointer to it
   link both**, the organization's one copy of each (issue
   btclib-org/.github#1359).
+
+### `REVIEWING.md` lets a filed issue carry its fix
+
+- **An issue filed from a review may say the fix where one is known**
+  (issue btclib-org/.github#1378): *What is filed, and what is not*
+  dropped its "no fix", the filing bar standing as it was.
