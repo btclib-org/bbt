@@ -2152,3 +2152,9 @@ on it opens.
 - **`.pre-commit-config.yaml`'s `ci: skip:` names `uv-lock` beside `mypy`**,
   the pre-commit.ci image carrying no 3.15 and having no network to fetch
   it, while `lint.yml` still runs the hook (issue btclib-org/.github#1348).
+
+### `REVIEWING.md` links Conventional Comments at its GitLab Pages address
+
+- **`REVIEWING.md` links `https://conventionalcomments.gitlab.io/`**, a name the
+  `*.gitlab.io` certificate covers, which `conventionalcomments.org` can present
+  and fail the TLS check (issue btclib-org/.github#1341).
