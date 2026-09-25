@@ -101,4 +101,7 @@ found it.
 
 Working here: [CONTRIBUTING.md](./CONTRIBUTING.md) for how to,
 [REVIEWING.md](./REVIEWING.md) for what a pull request is answered
-against.
+against. How the organization decides, and who holds which role, is its
+[GOVERNANCE.md](https://github.com/btclib-org/.github/blob/main/GOVERNANCE.md);
+what it intends to do, and what it deliberately does not, is its
+[ROADMAP.md](https://github.com/btclib-org/.github/blob/main/ROADMAP.md).

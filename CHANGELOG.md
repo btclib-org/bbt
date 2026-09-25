@@ -2152,3 +2152,9 @@ on it opens.
 - **`.pre-commit-config.yaml`'s `ci: skip:` names `uv-lock` beside `mypy`**,
   the pre-commit.ci image carrying no 3.15 and having no network to fetch
   it, while `lint.yml` still runs the hook (issue btclib-org/.github#1348).
+
+### `CONTRIBUTING.md` and `README.md` link `GOVERNANCE.md` and `ROADMAP.md`
+
+- **`CONTRIBUTING.md`'s shared part and `README.md`'s closing pointer to it
+  link both**, the organization's one copy of each (issue
+  btclib-org/.github#1359).
