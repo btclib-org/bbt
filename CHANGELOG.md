@@ -2270,3 +2270,18 @@ on it opens.
 - **Both sides are binary double-and-add, `_mult_jac_var` against
   `_double_mult_var`** (closes #126): `_mult` is a regular window, which the
   binary trick does not beat, so the script showed no speedup; now it does.
+
+### `.vscode/` holds the two files section 13 tracks
+
+- **`.vscode/settings.json` and `.vscode/extensions.json` mirror the gate**
+  (issue btclib-org/.github#1389).
+
+### `.github/dependabot.yml` names the `pre-commit` ecosystem it leaves unused
+
+- **pre-commit.ci's autoupdate keeps the hook revisions** (issue
+  btclib-org/.github#1391).
+
+### `REPOSITORY.md` quotes what the two endpoints answer
+
+- **Classic `signatures` is `false` and `sha_pinning_required` is `true`,
+  each linked to section 11 of the standard** (issue btclib-org/.github#1409).
