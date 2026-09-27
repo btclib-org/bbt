@@ -2164,3 +2164,9 @@ on it opens.
 - **An issue filed from a review may say the fix where one is known**
   (issue btclib-org/.github#1378): *What is filed, and what is not*
   dropped its "no fix", the filing bar standing as it was.
+
+### `requires-python` and `[tool.mypy] python_version` hold at 3.14
+
+- **`requires-python` and `[tool.mypy] python_version` stay at 3.14**:
+  Dependabot's uv ecosystem refuses a floor naming 3.15's own release
+  candidate; `.python-version` keeps tracking it (closes #88).
