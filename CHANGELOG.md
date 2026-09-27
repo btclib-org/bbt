@@ -2303,3 +2303,9 @@ on it opens.
 - **The installer option and its `C:\Program Files\Bitcoin\bitcoin-qt.exe`
   mention are gone** (closes #133); Bob's and Carol's own GUI console
   drives their nodes now, neither passing `-server` (closes #135).
+
+### `excel/` is one macro-free `.xlsx` per workbook, generated from text
+
+- **`excel/generate.py` writes every workbook, and `calc/` and every
+  `.xlsm` are gone** (closes #136, closes #93, closes #134, closes
+  #139): a gate compares every cell, chart, column width and anchor.

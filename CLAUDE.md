@@ -26,8 +26,8 @@ read or cloned.
 - `ipynb/` — Jupyter notebooks, outputs committed.
 - `py-scripts/` — one script per idea, each run from a checkout and each
   printing what it computes.
-- `calc/` and `excel/` — the same spreadsheets in two formats, which is
-  why a change to one is a change to both.
+- `excel/` — the spreadsheets, generated from `excel/generate.py`: a
+  change is made to that file, not to a workbook.
 - `pyproject.toml` — the whole tool configuration, and `README.md` points
   at the course page the slides live on.
 
@@ -210,11 +210,11 @@ Do not use Fable unless explicitly instructed.
   `repo: local` hook being the one shape it skips.
 - **The gates are `uv run` commands over `pyproject.toml`'s groups, and
   only the hooks leave the project out.** They run under
-  `--only-group lint`; the notebook gate, the scripts gate and the mypy
-  hook's own entry each get the project with `lint`, which includes
-  `notebooks`, the notebooks executing on the project's kernel. A session
-  that changes how a gate is invoked changes every file spelling the
-  command, in the same commit, and
+  `--only-group lint`; the notebook gate, the scripts gate, the workbook
+  gate and the mypy hook's own entry each get the project with `lint`,
+  `notebooks` or `excel`, whichever the gate's own imports need. A
+  session that changes how a gate is invoked changes every file spelling
+  the command, in the same commit, and
   `git grep -l 'uv run --locked' -- ':!CHANGELOG.md' ':!CLAUDE.md'` is
   what lists them.
 - **`uv sync` writes `uv.lock` whether or not it was asked to**, so run
@@ -270,8 +270,12 @@ Do not use Fable unless explicitly instructed.
   pattern matches the base64 of a committed image as readily as it
   matches code, which is the half that has already produced a wrong
   answer here. Parse the document.
-- **`calc/` and `excel/` are binaries** and a diff of one says nothing.
-  A change to a spreadsheet is verified by opening it.
+- **`excel/*.xlsx` are binaries, and a diff of one says nothing** -- but
+  the source is `excel/generate.py`, not the workbook, and
+  `.github/scripts/check_generated_workbooks.py` gates whether a
+  committed workbook is still that script's own output. What no gate
+  reads is a chart's own look on screen, so a change to it is still
+  verified by opening the workbook.
 - **The history is older than this repository**, so the contributor
   graph carries authors who never pushed here. `AUTHORS.md` says so,
   with the command that dates each.

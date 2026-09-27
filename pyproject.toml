@@ -67,7 +67,7 @@ keywords = [
     # The order is this file's alone -- `gh api repos/btclib-org/bbt
     # --jq '.topics'` sorts what it is given, so the two sequences are
     # compared by nothing -- and it runs from what the material is to
-    # what the tree holds: ipynb/ the notebooks, calc/ and excel/ the
+    # what the tree holds: ipynb/ the notebooks, excel/ the
     # spreadsheets, regtest-lab/ the Bitcoin Core walk-through. Each
     # name is read against the tree rather than taken from a sibling's
     # list
@@ -94,12 +94,25 @@ keywords = [
 #
 # pre-commit is here so that uv.lock pins the tool that decides what the
 # gate calls clean, as .pre-commit-config.yaml pins every hook's rev
-lint = ["mypy", "pre-commit", "ruff", { include-group = "notebooks" }]
+lint = [
+    "mypy",
+    "pre-commit",
+    "ruff",
+    "types-openpyxl",
+    { include-group = "notebooks" },
+    { include-group = "excel" },
+]
 # what .github/scripts/check_notebooks.py executes and reads the
 # notebooks with. Nothing this tree ships imports either, so the group is
 # the gate's alone; lint includes it because the mypy hook type checks
 # that script against the lint group
 notebooks = ["nbclient", "nbformat"]
+# what excel/generate.py writes the workbooks with, and what its own
+# gate reads them back with -- the two files that import it, so it sits
+# beside notebooks rather than in `[project] dependencies` above; lint
+# includes it for the same reason it includes notebooks -- the mypy
+# hook type checks both files too
+excel = ["openpyxl"]
 dev = [{ include-group = "lint" }]
 
 [tool.uv]
@@ -133,9 +146,11 @@ select = ["ALL"]
 ignore = [
     # a script's or a notebook cell's output is the whole of what it
     # produces, and what the checkers under .github/scripts/ print is
-    # the part of a lint.yml log worth reading when one of them fails.
-    # `uvx ruff check --preview --select T201 .` lists every site, and
-    # every one is under py-scripts, ipynb or .github/scripts
+    # the part of a lint.yml log worth reading when one of them fails;
+    # excel/generate.py prints the name of every workbook it writes, for
+    # the same reason. `uvx ruff check --preview --select T201 .` lists
+    # every site, and every one is under py-scripts, ipynb,
+    # .github/scripts or excel
     "print",
     # assert used to state what a step shows, throughout py-scripts and
     # the notebooks alike -- a walkthrough asserting what it just
@@ -207,7 +222,8 @@ ignore = [
 # cell presents it -- DSA.ipynb, SSA.ipynb and field_table.ipynb's
 # `tagged_hash`, `challenge` and `field_table` carry no annotation in the
 # notebook that mypy never reads (pyproject.toml's own `[tool.mypy]`
-# comment: the hook names py-scripts and .github/scripts, not ipynb).
+# comment: the hook names py-scripts, .github/scripts and excel, not
+# ipynb).
 # The typed py-scripts equivalent, where one exists, already carries full
 # annotations -- ssa_example2.py's own `challenge(x_K: int, x_Q: int, ...)`
 "ipynb/*.ipynb" = ["ANN001", "ANN201"]
@@ -336,9 +352,9 @@ CPY = "CPY"
 # forward.
 #
 # The `mypy` hook in .pre-commit-config.yaml is what runs this, and it
-# names py-scripts and .github/scripts, which is where every tracked
-# Python file of this tree is: `git ls-files '*.py'` is what says
-# whether those two are still the whole of them. Where one line cannot
+# names py-scripts, .github/scripts and excel, which is where every
+# tracked Python file of this tree is: `git ls-files '*.py'` is what says
+# whether those three are still the whole of them. Where one line cannot
 # be typed the answer is `# type: ignore[code]` at that line, and never
 # a setting relaxed here
 strict = true

@@ -37,7 +37,7 @@ body:
         - regtest-lab
         - ipynb (the notebooks)
         - py-scripts
-        - calc and excel (the spreadsheets)
+        - excel (the spreadsheets)
         - the repository's own prose
     validations:
       required: true

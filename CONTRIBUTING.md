@@ -317,6 +317,23 @@ file it reads and fails where it reads none too;
 `py-scripts/ec_explorer.py` is excluded by name, with its reason written
 beside it, and an excluded name that is not there is a failure.
 
+`excel/` has a gate of its own too: a workbook there is not typed in
+Excel and committed, it is written by `excel/generate.py` from the
+parameters `CURVES` and `FINITE_FIELD_PRIMES` name, and a spreadsheet
+is a binary a `git diff` says nothing about.
+
+```shell
+uv run --locked --group excel \
+    python .github/scripts/check_generated_workbooks.py
+```
+
+`openpyxl` is the `excel` group, and `lint` includes it so that the mypy
+hook reads its types, the same reason it includes `notebooks`. The
+comparison is cell by cell and chart by chart, not byte by byte: two
+workbooks holding the same values and formulas can still differ in a
+relationship id or a shared string table's own order, neither a change
+to the material.
+
 `uv.lock` is tracked and the `uv-lock` hook keeps it in step with
 `pyproject.toml`. `--locked` above is what makes a mismatch a failure
 rather than a silent re-resolution; plain `uv sync` rewrites the lock,
@@ -337,7 +354,7 @@ that hook:
 ```shell
 uv run --locked --only-group lint pre-commit run --all-files mypy
 uv run --locked --no-default-groups --group lint \
-    mypy py-scripts .github/scripts
+    mypy py-scripts .github/scripts excel
 ```
 
 The second line is the hook's own entry, and it is what to reach for
