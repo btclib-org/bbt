@@ -2181,3 +2181,15 @@ on it opens.
 
 - **The Calc-equivalent line now points at `calc/`** (closes #107):
   every `.xlsm` there already has a `.ods` counterpart.
+
+### `ec_explorer.py` prints a `Curve()` call btclib builds
+
+- **Each printed line reads `Curve(p, a, b, G, n, h, False)`** (closes #95),
+  the form `ellipticcurves.py` writes, `h` being the cofactor btclib's
+  `Curve()` accepts, which exceeds 1 over some of these small fields.
+
+### `ellipticcurves.py` and `ec_explorer.py` stop claiming each other
+
+- **Each docstring says what its own file is** (closes #96): the table is
+  kept by hand, and the explorer prints per prime the first curve of highest
+  prime order below it and the first of highest prime order overall.
