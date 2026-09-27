@@ -59,6 +59,11 @@ repos:
       - id: check-merge-conflict
       - id: check-vcs-permalinks
       - id: detect-private-key
+      # section 4's Python shape hooks, less name-tests-test: its files:
+      # pattern wants a .py under a tests/ directory, this tree has none,
+      # and check-hooks-apply above fails a hook that applies to nothing
+      - id: debug-statements
+      - id: check-docstring-first
       - id: check-yaml
       # the notebooks: a .ipynb is json, so this is what says one is
       # still readable by jupyter after a hand edit or a merge. The
