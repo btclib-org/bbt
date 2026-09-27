@@ -48,7 +48,7 @@
    to download the whole blockchain. Be sure you are launching
    **regtest**: that one will require almost no space.
 
-1. in the GUI open the console (Help | Debug Window | Console) type
+1. in the GUI open the console (Window | Console) type
 
    ```text
    getblockcount
@@ -66,12 +66,15 @@
 
 You should now be ready to start the regtest lab session.
 
-Whenever you want *to start with a fresh new regtest network, remember to
-clear the regtest data folder* that has been created in the
-`%APPDATA%\Bitcoin\regtest` folder:
+Whenever you want *to start with a fresh new regtest network*, note the
+folder Window | Information shows as *Datadir* while the node runs: that
+is the regtest data folder. Then close Bitcoin Core, wait until the window
+saying *Do not shut down the computer until this window disappears* has
+gone, and *clear the regtest data folder*, writing the Datadir you noted
+in place of `C:\your\datadir`:
 
 ```bat
-> rmdir %APPDATA%\Bitcoin\regtest /s /q
+> rmdir "C:\your\datadir" /s /q
 ```
 
 For convenience the
@@ -80,7 +83,9 @@ and
 [regtest-18444-reset-Alice.bat](./windowsbat/regtest-18444-reset-Alice.bat)
 batch files are provided to respectively launch and reset the regtest
 network, without tweaking with the %PATH% environment variable: just put
-the batch files in `c:\your\bitcoinfolder`.
+the batch files in `c:\your\bitcoinfolder`. Close a node as above before
+running its reset file. The Alice one clears `%APPDATA%\Bitcoin\regtest`,
+so where Datadir names another folder it is that folder to clear by hand.
 
 One can start multiple nodes, as separate instances of the bitcoin
 GUI+daemon, on the same machine: each node must use a different p2p port
