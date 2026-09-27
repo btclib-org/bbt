@@ -39,8 +39,11 @@
    augmented PATH) and start the Bitcoin Core GUI+daemon in regtest mode:
 
    ```bat
-   > bitcoin-qt -regtest -addresstype=bech32 -walletrbf=1 -server ^
-       -rpcallowip=127.0.0.1 -fallbackfee=0.0002
+   > if not exist "%APPDATA%\Bitcoin\regtest_Alice" ^
+       mkdir "%APPDATA%\Bitcoin\regtest_Alice"
+   > bitcoin-qt -regtest -datadir="%APPDATA%\Bitcoin\regtest_Alice" ^
+       -addresstype=bech32 -walletrbf=1 -server -rpcallowip=127.0.0.1 ^
+       -fallbackfee=0.0002
    ```
 
    Do not be scared by the alert about >160GB being required. This would
@@ -61,20 +64,19 @@
    PATH) and using it, e.g.:
 
     ```bat
-    > bitcoin-cli -regtest getblockcount
+    > bitcoin-cli -regtest -datadir="%APPDATA%\Bitcoin\regtest_Alice" ^
+        getblockcount
     ```
 
 You should now be ready to start the regtest lab session.
 
-Whenever you want *to start with a fresh new regtest network*, note the
-folder Window | Information shows as *Datadir* while the node runs: that
-is the regtest data folder. Then close Bitcoin Core, wait until the window
-saying *Do not shut down the computer until this window disappears* has
-gone, and *clear the regtest data folder*, writing the Datadir you noted
-in place of `C:\your\datadir`:
+Whenever you want *to start with a fresh new regtest network*, close
+Bitcoin Core, wait until the window saying *Do not shut down the computer
+until this window disappears* has gone, and *clear the regtest data
+folder* the launch command above set with `-datadir`:
 
 ```bat
-> rmdir "C:\your\datadir" /s /q
+> rmdir "%APPDATA%\Bitcoin\regtest_Alice" /s /q
 ```
 
 For convenience the
@@ -82,10 +84,10 @@ For convenience the
 and
 [regtest-18444-reset-Alice.bat](./windowsbat/regtest-18444-reset-Alice.bat)
 batch files are provided to respectively launch and reset the regtest
-network, without tweaking with the %PATH% environment variable: just put
-the batch files in `c:\your\bitcoinfolder`. Close a node as above before
-running its reset file. The Alice one clears `%APPDATA%\Bitcoin\regtest`,
-so where Datadir names another folder it is that folder to clear by hand.
+network, without tweaking with the %PATH% environment variable: put the
+batch files into `c:\your\bitcoinfolder` rather than unpacking Bitcoin
+Core into this repository's `windowsbat` folder. Close a node as above
+before running its reset file.
 
 One can start multiple nodes, as separate instances of the bitcoin
 GUI+daemon, on the same machine: each node must use a different p2p port

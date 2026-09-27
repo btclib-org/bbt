@@ -16,6 +16,10 @@ to use the *regtest* daemon process. In the GUI console environment
 `bitcoin-cli -regtest` is already assumed and can be skipped, typing only
 the `[...]` part.
 
+On Windows, where windows.md starts a node with its own explicit
+`-datadir`, `bitcoin-cli` needs the same option to find its cookie file,
+e.g. `bitcoin-cli -regtest -datadir="%APPDATA%\Bitcoin\regtest_Alice" [...]`.
+
 - get the block count (zero if you have not generated blocks yet or
   joined other nodes which might have)
 
