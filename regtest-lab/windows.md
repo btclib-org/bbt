@@ -14,6 +14,12 @@
      where the `bin`, `libexec` and `share` folders are located (usually
      it should be `C:\Program Files\Bitcoin\bitcoin-qt.exe`)
 
+   Before unzipping or running either, check it against the release's
+   [SHA256SUMS](https://bitcoincore.org/bin/bitcoin-core-31.1/SHA256SUMS)
+   as
+   [Verify your download](https://bitcoincore.org/en/download/#verify-your-download)
+   shows for Windows, and stop if the checksums differ.
+
 1. add the `C:\your\bitcoinfolder\bin folder` (the one including the
    `bitcoin-qt`, `bitcoind` and `bitcoin-cli` executables) to your %PATH%
    environment variable, so that whenever you will call the bitcoin

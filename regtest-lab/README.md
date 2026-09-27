@@ -11,7 +11,7 @@ instructions provided for your platform:
 
 ## The `bitcoin-cli` Command Line Tool
 
-In general any command line must starts with `bitcoin-cli -regtest [...]`
+In general any command line must start with `bitcoin-cli -regtest [...]`
 to use the *regtest* daemon process. In the GUI console environment
 `bitcoin-cli -regtest` is already assumed and can be skipped, typing only
 the `[...]` part.
@@ -239,7 +239,7 @@ the `[...]` part.
 For a [full command list](https://bitcoincore.org/en/doc/31.0.0/):
 
 ```shell
-bitcoin-cli help
+bitcoin-cli -regtest help
 ```
 
 For help about a peculiar command (e.g. `generatetoaddress`, which the
@@ -247,7 +247,7 @@ command list above does not carry, the site documenting no `generate`
 RPC):
 
 ```shell
-bitcoin-cli generatetoaddress
+bitcoin-cli -regtest help generatetoaddress
 ```
 
 To go beyond this short lab, please see

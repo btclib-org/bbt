@@ -9,11 +9,24 @@
    export BITCOINARCH=arm64-apple-darwin
    ```
 
-1. download Bitcoin Core
+1. download Bitcoin Core, and the checksums of its release
 
    ```shell
    curl -O https://bitcoincore.org/bin/bitcoin-core-31.1/bitcoin-31.1-$BITCOINARCH.tar.gz
+   curl -O https://bitcoincore.org/bin/bitcoin-core-31.1/SHA256SUMS
    ```
+
+1. check the archive against those checksums: the line printed must end
+   in `OK`, and anything else means the file is not the release, so stop
+   here
+
+   ```shell
+   shasum -a 256 --ignore-missing -c SHA256SUMS
+   ```
+
+   That `SHA256SUMS` is itself genuine is the signature check that
+   [Verify your download](https://bitcoincore.org/en/download/#verify-your-download)
+   walks through.
 
 1. extract the archive
 
@@ -32,7 +45,7 @@
 1. clean up the temporary directory
 
    ```shell
-   rm -rf bitcoin-31.1*
+   rm -rf bitcoin-31.1* SHA256SUMS
    ```
 
 1. start the Bitcoin Core daemon in regtest mode, with a fallback fee —
@@ -44,10 +57,14 @@
 
 You are now ready to start the regtest lab session.
 
-Whenever you want *to start with a fresh new regtest network, remember to
-clear the regtest data folder* in the bitcoin working folder:
+Whenever you want *to start with a fresh new regtest network*, stop the
+daemon, wait for it to remove `bitcoind.pid`, which it does once its data is
+written, and *clear the regtest data folder*. With no daemon running, `stop`
+answers that it could not connect and the rest runs at once:
 
 ```shell
-cd /Users/your_username/Library/Application Support/Bitcoin
-rm -rf regtest
+REGTEST="$HOME/Library/Application Support/Bitcoin/regtest"
+bitcoin-cli -regtest stop
+while [ -e "$REGTEST/bitcoind.pid" ]; do sleep 1; done
+rm -rf "$REGTEST"
 ```

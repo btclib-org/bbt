@@ -9,13 +9,27 @@
    export BITCOINPLAIN=`echo $BITCOIN | sed 's/bitcoin-core/bitcoin/'`
    ```
 
-1. download relevant files (every time you see *username* in the code
-   below, please replace it with your personal username)
+1. download Bitcoin Core, and the checksums of its release (every time
+   you see *username* in the code below, please replace it with your
+   personal username)
 
    ```shell
    wget -O ~username/$BITCOINPLAIN-x86_64-linux-gnu.tar.gz \
      https://bitcoincore.org/bin/$BITCOIN/$BITCOINPLAIN-x86_64-linux-gnu.tar.gz
+   wget -O ~username/SHA256SUMS https://bitcoincore.org/bin/$BITCOIN/SHA256SUMS
    ```
+
+1. check the archive against those checksums: the line printed must end
+   in `OK`, and anything else means the file is not the release, so stop
+   here
+
+   ```shell
+   cd ~username && sha256sum --ignore-missing --check SHA256SUMS
+   ```
+
+   That `SHA256SUMS` is itself genuine is the signature check that
+   [Verify your download](https://bitcoincore.org/en/download/#verify-your-download)
+   walks through.
 
 1. install Bitcoin Core
 
@@ -41,10 +55,13 @@
 
 You are now ready to start the regtest lab session.
 
-Whenever you want *to start with a fresh new regtest network, remember to
-clear the regtest data folder* in the bitcoin working folder:
+Whenever you want *to start with a fresh new regtest network*, stop the
+daemon, wait for it to remove `bitcoind.pid`, which it does once its data is
+written, and *clear the regtest data folder*. With no daemon running, `stop`
+answers that it could not connect and the rest runs at once:
 
 ```shell
-cd .bitcoin
-rm -rf regtest
+bitcoin-cli -regtest stop
+while [ -e ~/.bitcoin/regtest/bitcoind.pid ]; do sleep 1; done
+rm -rf ~/.bitcoin/regtest
 ```
