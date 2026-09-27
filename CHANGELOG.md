@@ -2264,3 +2264,9 @@ on it opens.
 
 - **The root `.gitignore` names what `uv sync`, the mypy and ruff hooks and
   Jupyter write here** (closes #105), where it held GitHub's Python template.
+
+### `speedup_shamir.py` times Shamir's trick against double-and-add
+
+- **Both sides are binary double-and-add, `_mult_jac_var` against
+  `_double_mult_var`** (closes #126): `_mult` is a regular window, which the
+  binary trick does not beat, so the script showed no speedup; now it does.
