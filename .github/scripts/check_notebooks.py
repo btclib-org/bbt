@@ -68,9 +68,10 @@ def executed(path: Path) -> Any:
     """Run a notebook and return what `nbformat` would write for it.
 
     The result is parsed back from that serialisation rather than read off
-    the objects: a stream output's `text` is one string in memory and a
-    list of lines on disk, so comparing the committed file against the
-    objects reports every cell carrying an output as differing.
+    the objects: `nbformat` holds every `text/*` entry of a result's or a
+    display's data, and an SVG's, as one string in memory and as a list of
+    lines on disk, so comparing the committed file against the objects
+    reports every cell carrying one as differing.
     """
     notebook = nbformat.read(path, as_version=4)
     for cell in code_cells(notebook):
@@ -115,14 +116,47 @@ def departure(name: str, index: int, was: Any, now: Any) -> str:
     return "\n".join([f"  {name} code cell {index}, {heading!r}", *delta])
 
 
+def merged_streams(cell: Any) -> Any:
+    """Return a cell whose consecutive same-name streams are one output.
+
+    The kernel may deliver one print's text in two stream messages, and
+    nbclient stores each message as an output of its own, so where the
+    boundary falls depends on the machine rather than on the notebook.
+    Joining the text of consecutive outputs of one stream, on both sides,
+    compares what a reader sees rather than where the messages broke.
+    """
+    outputs: list[Any] = []
+    for output in cell.get("outputs") or []:
+        if output.get("output_type") != "stream":
+            outputs.append(output)
+            continue
+        text = output["text"]
+        text = text if isinstance(text, str) else "".join(text)
+        last = outputs[-1] if outputs else None
+        if (
+            last is not None
+            and last.get("output_type") == "stream"
+            and last["name"] == output["name"]
+        ):
+            last["text"] += text
+        else:
+            outputs.append({**output, "text": text})
+    # back into lines, so that a departure diffs line by line
+    for output in outputs:
+        if output.get("output_type") == "stream":
+            output["text"] = output["text"].splitlines(keepends=True)
+    return {**cell, "outputs": outputs}
+
+
 def departures(path: Path, name: str) -> list[str]:
     """Report every code cell whose fresh run departs from the committed one."""
     committed = code_cells(json.loads(path.read_text(encoding="utf-8")))
     fresh = code_cells(executed(path))
     found = []
-    for index, (was, now) in enumerate(zip(committed, fresh, strict=True)):
-        if is_provisioning(was):
+    for index, (read, ran) in enumerate(zip(committed, fresh, strict=True)):
+        if is_provisioning(read):
             continue
+        was, now = merged_streams(read), merged_streams(ran)
         outputs_agree = was.get("outputs") == now.get("outputs")
         counts_agree = was.get("execution_count") == now.get("execution_count")
         if not (outputs_agree and counts_agree):

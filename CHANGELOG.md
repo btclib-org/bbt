@@ -2193,3 +2193,9 @@ on it opens.
 - **Each docstring says what its own file is** (closes #96): the table is
   kept by hand, and the explorer prints per prime the first curve of highest
   prime order below it and the first of highest prime order overall.
+
+### The notebook gate compares a stream's text, not where it broke
+
+- **`check_notebooks.py` joins consecutive outputs of one stream on both
+  sides before comparing** (closes #117): the kernel can split one print
+  across two outputs, which failed the gate on a notebook that reproduced.
