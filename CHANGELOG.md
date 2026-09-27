@@ -2247,3 +2247,15 @@ on it opens.
 - **`REVIEWING.md` asks for each ruff `ignore` entry's and each `# noqa`'s
   reason, and `CLAUDE.md` and `.pre-commit-config.yaml` place codespell's
   configuration in its `args:`** (closes #106, closes #113).
+
+### `speedup_shamir.py` checks that the two methods agree
+
+- **The agreement loop runs ahead of the timed loops** (closes #108), where it
+  sat in a bare string that ran nothing and that `check-docstring-first` read
+  as a second module docstring.
+
+### The gate runs `debug-statements` and `check-docstring-first`
+
+- **Both are in the pre-commit-hooks block, as section 4 of the standard asks**
+  (closes #104); its third Python shape hook, `name-tests-test`, has no
+  `tests/` file here to apply to, which the block's comment says.

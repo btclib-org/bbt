@@ -26,12 +26,11 @@ for _ in range(500):
     q = random.getrandbits(ec.nlen) % ec.n
     QJs.append(_mult(q, ec.GJ, ec))
 
-"""
-for u, v, QJ in zip(us, vs, QJs):
+# the two methods agree, checked outside the timed loops
+for u, v, QJ in zip(us, vs, QJs, strict=True):
     t1 = ec.add_jac(_mult(u, ec.GJ, ec), _mult(v, QJ, ec))
     t2 = _double_mult_var(u, ec.GJ, v, QJ, ec)
     assert ec.is_jac_equal(t1, t2)
-"""
 
 start = time.time()
 for u, v, QJ in zip(us, vs, QJs, strict=True):
