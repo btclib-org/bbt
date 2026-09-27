@@ -15,10 +15,10 @@ from btclib.utils import int_from_bits
 mprvkey = 1 + secrets.randbelow(ec.n - 1)
 print(f"\nmaster private key = {hex(mprvkey).upper()}")
 
-mprvkey_bytes = mprvkey.to_bytes(ec.nlen, "big")
+mprvkey_bytes = mprvkey.to_bytes(ec.n_size, "big")
 n_keys = 3
 for i in range(n_keys):
-    ibytes = i.to_bytes(ec.nlen, "big")
+    ibytes = i.to_bytes(ec.n_size, "big")
     hd = hf(ibytes + mprvkey_bytes).digest()
     q = int_from_bits(hd, ec.nlen) % ec.n
     Q = mult(q, ec.G)
