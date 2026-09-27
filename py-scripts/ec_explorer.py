@@ -2,13 +2,27 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
-"""Search each listed prime for the curve ellipticcurves.py lists.
+"""Search each listed prime for the curves of highest prime order.
 
-For every prime, searches (a, b) for the curve of highest order below that
-prime, and prints the Curve() call that builds it.
+For every prime p, scans a and b over range(200) in ascending order, and keeps
+the first curve of highest prime order below p and the first of highest prime
+order overall. Each is printed as the Curve() call that builds it, in the form
+ellipticcurves.py writes.
 """
 
+from math import isqrt
+
 from btclib.number_theory import mod_sqrt_var
+
+
+def btclib_cofactor(p: int, n: int) -> int:
+    """Return the cofactor btclib's Curve() accepts for order n over F_p.
+
+    Curve() refuses any value but floor((p + 1 + 2 sqrt(p)) / n), which exceeds
+    1 wherever n fits more than once below Hasse's upper bound, although every
+    curve kept here has exactly n points (btclib-org/ellipticcurves#19).
+    """
+    return (p + 1 + isqrt(4 * p)) // n
 
 
 def isprime(n: int) -> bool:
@@ -147,27 +161,10 @@ for prime in primes:
             except ValueError:
                 gx += 1
         print(
-            "ec",
-            prime,
-            "_",
-            maxorderlessthanprime,
-            " = ",
-            "Curve(",
-            maxorderlessthanprimea,
-            ", ",
-            maxorderlessthanprimeb,
-            ", ",
-            prime,
-            ", ",
-            "(",
-            gx,
-            ",",
-            gy,
-            ")",
-            ", ",
-            maxorderlessthanprime,
-            ")",
-            sep="",
+            f"ec{prime}_{maxorderlessthanprime} = Curve({prime}, "
+            f"{maxorderlessthanprimea}, {maxorderlessthanprimeb}, ({gx}, {gy}), "
+            f"{maxorderlessthanprime}, "
+            f"{btclib_cofactor(prime, maxorderlessthanprime)}, False)",
         )
     if maxordera != -1:
         gx = 0
@@ -181,25 +178,6 @@ for prime in primes:
             except ValueError:
                 gx += 1
         print(
-            "ec",
-            prime,
-            "_",
-            maxorder,
-            " = ",
-            "Curve(",
-            maxordera,
-            ", ",
-            maxorderb,
-            ", ",
-            prime,
-            ", ",
-            "(",
-            gx,
-            ",",
-            gy,
-            ")",
-            ", ",
-            maxorder,
-            ")",
-            sep="",
+            f"ec{prime}_{maxorder} = Curve({prime}, {maxordera}, {maxorderb}, "
+            f"({gx}, {gy}), {maxorder}, {btclib_cofactor(prime, maxorder)}, False)",
         )
