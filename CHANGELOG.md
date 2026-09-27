@@ -2211,3 +2211,9 @@ on it opens.
 - **`windows.md` clears the Datadir Window | Information shows, once the
   shutdown window has gone, and opens the console from Window | Console**
   (issue #120).
+
+### The hash-puzzle bars stand at their own zeros, the script's on base 16
+
+- **`PartialHashInversion.ipynb` plots at `range(1, len(n) + 1)`, and
+  `hash_puzzle.py` on `yscale("log", base=16)`** (closes #99, closes #112):
+  a hit past the zeros asked raised, or, one zero asked, drew every bar at 1.
