@@ -488,11 +488,10 @@ because that document, and not this one, is where the rule lives.
   them and compares every output, which `CONTRIBUTING.md`'s last section
   gives as a command to run first; `ipynb/PartialHashInversion.ipynb` is
   the one it cannot execute, and there the question is the reviewer's.
-- **Does a ruff family left out of `select` carry its count and the
-  command that re-derives it?** `pyproject.toml` records one beside each,
-  because a short select list is a measurement here rather than a
-  preference, and a count with no command is the claim this organization
-  files most often against itself.
+- **Does each ruff `ignore` and `per-file-ignores` entry, and each site
+  `# noqa`, carry its reason and, where the reason is that the tree
+  answers zero to the rule, the command that measures it?** `CLAUDE.md`'s
+  bullet on `pyproject.toml` is where that is stated, and why.
 - **Does a step in `lab-tutorial/` still describe what the tool does?**
   Those pages walk a reader through somebody else's software — a wallet,
   a block explorer, Bitcoin Core — and a screenshot outlives the screen

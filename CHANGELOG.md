@@ -2241,3 +2241,9 @@ on it opens.
 - **Step [3]'s label names the payload it hashes, and step [6] and the
   decoding's step [3] call it the payload rather than an extended key, the
   labels `prvkey2wif_uncompressed.py` prints** (closes #111).
+
+### The process documents cite the configuration the tree has
+
+- **`REVIEWING.md` asks for each ruff `ignore` entry's and each `# noqa`'s
+  reason, and `CLAUDE.md` and `.pre-commit-config.yaml` place codespell's
+  configuration in its `args:`** (closes #106, closes #113).

@@ -118,8 +118,8 @@ repos:
         name: detect-secrets (credentials of other systems)
         args: [--baseline, .secrets.baseline]
   # a typo in a comment is cosmetic; the same typo in lab-tutorial/01.md
-  # is a step a student follows and cannot complete. Configured in
-  # pyproject.toml where it needs configuring at all
+  # is a step a student follows and cannot complete. Configured by the
+  # `args:` of its two entries below and nowhere else
   - repo: https://github.com/codespell-project/codespell
     rev: v2.4.3
     hooks:
