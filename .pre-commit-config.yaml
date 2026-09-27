@@ -428,7 +428,7 @@ repos:
         name: mypy (strict, in the project environment)
         entry: >
           uv run --locked --no-default-groups --group lint
-          mypy py-scripts .github/scripts
+          mypy py-scripts .github/scripts excel
         language: system
         types: [python]
         pass_filenames: false

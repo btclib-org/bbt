@@ -1,7 +1,10 @@
 # what this tree's commands leave in it: the environment `uv sync` builds,
-# the caches the mypy and ruff hooks keep between runs, and the directory
-# Jupyter keeps a notebook's checkpoint in, beside the notebook
+# the caches the mypy and ruff hooks keep between runs, the directory
+# Jupyter keeps a notebook's checkpoint in, beside the notebook, and the
+# compiled bytecode Python leaves beside a module a gate script imports,
+# such as `excel/generate.py`
 .ipynb_checkpoints/
 .mypy_cache/
 .ruff_cache/
 .venv/
+__pycache__/

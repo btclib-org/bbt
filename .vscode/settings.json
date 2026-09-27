@@ -27,7 +27,7 @@
   // `uv sync --locked` creates, which is where the locked mypy lives
   "mypy-type-checker.importStrategy": "fromEnvironment",
   // reportingScope stays at its default: the extension checks the file in
-  // the editor, the hook checks py-scripts and .github/scripts
+  // the editor, the hook checks py-scripts, .github/scripts and excel
 
   // the ruff-check hook, `--fix`, on save. "always" rather than "explicit"
   // because an auto-save on focus change is not an explicit save.
