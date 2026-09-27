@@ -1,12 +1,14 @@
 ---
 # What Dependabot can move here, which is not everything this repository
-# pins: the pre-commit hook revisions have no Dependabot ecosystem, and
-# the `ci:` block of .pre-commit-config.yaml has pre-commit.ci bumping
-# them weekly instead. A version pinned in a hook's
-# `additional_dependencies` is reached by neither -- `autoupdate`
-# rewrites `rev:` lines and nothing else, and a `repo: local` hook has
-# no `rev:` at all, on purpose and for the reason written beside the
-# `typos` entries, so a hand edit is what moves that pin.
+# pins. Dependabot has a `pre-commit` ecosystem, and it is not configured
+# here: the `ci:` block of .pre-commit-config.yaml has pre-commit.ci
+# bumping the hook revisions weekly, and section 11 of the standard
+# keeps that job with one bot rather than two (btclib-org/.github#1391).
+# A version pinned in a hook's `additional_dependencies` is reached by
+# neither -- `autoupdate` rewrites `rev:` lines and nothing else, and a
+# `repo: local` hook has no `rev:` at all, on purpose and for the reason
+# written beside the `typos` entries, so a hand edit is what moves that
+# pin.
 #
 # This tree publishes nothing and is course material, and section 2 of
 # the standard lists this file for a repository that ships a package.

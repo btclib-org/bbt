@@ -68,21 +68,30 @@ repos:
       # the notebooks: a .ipynb is json, so this is what says one is
       # still readable by jupyter after a hand edit or a merge. The
       # question worth asking of those files is the one this hook asks,
-      # and the formatter below is kept off them
+      # and the formatter below is kept off them.
+      # `.vscode/` is jsonc and not json: VSCode reads a comment in its own
+      # settings.json and extensions.json, and what those two files carry
+      # besides the settings is the reason for each of them. A json parser
+      # rejects the file at the first one. It is not a gap: prettier below
+      # is given that directory and fails on what it cannot parse, which
+      # is the question this hook asks
       - id: check-json
+        exclude: ^\.vscode/
       # the hand-written json -- .claude/settings.json, which is what
       # `git ls-files '*.json'` answers beside the notebooks: section 4
       # lists this hook with the syntax ones, and the hook has a subject
       # wherever a json is written by hand rather than recorded. The
       # notebooks are excluded, not declined: jupyter writes them, and
       # this hook would rewrite every one -- outputs and embedded svg
-      # included -- to settle an indentation nobody reads.
+      # included -- to settle an indentation nobody reads. `.vscode/` is
+      # excluded for the reason given on check-json above, and is
+      # prettier's below.
       # check-hooks-apply is what keeps the exclude honest, the day the
       # last hand-written json goes
       - id: pretty-format-json
         name: pretty-format-json (in place fixes)
         args: [--autofix]
-        exclude: \.ipynb$
+        exclude: (\.ipynb$|^\.vscode/)
       - id: check-toml
       - id: check-added-large-files
       # there are none, and a submodule is the one dependency that would
@@ -312,8 +321,10 @@ repos:
         # every one of them, which is what check-json above declines to
         # do for the same reason. .claude/settings.json is not here
         # either, being json and pretty-format-json's above: one
-        # formatter per file, or the two rewrite each other
-        files: ^(.*\.ya?ml|\.markdownlint\.jsonc)$
+        # formatter per file, or the two rewrite each other. `.vscode/`'s
+        # two files are jsonc under a .json name, which is why they are
+        # here and not there
+        files: ^(.*\.ya?ml|\.vscode/.*\.json|\.markdownlint\.jsonc)$
   # the toml here is configuration and nothing else: .taplo.toml, which
   # carries the formatting choices and the reasoning, and pyproject.toml.
   # One indent for every toml in the organization is the point of having

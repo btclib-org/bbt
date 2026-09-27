@@ -1,0 +1,112 @@
+{
+  // this file mirrors .pre-commit-config.yaml, which is the lint gate: what
+  // the editor fixes on save is what a hook would have fixed, so nothing
+  // reaches `git commit` for the first time there. extensions.json beside it
+  // names the tool each setting drives. What no extension wraps is only ever
+  // seen by
+  //
+  //   uvx pre-commit run --all-files
+  //
+  // A machine-local preference does not belong here, this file being tracked
+  // and read by every checkout: what belongs is a choice this project has
+  // made and an editor cannot read from pyproject.toml
+
+  // there is no pyright among the hooks and mypy is the type gate, so what
+  // Pylance reports is a second opinion nothing enforces. Pylance's own
+  // default for this setting is already "off", so writing it here is not
+  // overriding that default: it is what stops a developer's own
+  // user-level "basic" or "standard" from applying to this workspace
+  // instead. Completion, hover and go-to-definition are unaffected by it
+  "python.analysis.typeCheckingMode": "off",
+
+  // the mypy hook is a local one, running the project environment's mypy
+  // rather than an isolated copy, and the editor has to use that same one:
+  // the mypy the extension bundles is a different version from the locked
+  // one, and an `enable_error_code` name it does not know is dropped with a
+  // warning no extension surfaces. The environment is the .venv
+  // `uv sync --locked` creates, which is where the locked mypy lives
+  "mypy-type-checker.importStrategy": "fromEnvironment",
+  // reportingScope stays at its default: the extension checks the file in
+  // the editor, the hook checks py-scripts and .github/scripts
+
+  // the ruff-check hook, `--fix`, on save. "always" rather than "explicit"
+  // because an auto-save on focus change is not an explicit save.
+  // `source.organizeImports.ruff` is absent on purpose: select = ["ALL"]
+  // takes in "I", so the import order is already one of the fixes.
+  // formatOnSave is off, and written rather than left to a user's own
+  // setting: ruff-format is the hook this tree leaves out, for the reason
+  // beside the ruff hooks in .pre-commit-config.yaml, and a formatter on
+  // save is that same rewrite of the teaching code, one file at a time
+  "[python]": {
+    "editor.formatOnSave": false,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.ruff": "always"
+    },
+    // [tool.ruff.lint.pycodestyle] max-doc-length, which W505 holds a
+    // comment and a docstring to. Code has no ruler, E501 being ignored
+    "editor.rulers": [80]
+  },
+
+  // the same hook over ipynb/, whose cells it reads as Python: a cell is
+  // not reached by `[python]` above, so the notebook carries its own pair.
+  // "explicit" and not "always", the notebook setting accepting no
+  // "always" -- an auto-save leaves a cell to the hook. Format on save
+  // stays off for the reason given above, the ruff-format hook being left
+  // out for the notebook cells as much as for the scripts
+  "notebook.formatOnSave.enabled": false,
+  "notebook.codeActionsOnSave": {
+    "notebook.source.fixAll.ruff": "explicit"
+  },
+
+  // `markdownlint-cli2 --fix`, which arrives as a code action and not as a
+  // formatter: the extension registers no document formatter, and the fix
+  // corrects rule violations rather than reflowing a paragraph. The ruler is
+  // MD013, tables included, and it is where the wrapping stays a judgement
+  // -- markdownlint reports a long line and rewraps no prose
+  "[markdown]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.markdownlint": "always"
+    },
+    "editor.rulers": [80]
+  },
+
+  // the typos hooks, whose configuration is [tool.typos] in pyproject.toml.
+  // The server looks for that file from the workspace folder and not from
+  // the file being edited, so naming the path is what reaches a file opened
+  // from outside this tree too. Relative, this file being tracked and an
+  // absolute path being one checkout's: the client starts the server with
+  // the workspace folder as its working directory, which is what a bare
+  // name resolves against
+  "typos.config": "pyproject.toml",
+
+  // the prettier and taplo hooks, on save and by the same two tools:
+  // prettier for yaml and for the jsonc that carries a comment, taplo for
+  // toml, reading the .taplo.toml the hook reads. `yaml.format.enable`
+  // stays off -- the yaml extension embeds a prettier of its own version,
+  // and two of them formatting one file is how a diff the hook did not ask
+  // for gets in
+  "yaml.format.enable": false,
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[toml]": {
+    "editor.defaultFormatter": "tamasfe.even-better-toml",
+    "editor.formatOnSave": true
+  },
+
+  // trailing-whitespace, end-of-file-fixer and `mixed-line-ending --fix=lf`.
+  // The first hook passes no --markdown-linebreak-ext, so a hard break
+  // spelled as two trailing spaces does not survive it either, and trimming
+  // one here is no loss
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.eol": "\n",
+  // fix-byte-order-marker: "utf8bom" writes the mark that hook removes
+  "files.encoding": "utf8"
+}

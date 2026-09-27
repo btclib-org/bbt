@@ -79,12 +79,16 @@ gh api repos/btclib-org/bbt/branches/main/protection \
          delete: .allow_deletions.enabled,
          threads: .required_conversation_resolution.enabled}'
 # {"admins":false,"delete":false,"dismiss":true,"force":false,
-#  "linear":true,"reviews":1,"signatures":true,"threads":true}
+#  "linear":true,"reviews":1,"signatures":false,"threads":true}
 ```
 
 `enforce_admins: false` is not a relaxation but what makes a solo merge
 possible at all, the ruleset bypass below reaching only the ruleset's own
 rule.
+
+`signatures: false` is classic protection's own copy of the rule, and
+`main-integrity` below is what requires signatures: [the standard states
+that value for every repository][s11-branch].
 
 ```shell
 gh api repos/btclib-org/bbt/rulesets --jq '.[].id' \
@@ -245,20 +249,25 @@ calls `btclib-org/.github`'s `reusable-claude-review.yml`, and takes
 `id-token: write` for the OIDC token minted at startup by the action
 that workflow runs.
 
+**What the call above cannot say is whether its answers are this
+repository's own or the organization's**, there being no endpoint that
+answers. Nobody has recorded an override here, which is weaker than
+knowing there is none.
+
 ```shell
 gh api repos/btclib-org/bbt/actions/permissions
-# {"enabled":true,"allowed_actions":"all","sha_pinning_required":false}
+# {"enabled":true,"allowed_actions":"all","sha_pinning_required":true}
 ```
 
-`sha_pinning_required` is false and every action a workflow here uses
-is pinned to a SHA anyway, which is [what the standard asks of the
-workflow][s10] rather than of the setting. The setting would refuse a tag
-outright; leaving it off is the sibling repositories' answer too, so this
-is not a divergence.
+```shell
+gh api orgs/btclib-org/actions/permissions \
+  --jq '{allowed_actions, sha_pinning_required}'
+# {"allowed_actions":"all","sha_pinning_required":true}
+```
 
-**What these calls cannot say is whether a value is this repository's own
-or the organization's**, there being no endpoint that answers. Nobody has
-recorded an override here, which is weaker than knowing there is none.
+The organization gives the same two answers, `sha_pinning_required`
+being set at that level: [section 11 has the reasons for both
+fields][s11-tokens].
 
 ## Secret scanning and Dependabot
 
@@ -443,10 +452,10 @@ repository document against this file rather than a command.
 [s2-root]: https://github.com/btclib-org/.github#root-files
 [s3]: https://github.com/btclib-org/.github#3-pyprojecttoml-is-the-configuration
 [s8]: https://github.com/btclib-org/.github#8-coverage-at-100
-[s10]: https://github.com/btclib-org/.github#what-every-workflow-does
 [s10-check]: https://github.com/btclib-org/.github#the-aggregate-job-and-the-required-check
 [s10-carries]: https://github.com/btclib-org/.github#which-trees-carry-which-sentinel
 [s11]: https://github.com/btclib-org/.github#11-github-settings
+[s11-branch]: https://github.com/btclib-org/.github#branch-protection-and-rulesets
 [s11-deps]: https://github.com/btclib-org/.github#dependabot-and-pre-commitci
 [s11-merge]: https://github.com/btclib-org/.github#merge-method
 [s11-sigs]: https://github.com/btclib-org/.github#signatures
