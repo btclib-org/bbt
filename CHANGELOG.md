@@ -2205,3 +2205,9 @@ on it opens.
 - **The reset deletes by absolute path once `bitcoind.pid` is gone, each
   download is checked against `SHA256SUMS`, and the closing help commands
   carry `-regtest`** (closes #97, closes #98, closes #114).
+
+### The Windows reset clears the folder Bitcoin Core names
+
+- **`windows.md` clears the Datadir Window | Information shows, once the
+  shutdown window has gone, and opens the console from Window | Console**
+  (issue #120).
