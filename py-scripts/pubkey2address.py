@@ -36,9 +36,9 @@ print("\n*** [3] RIPEMD-160 hashing on the result of SHA-256, i.e., HASH160:")
 h2 = hashlib.new("ripemd160", h1).digest()
 print(h2.hex())
 
-version_byte = "\x00"  # for mainnet
+version_byte = b"\x00"  # for mainnet
 print("\n*** [4] version byte added in front of the HASH160:")
-vh160 = b"\x00" + h2
+vh160 = version_byte + h2
 print(vh160.hex())
 
 print("\n** [5] SHA-256 hashing of the extended HASH160:")

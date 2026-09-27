@@ -46,7 +46,6 @@ qbytes = hd[:32]
 q = int(qbytes.hex(), 16) % ec.n
 qbytes = b"\x00" + q.to_bytes(32, byteorder="big")
 Q = mult(q, ec.G)
-qbytes = b"\x00" + q.to_bytes(32, byteorder="big")
 Qbytes = bytes_from_point(Q)
 chain_code = hd[32:]
 
@@ -78,7 +77,6 @@ hd = hmac.digest(chain_code, key + child_number, "sha512")
 q = (q + int(hd[:32].hex(), 16)) % ec.n
 qbytes = b"\x00" + q.to_bytes(32, byteorder="big")
 Q = mult(q, ec.G)
-qbytes = b"\x00" + q.to_bytes(32, byteorder="big")
 Qbytes = bytes_from_point(Q)
 chain_code = hd[32:]
 
@@ -109,7 +107,6 @@ hd = hmac.digest(chain_code, key + child_number, "sha512")
 q = (q + int(hd[:32].hex(), 16)) % ec.n
 qbytes = b"\x00" + q.to_bytes(32, byteorder="big")
 Q = mult(q, ec.G)
-qbytes = b"\x00" + q.to_bytes(32, byteorder="big")
 Qbytes = bytes_from_point(Q)
 chain_code = hd[32:]
 
@@ -140,7 +137,6 @@ hd = hmac.digest(chain_code, key + child_number, "sha512")
 q = (q + int(hd[:32].hex(), 16)) % ec.n
 qbytes = b"\x00" + q.to_bytes(32, byteorder="big")
 Q = mult(q, ec.G)
-qbytes = b"\x00" + q.to_bytes(32, byteorder="big")
 Qbytes = bytes_from_point(Q)
 chain_code = hd[32:]
 
@@ -171,7 +167,6 @@ hd = hmac.digest(chain_code, key + child_number, "sha512")
 q = (q + int(hd[:32].hex(), 16)) % ec.n
 qbytes = b"\x00" + q.to_bytes(32, byteorder="big")
 Q = mult(q, ec.G)
-qbytes = b"\x00" + q.to_bytes(32, byteorder="big")
 Qbytes = bytes_from_point(Q)
 chain_code = hd[32:]
 
@@ -202,7 +197,6 @@ hd = hmac.digest(chain_code, key + child_number, "sha512")
 q = (q + int(hd[:32].hex(), 16)) % ec.n
 qbytes = b"\x00" + q.to_bytes(32, byteorder="big")
 Q = mult(q, ec.G)
-qbytes = b"\x00" + q.to_bytes(32, byteorder="big")
 Qbytes = bytes_from_point(Q)
 chain_code = hd[32:]
 

@@ -19,7 +19,7 @@ print("\n*** [2] payload (compressed):")
 payload = b"\x80" + q.to_bytes(32, "big") + b"\x01"
 print(payload.hex())
 
-print("\n*** [3] SHA-256 hashing of the SHA-256:")
+print("\n*** [3] SHA-256 hashing of the payload:")
 h1 = sha256(payload).digest()
 print(h1.hex())
 
@@ -30,7 +30,7 @@ print(h2.hex())
 print("\n*** [5] First 4 bytes of the double SHA-256 used as checksum:")
 print(h2[:4].hex())
 
-print("\n*** [6] checksum added at the end of extended key:")
+print("\n*** [6] checksum added at the end of the payload:")
 checksummed_payload = payload + h2[:4]
 print(checksummed_payload.hex())
 
@@ -59,7 +59,7 @@ print("\n*** [2] Base58 decoding")
 checksummed_payload = base58._b58decode(wif)  # noqa: SLF001
 print(checksummed_payload.hex())
 
-print("\n*** [3] Extended key (checksum verified)")
+print("\n*** [3] payload (checksum verified)")
 payload, checksum = checksummed_payload[:-4], checksummed_payload[-4:]
 verified = sha256(sha256(payload).digest()).digest()[:4] == checksum
 print(payload.hex() + " (" + ("true" if verified else "false") + ")")

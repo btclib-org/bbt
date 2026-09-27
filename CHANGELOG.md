@@ -2217,3 +2217,27 @@ on it opens.
 - **`PartialHashInversion.ipynb` plots at `range(1, len(n) + 1)`, and
   `hash_puzzle.py` on `yscale("log", base=16)`** (closes #99, closes #112):
   a hit past the zeros asked raised, or, one zero asked, drew every bar at 1.
+
+### `det_keychain_type1.py` hashes `ec.n_size`-byte serializations
+
+- **The master key and the index are serialized with `ec.n_size`, as in
+  `det_keychain_type2.py`** (closes btclib-org/bbt#100): `ec.nlen` is a bit
+  length, so each was 256 bytes, mostly zero padding; the printed keys change.
+
+### `pubkey2address.py` prepends the `version_byte` it names
+
+- **`version_byte` is `b"\x00"` and step [4] prepends it to the HASH160**
+  (closes #109), where it was a `str` nothing read beside a bytes literal;
+  the printed address is unchanged.
+
+### `bip32_testvector1.py` builds each `qbytes` once
+
+- **Each step assigns `qbytes` ahead of `Q = mult(q, ec.G)` only, as
+  `bip32_testvector3.py` does** (closes btclib-org/bbt#110): the second one,
+  after it, rebuilt the same bytes, so the output is unchanged.
+
+### `prvkey2wif_compressed.py` names the payload where it hashes one
+
+- **Step [3]'s label names the payload it hashes, and step [6] and the
+  decoding's step [3] call it the payload rather than an extended key, the
+  labels `prvkey2wif_uncompressed.py` prints** (closes #111).
