@@ -2170,3 +2170,14 @@ on it opens.
 - **`requires-python` and `[tool.mypy] python_version` stay at 3.14**:
   Dependabot's uv ecosystem refuses a floor naming 3.15's own release
   candidate; `.python-version` keeps tracking it (closes #88).
+
+### `excel/`'s F79 curve file matches its own point count
+
+- **`excel/EC(-1,1)-F79-G(0,1)-N43.xlsm` is renamed
+  `excel/EC(-1,1)-F79-G(0,1)-N86.xlsm`** (closes #94): its `# Points`
+  cell agrees with `calc/EC(-1,1)-F79-G(0,1)-N86.ods`.
+
+### `excel/README.md` stops inviting a Calc port already done
+
+- **The Calc-equivalent line now points at `calc/`** (closes #107):
+  every `.xlsm` there already has a `.ods` counterpart.
