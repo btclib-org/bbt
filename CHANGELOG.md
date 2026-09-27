@@ -2259,3 +2259,8 @@ on it opens.
 - **Both are in the pre-commit-hooks block, as section 4 of the standard asks**
   (closes #104); its third Python shape hook, `name-tests-test`, has no
   `tests/` file here to apply to, which the block's comment says.
+
+### `.gitignore` names what this tree's commands write
+
+- **The root `.gitignore` names what `uv sync`, the mypy and ruff hooks and
+  Jupyter write here** (closes #105), where it held GitHub's Python template.
