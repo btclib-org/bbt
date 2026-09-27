@@ -5,7 +5,7 @@
   // names the tool each setting drives. What no extension wraps is only ever
   // seen by
   //
-  //   uvx pre-commit run --all-files
+  //   uv run --locked --only-group lint pre-commit run --all-files
   //
   // A machine-local preference does not belong here, this file being tracked
   // and read by every checkout: what belongs is a choice this project has

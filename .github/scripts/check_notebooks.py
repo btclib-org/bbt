@@ -25,8 +25,8 @@ import sys
 from pathlib import Path
 from typing import Any
 
-import nbformat  # type: ignore[import-not-found]
-from nbclient import NotebookClient  # type: ignore[import-not-found]
+import nbformat
+from nbclient import NotebookClient
 
 ROOT = Path(__file__).resolve().parents[2]
 NOTEBOOK_DIR = ROOT / "ipynb"
@@ -73,7 +73,9 @@ def executed(path: Path) -> Any:
     lines on disk, so comparing the committed file against the objects
     reports every cell carrying one as differing.
     """
-    notebook = nbformat.read(path, as_version=4)
+    # nbformat ships `py.typed` and leaves `read` and `writes` unannotated,
+    # so each call carries its own ignore rather than a [tool.mypy] setting
+    notebook = nbformat.read(path, as_version=4)  # type: ignore[no-untyped-call]
     for cell in code_cells(notebook):
         if is_provisioning(cell):
             cell.source = "\n".join(
@@ -87,7 +89,7 @@ def executed(path: Path) -> Any:
         kernel_name="python3",
         resources={"metadata": {"path": str(path.parent)}},
     ).execute()
-    return json.loads(nbformat.writes(notebook))
+    return json.loads(nbformat.writes(notebook))  # type: ignore[no-untyped-call]
 
 
 def transcript(cell: Any) -> str:
