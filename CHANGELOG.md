@@ -2297,3 +2297,9 @@ on it opens.
 - **Alice's launch command and `.bat` files pass `-datadir`, and
   `bitcoin-cli` needs the same option** (closes #120); `windowsbat/.gitignore`
   is gone, that folder being no place to unpack Core (closes #128).
+
+### `windows.md` offers only the zip, and Bob's and Carol's stay GUI-only
+
+- **The installer option and its `C:\Program Files\Bitcoin\bitcoin-qt.exe`
+  mention are gone** (closes #133); Bob's and Carol's own GUI console
+  drives their nodes now, neither passing `-server` (closes #135).

@@ -1,20 +1,12 @@
 # Bitcoin Core Setup (Windows)
 
-1. Download and install Bitcoin Core from
-   <https://bitcoincore.org/en/download/>. You can pick one of the
-   following two version:
-   - portable version (zip)
-     <https://bitcoincore.org/bin/bitcoin-core-31.1/bitcoin-31.1-win64.zip>;
-     unzip it in your favorite location; in the following
-     `C:\your\bitcoinfolder` is where the `bin`, `libexec` and `share`
-     folders are located
-   - regular version (exe)
-     <https://bitcoincore.org/bin/bitcoin-core-31.1/bitcoin-31.1-win64-setup.exe>;
-     execute the installer; in the following `C:\your\bitcoinfolder` is
-     where the `bin`, `libexec` and `share` folders are located (usually
-     it should be `C:\Program Files\Bitcoin\bitcoin-qt.exe`)
+1. Download Bitcoin Core's portable zip from
+   <https://bitcoincore.org/bin/bitcoin-core-31.1/bitcoin-31.1-win64.zip>
+   and unzip it in your favorite location; in the following
+   `C:\your\bitcoinfolder` is where the `bin`, `libexec` and `share`
+   folders are located.
 
-   Before unzipping or running either, check it against the release's
+   Before unzipping, check it against the release's
    [SHA256SUMS](https://bitcoincore.org/bin/bitcoin-core-31.1/SHA256SUMS)
    as
    [Verify your download](https://bitcoincore.org/en/download/#verify-your-download)
@@ -103,4 +95,6 @@ and
 batch files are provided to launch and reset Carol's node. Every node
 (Alice 18444, Bob 18555, and Carol 18666) has its own wallet and can
 interact with the other nodes generating blocks which are broadcasted to
-the network and sending/receiving regtest-bitcoins.
+the network and sending/receiving regtest-bitcoins. Bob's and Carol's
+nodes are driven from their own GUI console (Window | Console), neither
+passing `-server` for a second `bitcoin-cli` prompt to reach.
