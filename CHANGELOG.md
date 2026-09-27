@@ -2291,3 +2291,9 @@ on it opens.
 - **pre-commit, nbclient and nbformat are pinned by `uv.lock`** (closes #101,
   closes #102, closes #103): the hooks run under `--only-group lint`, on
   `.python-version`'s interpreter, and mypy resolves both notebook libraries.
+
+### Every Windows node keeps its own datadir, and `windowsbat/` holds no Core
+
+- **Alice's launch command and `.bat` files pass `-datadir`, and
+  `bitcoin-cli` needs the same option** (closes #120); `windowsbat/.gitignore`
+  is gone, that folder being no place to unpack Core (closes #128).
