@@ -72,19 +72,22 @@ else:
 
 # Now plot the result in a bar chart
 
-# len(n) and not zeros: the two agree only by luck. A search that
-# exhausts leaves n shorter, and plt.bar refuses two shapes that differ;
-# a hash carrying more zeros than were asked for leaves it longer, and
-# plt.bar accepts that by broadcasting x, drawing every bar at the first
-# tick. len(n) is the length that matches either way
+# len(n) and not zeros: a search that exhausts leaves n shorter, and a
+# hash carrying more zeros than were asked for leaves it longer. plt.bar
+# raises on two lengths that differ, unless one of them is 1: that one
+# it broadcasts, drawing every bar at the first tick where it is x and
+# repeating the one count at every tick where it is n
 x = range(1, len(n) + 1)
 plt.bar(x, n)
 plt.xlabel("Leading zeros")
 plt.ylabel("Occurrences")
 plt.show()
 
-# It is better to use a logarithmic scale for Y axis
-plt.bar(x, n, log="true")
+# It is better to use a logarithmic scale for Y axis, and base 16 puts a
+# tick at each power of sixteen: one more leading hex zero is expected
+# sixteen times less often, so about one tick lower
+plt.bar(x, n)
 plt.xlabel("Leading zeros")
 plt.ylabel("Occurrences")
+plt.yscale("log", base=16)
 plt.show()
