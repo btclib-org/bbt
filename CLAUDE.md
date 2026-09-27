@@ -221,9 +221,11 @@ Do not use Fable unless explicitly instructed.
 - **`codespell --version` names no release, and `typos --version` names
   one — section 4's spelling bullet of the standard has the mechanism,**
   pre-commit's own fetch strategy producing the mismatch rather than
-  anything this tree does. `pyproject.toml`'s `[tool.codespell]` block
-  and the `typos` word table are this tree's own, re-derived by running
-  the checker rather than read off either version string.
+  anything this tree does. codespell's configuration is its `args:` in
+  `.pre-commit-config.yaml`, and the only spell checker configuration in
+  `pyproject.toml` is the `typos` tables. Both are this tree's own,
+  re-derived by running the checker rather than read off either version
+  string.
 - **A notebook carries its outputs, and three of the four are
   transcripts**: `DSA.ipynb`, `SSA.ipynb` and `field_table.ipynb` each
   reproduce every stored output byte for byte when executed, so a cell
