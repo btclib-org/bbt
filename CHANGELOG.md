@@ -2199,3 +2199,9 @@ on it opens.
 - **`check_notebooks.py` joins consecutive outputs of one stream on both
   sides before comparing** (closes #117): the kernel can split one print
   across two outputs, which failed the gate on a notebook that reproduced.
+
+### The regtest pages' commands do what the pages say
+
+- **The reset deletes by absolute path once `bitcoind.pid` is gone, each
+  download is checked against `SHA256SUMS`, and the closing help commands
+  carry `-regtest`** (closes #97, closes #98, closes #114).
