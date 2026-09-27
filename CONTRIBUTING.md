@@ -264,29 +264,26 @@ directory of scripts that demonstrate one thing each.
 
 ```shell
 uv sync --locked
-uvx pre-commit run --all-files
-uvx pre-commit run --all-files markdownlint-cli2
-uvx pre-commit validate-config .pre-commit-config.yaml
+uv run --locked --only-group lint pre-commit run --all-files
+uv run --locked --only-group lint pre-commit run --all-files markdownlint-cli2
+uv run --locked --only-group lint \
+    pre-commit validate-config .pre-commit-config.yaml
 ```
 
-`uvx` and not the `uv run --only-group lint pre-commit` a sibling's lint
-job uses: pre-commit is in no dependency group here, so there is no
-project environment for it to be resolved from, and `lint.yml` runs this
-same command for the reason its own header gives. A `pre-commit run`
-naming no files of its own reads the staged ones, so from a clean tree it
-reports `(no files to check)Skipped` and exits 0: the single-hook line
-carries `--all-files` for that reason, and hook scope is the whole of
-what separates it from the line above it. The last one is worth running
-before pushing a change to the hook config: it catches what a wrong
-`types_or` tag or a malformed entry would otherwise turn into a red lint
-job.
+pre-commit is in the `lint` group, so `uv.lock` pins it, and `lint.yml`
+runs the first of these for the reason its own header gives. A
+`pre-commit run` naming no files of its own reads the staged ones, so from
+a clean tree it reports `(no files to check)Skipped` and exits 0: the
+single-hook line carries `--all-files` for that reason, and hook scope is
+the whole of what separates it from the line above it. The last one is
+worth running before pushing a change to the hook config: it catches what
+a wrong `types_or` tag or a malformed entry would otherwise turn into a
+red lint job.
 
-**`uv python install` before the first of the commands above, and again
-when `.python-version` moves.** Without it pre-commit builds its Python
-hook environments against whatever interpreter `uvx` resolves, which need
-not be the one `.python-version` names. The command takes no version
-argument, that file being what it reads; `lint.yml` runs it as a step of
-its own, and the comment there carries the rest.
+pre-commit builds its Python hook environments on the interpreter it runs
+under, which is the project environment's and so the one
+`.python-version` names; `uv run` installs that interpreter where it is
+missing.
 
 The hooks are not the whole of what `lint.yml` runs. `ipynb/README.md`
 promises that executing a transcript notebook gives back every output
@@ -294,16 +291,16 @@ committed in it, and `check-json` asks only that the file still parses,
 so that promise has a gate of its own:
 
 ```shell
-uv run --locked --with nbclient --with nbformat \
-    python .github/scripts/check_notebooks.py
+uv run --locked --group notebooks python .github/scripts/check_notebooks.py
 ```
 
-`nbclient` and `nbformat` arrive through `--with` and are in no
-dependency group: nothing this tree ships imports either, so they belong
-to the command that runs the gate rather than to the environment the
-material runs in. The script names every file it reads and fails where it
-reads none, `ipynb/PartialHashInversion.ipynb` excepted — that file's own
-paragraph in `ipynb/README.md` says why it cannot be a transcript.
+`nbclient` and `nbformat` are the `notebooks` group: nothing this tree
+ships imports either, so they are a group of their own rather than
+dependencies of the material, and `lint` includes it so that the mypy
+hook reads their types. The script names every file it reads and fails
+where it reads none, `ipynb/PartialHashInversion.ipynb` excepted — that
+file's own paragraph in `ipynb/README.md` says why it cannot be a
+transcript.
 
 `py-scripts/` has a gate of its own for a related reason: mypy resolves
 the names a script imports, and whether the script still runs is a
@@ -313,12 +310,12 @@ different question, which nothing else here asks.
 uv run --locked python .github/scripts/check_scripts.py
 ```
 
-Nothing arrives through `--with` there: what the scripts import is what
-`pyproject.toml` declares, so the environment `uv sync --locked` builds
-is the one they run in. That script names every file it reads and fails
-where it reads none too; `py-scripts/ec_explorer.py` is excluded by
-name, with its reason written beside it, and an excluded name that is
-not there is a failure.
+No group is named there: what the scripts import is what
+`pyproject.toml`'s dependencies declare, so the environment
+`uv sync --locked` builds is the one they run in. That script names every
+file it reads and fails where it reads none too;
+`py-scripts/ec_explorer.py` is excluded by name, with its reason written
+beside it, and an excluded name that is not there is a failure.
 
 `uv.lock` is tracked and the `uv-lock` hook keeps it in step with
 `pyproject.toml`. `--locked` above is what makes a mismatch a failure
@@ -338,7 +335,7 @@ The type check is a hook like the rest, and running it alone is running
 that hook:
 
 ```shell
-uvx pre-commit run --all-files mypy
+uv run --locked --only-group lint pre-commit run --all-files mypy
 uv run --locked --no-default-groups --group lint \
     mypy py-scripts .github/scripts
 ```

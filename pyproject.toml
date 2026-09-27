@@ -92,10 +92,14 @@ keywords = [
 # repository of the organization has already made. `pylint` is ruff's PL
 # family, selected below.
 #
-# pre-commit is not here: the gate runs through `uvx`, for the reason
-# CONTRIBUTING.md's last section gives, so a group naming it would be a
-# declaration nothing reads
-lint = ["mypy", "ruff"]
+# pre-commit is here so that uv.lock pins the tool that decides what the
+# gate calls clean, as .pre-commit-config.yaml pins every hook's rev
+lint = ["mypy", "pre-commit", "ruff", { include-group = "notebooks" }]
+# what .github/scripts/check_notebooks.py executes and reads the
+# notebooks with. Nothing this tree ships imports either, so the group is
+# the gate's alone; lint includes it because the mypy hook type checks
+# that script against the lint group
+notebooks = ["nbclient", "nbformat"]
 dev = [{ include-group = "lint" }]
 
 [tool.uv]

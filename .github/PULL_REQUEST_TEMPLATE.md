@@ -15,9 +15,10 @@
 <!-- CI runs all of this and rejects the pull request if any of it fails:
      the point of running it locally is not to wait for CI to say so. -->
 
-- [ ] the lint gate is clean: `uvx pre-commit run --all-files`
-- [ ] the transcript notebooks reproduce: `uv run --locked --with nbclient
-      --with nbformat python .github/scripts/check_notebooks.py`
+- [ ] the lint gate is clean: `uv run --locked --only-group lint
+      pre-commit run --all-files`
+- [ ] the transcript notebooks reproduce: `uv run --locked --group
+      notebooks python .github/scripts/check_notebooks.py`
 - [ ] the scripts still run: `uv run --locked python
       .github/scripts/check_scripts.py`
 - [ ] `CHANGELOG.md` has an entry, if a user would notice the change

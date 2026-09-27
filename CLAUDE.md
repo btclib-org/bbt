@@ -208,11 +208,15 @@ Do not use Fable unless explicitly instructed.
   entries between releases and its pin in `.pre-commit-config.yaml`
   moving whenever a hand edit moves it — `autoupdate` cannot, a
   `repo: local` hook being the one shape it skips.
-- **The gate is a `uvx` although `uv.lock` is tracked.** pre-commit is
-  in no dependency group, so there is no project environment for
-  `uv run --only-group lint pre-commit` to resolve it from. A session
-  that moves the gate to the sibling form has also changed what
-  `CONTRIBUTING.md` and `lint.yml` say, in the same commit.
+- **The gates are `uv run` commands over `pyproject.toml`'s groups, and
+  only the hooks leave the project out.** They run under
+  `--only-group lint`; the notebook gate, the scripts gate and the mypy
+  hook's own entry each get the project with `lint`, which includes
+  `notebooks`, the notebooks executing on the project's kernel. A session
+  that changes how a gate is invoked changes every file spelling the
+  command, in the same commit, and
+  `git grep -l 'uv run --locked' -- ':!CHANGELOG.md' ':!CLAUDE.md'` is
+  what lists them.
 - **`uv sync` writes `uv.lock` whether or not it was asked to**, so run
   it as `uv sync --locked` unless moving the lock is the point. That is
   the trap this tree fell into: the lock is tracked because the first

@@ -2285,3 +2285,9 @@ on it opens.
 
 - **Classic `signatures` is `false` and `sha_pinning_required` is `true`,
   each linked to section 11 of the standard** (issue btclib-org/.github#1409).
+
+### The gates take their tools from `uv.lock`
+
+- **pre-commit, nbclient and nbformat are pinned by `uv.lock`** (closes #101,
+  closes #102, closes #103): the hooks run under `--only-group lint`, on
+  `.python-version`'s interpreter, and mypy resolves both notebook libraries.

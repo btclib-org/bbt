@@ -89,20 +89,6 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
 
-      # the interpreter pre-commit runs under, and so the one it builds
-      # every `language: python` hook environment with --
-      # .pre-commit-config.yaml's local typos entries among them. uvx
-      # resolves an interpreter without reading .python-version, so
-      # without this step those environments are built against the
-      # runner image's own python3 while this tree declares a version of
-      # its own, and the first hook to parse the tree's Python parses it
-      # with an interpreter nothing here names. No version is written:
-      # `uv python install` with no argument installs the one
-      # .python-version gives, which is where section 1 of the standard
-      # keeps it
-      - name: Install the interpreter .python-version names
-        run: uv python install
-
       # the cache key needs the runner image, not only the OS: a
       # pre-commit environment built on one image is not always usable on
       # the next one, and a stale hit fails in the hook rather than here
@@ -115,9 +101,10 @@ jobs:
         with:
           path: ~/.cache/pre-commit
           # the interpreter beside the hook config: a `language: python`
-          # hook's environment is built against the Python the step
-          # above installs and is cached under a directory naming that
-          # version, so a key over the config alone stands for the
+          # hook's environment is built against the Python pre-commit
+          # runs under, which is the project environment's and so the one
+          # .python-version names, and is cached under a directory naming
+          # that version. A key over the config alone stands for the
           # environments of two interpreters at once and restores ones
           # pre-commit rebuilds rather than runs
           key: >-
@@ -126,19 +113,22 @@ jobs:
           restore-keys: |
             pre-commit-${{ runner.os }}-${{ steps.image.outputs.os }}-
 
-      # uvx, and not the sibling repositories' "uv run --locked
-      # --only-group lint pre-commit": pre-commit is in no dependency
-      # group here, so there is no project environment to resolve it
-      # from, and this is the command CONTRIBUTING.md's last section
-      # gives an author to run before pushing. Running the same one is
-      # the point -- a workflow invoking pre-commit some other way is the
-      # second declaration section 4 refuses, one version behind the
-      # author's or ahead of it.
+      # pre-commit out of the lint group, pinned by uv.lock, and the
+      # command CONTRIBUTING.md's last section gives an author to run
+      # before pushing: a workflow invoking pre-commit some other way is
+      # the second declaration section 4 refuses. --only-group leaves the
+      # project out, the mypy hook's own `uv run` installing what it type
+      # checks against. No interpreter step comes before it: `uv run`
+      # installs the interpreter .python-version names where the runner
+      # lacks it, and pre-commit builds its `language: python` hook
+      # environment on the interpreter it runs under.
       # --show-diff-on-failure changes no hook's answer: it prints what
       # an in-place fixer changed, so a red job says what to apply rather
       # than only that something is unclean
       - name: Run every hook
-        run: uvx pre-commit run --all-files --show-diff-on-failure
+        run: >
+          uv run --locked --only-group lint
+          pre-commit run --all-files --show-diff-on-failure
 
       # what no hook covers: ipynb/README.md promises that executing a
       # transcript notebook gives back every output committed in it, and
@@ -155,9 +145,9 @@ jobs:
       # transcript notebooks at every commit where this runs them once
       # per push.
       #
-      # nbclient and nbformat arrive through `--with` rather than from
-      # pyproject.toml, for the reason CONTRIBUTING.md's last section
-      # gives.
+      # nbclient and nbformat are pyproject.toml's `notebooks` group, so
+      # uv.lock pins them, and the project is in the environment because
+      # the notebooks are executed on its kernel.
       #
       # `!cancelled()` so that one push answers for the hooks and for the
       # notebooks: with the default condition a red hook withholds the
@@ -165,7 +155,7 @@ jobs:
       - name: Check that the transcript notebooks reproduce
         if: ${{ !cancelled() }}
         run: >
-          uv run --locked --with nbclient --with nbformat
+          uv run --locked --group notebooks
           python .github/scripts/check_notebooks.py
 
       # what no hook covers either, and a different question from the one
@@ -179,8 +169,8 @@ jobs:
       # gives: a hook would run every script at every commit where this
       # runs them once per push.
       #
-      # Nothing arrives through `--with` here, unlike the step above:
-      # what the scripts import is what pyproject.toml declares, so the
+      # No group is named here, unlike the step above: what the scripts
+      # import is what pyproject.toml's dependencies declare, so the
       # environment `uv sync --locked` builds is the one they run in.
       #
       # `!cancelled()` so that one push answers for the hooks, the
