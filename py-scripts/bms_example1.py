@@ -14,10 +14,10 @@ print("\n0. Message:", msg.decode())
 wif = b"Kx45GeUBSMPReYQwgXiKhG9FzNXrnCeutJp4yjTd5kKxCitadm3C"
 print("1. Compressed WIF:", wif.decode())
 # `sign` below takes the parsed key, not a WIF: `prv_key_data_from_wif`
-# is the read that gives it one, and `.pub.sec` is the public key it
-# derives from it.
+# is the read that gives it one, and `.pub` is the public key it derives
+# from it.
 prv_key = prv_key_data_from_wif(wif)
-pubkey = prv_key.pub.sec
+pubkey = prv_key.pub
 
 print("2. Addresses")
 address1 = p2pkh(pubkey)
@@ -85,7 +85,7 @@ print("BIP137 p2wpkh     :", verify(msg, address3, sig3))
 wif2 = wif_from_prv_key(prv_key.q, prv_key.network, compressed=False)
 print("\n1. Uncompressed WIF          :", wif2)
 prv_key2 = prv_key_data_from_wif(wif2)
-pubkey = prv_key2.pub.sec
+pubkey = prv_key2.pub
 
 address4 = p2pkh(pubkey)
 print("2. Uncompressed P2PKH address:", address4)

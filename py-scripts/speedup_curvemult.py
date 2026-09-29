@@ -11,7 +11,7 @@ import random
 import time
 
 from btclib.curves.curve import secp256k1 as ec
-from btclib.curves.curve_group import (
+from btclib_ecc.curves.curve_group import (
     _cached_multiples,
     _cached_multiples_fixwind,
     _mult,
@@ -21,7 +21,7 @@ from btclib.curves.curve_group import (
     _mult_jac_var,
     _mult_mont_ladder_var,
 )
-from btclib.curves.curve_group_2 import (
+from btclib_ecc.curves.curve_group_2 import (
     _mult_endomorphism_secp256k1,
     _mult_sliding_window_var,
     _mult_w_NAF_var,
