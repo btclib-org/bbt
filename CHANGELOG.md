@@ -2321,3 +2321,9 @@ on it opens.
 - **`dsa_example2.py` catches `BTClibEccValueError`, and `bms_example1.py`
   passes `PubKeyData`** (issue #142): the former is what
   `btclib.curves.curve` now raises, the latter what `p2pkh` wants.
+
+### `[tool.uv] required-version` follows the `uv` `dependabot-core` bundles to `0.12.19`
+
+- **`required-version` reads `>=0.12.19`, not `>=0.12.17`** (issue
+  btclib-org/.github#1438): a floor below the pin admits a `uv` older
+  than the one Dependabot writes `uv.lock` with.
