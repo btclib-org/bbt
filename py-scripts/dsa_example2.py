@@ -13,7 +13,7 @@ from hashlib import sha256
 
 from btclib.curves.curve import mult
 from btclib.curves.curve import secp256k1 as ec
-from btclib.exceptions import BTClibValueError
+from btclib.exceptions import BTClibEccValueError
 from btclib.number_theory import mod_inv
 from btclib.utils import int_from_bits
 
@@ -93,7 +93,7 @@ i = 0
 for x_K in (r1, r1 + ec.n):
     try:
         y_even = ec.y_even_var(x_K)
-    except BTClibValueError:
+    except BTClibEccValueError:
         # x_K is outside the field, or is no curve point's x-coordinate
         continue
     for y_K in (y_even, ec.p - y_even):

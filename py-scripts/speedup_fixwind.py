@@ -8,7 +8,7 @@ import random
 import time
 
 from btclib.curves.curve import secp256k1 as ec
-from btclib.curves.curve_group import (
+from btclib_ecc.curves.curve_group import (
     _mult_base_3_var,
     _mult_fixed_window_var,
     _mult_jac_var,

@@ -2309,3 +2309,15 @@ on it opens.
 - **`excel/generate.py` writes every workbook, and `calc/` and every
   `.xlsm` are gone** (closes #136, closes #93, closes #134, closes
   #139): a gate compares every cell, chart, column width and anchor.
+
+### btclib moves to 2026.9.29, on `btclib-ecc` and `btclib-wallet` too
+
+- **`btclib-ecc` and `btclib-wallet` are declared dependencies** (closes
+  #142): `btclib.curves.curve_group` forwards no private name and
+  `btclib.mnemonic` is gone, so affected scripts import from each directly.
+
+### A curve exception and a public-key type moved under the same bump
+
+- **`dsa_example2.py` catches `BTClibEccValueError`, and `bms_example1.py`
+  passes `PubKeyData`** (issue #142): the former is what
+  `btclib.curves.curve` now raises, the latter what `p2pkh` wants.

@@ -9,8 +9,8 @@ Prints both phrases and the first hardened child key each one yields.
 
 import secrets
 
-from btclib import bip32
-from btclib.mnemonic import bip39, electrum
+from btclib_wallet import bip32
+from btclib_wallet.mnemonic import bip39, electrum
 
 entropy = secrets.randbits(256)
 
