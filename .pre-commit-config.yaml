@@ -237,7 +237,7 @@ repos:
   # check-changelog runs ahead of markdownlint-cli2 below: that hook's
   # `--fix` repairs the very seam the third check exists to name.
   - repo: https://github.com/btclib-org/.github
-    rev: 93615580cdf8afb1b0a89bf38b707232d39a502a
+    rev: 1c3cb979a34a31b5cfa3b7abfc924e4962a2b963
     hooks:
       - id: check-changelog
         args: [--grandfathered, "90"]
@@ -311,7 +311,7 @@ repos:
         types: [markdown]
         exclude: ^(CHANGELOG|RELEASE_NOTES)\.md$
   - repo: https://github.com/rbubley/mirrors-prettier
-    rev: v3.9.8
+    rev: v3.9.9
     hooks:
       - id: prettier
         name: prettier (yaml and jsonc, in place fixes)
@@ -380,7 +380,7 @@ repos:
     hooks:
       - id: yamllint
   - repo: https://github.com/Mateusz-Grzelinski/actionlint-py
-    rev: v1.7.12.24
+    rev: v1.7.12.25
     hooks:
       # actionlint through its Python packaging: the upstream hook's only
       # non-docker id wants a go toolchain on every machine that runs the
@@ -399,7 +399,7 @@ repos:
   # open them must not have. Section 4's schemas bullet; check-readthedocs
   # is not beside it, there being no .readthedocs.yaml to read
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.38.0
+    rev: 0.38.2
     hooks:
       - id: check-dependabot
       # .github/ISSUE_TEMPLATE/ is read the same way and by nothing else
@@ -440,7 +440,7 @@ repos:
   # resolution is Dependabot's uv ecosystem, per .github/dependabot.yml;
   # this hook re-locks and does not upgrade
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.12.17
+    rev: 0.12.19
     hooks:
       - id: uv-lock
   # the selection is pyproject.toml's: select = ["ALL"], with every
@@ -451,7 +451,7 @@ repos:
   # taught from and not a lint fix. What that costs is recorded where
   # E501 is ignored
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.16.8
+    rev: v0.16.9
     hooks:
       - id: ruff-check
         name: ruff check (in place fixes)
