@@ -2339,3 +2339,9 @@ on it opens.
 - **`lint.yml` carries `btclib-org/.github`'s `reusable-lint.yml` job**
   (issue btclib-org/.github#1465): `Dependency review` fails on an added
   advisory of `moderate` severity or above, or an unlisted licence.
+
+### `CLAUDE.md`'s primary-checkout section is the organization's shared text
+
+- **The section is the shared text, byte for byte, and the *Model* section
+  and some *Non-obvious facts* bullets are shorter or gone** (issue
+  btclib-org/.github#1494).

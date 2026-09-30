@@ -37,127 +37,48 @@ this tree can answer.
 
 ## The primary checkout is the maintainer's
 
-**Never work in it.** No edit, no `git add`, no commit, no branch
-switch, no rebase, no `git stash` — the hooks fix files in place. It is a
-local reference only, and it stays on `main`.
-
-Reading it is fine, but `git fetch` moves `refs/remotes/origin/main` and
-leaves the work tree where it was, so a `grep` or a `Read` against the
-checkout answers for whenever it was last brought forward, not for now.
-The read that cannot go stale is `git show origin/main:<path>`: it
-answers from the ref `git fetch` just moved, never from the tree.
-
-Where the checkout has to be current rather than merely readable, a
-fast-forward of a clean `main` brings it up:
+Never work in it: no edit, no `git add`, no commit, no branch switch, no
+rebase, no `git stash` — the hooks fix files in place. The one write
+allowed there brings it forward, and only while it is on `main` and
+`git status --porcelain` prints nothing; where it is not, stop:
 
 ```shell
-git fetch origin && git merge --ff-only origin/main
+checkout=<checkout>
 ```
-
-That writes no commit, switches no branch and runs no hook, so it is on
-the permitted side of *never work in it*, not an exception to it. Stop
-if the checkout is not on `main` or is not clean: that is no longer
-bringing it forward.
-
-**Every session works in a worktree**, its own, from the first edit, named
-`wt-<tracker>-<issue>-<repo>-<role>` rather than after the issue alone, most
-general part first: an issue filed in `btclib-org/.github`'s tracker is the key
-and the repository is a detail of it — `btclib-org/.github#255` is one issue
-owed by seven repositories, `btclib-org/.github#177` by two — so the repository
-is what varies underneath an issue rather than the other way round, which is why
-`repo` comes after `issue`. Naming it that way also sorts every worktree of one
-issue together, which is what a port leaves behind.
-
-Each of the four parts earns its place against a different collision,
-and none of them is the same collision. `tracker` is the repository
-whose issue tracker holds the issue: an issue number is unique only
-within one tracker, so `btclib-org/.github#45` and
-`btclib-org/btclib#45` are different issues that would otherwise name
-the same worktree. `issue` is what prevents the collision that has
-actually happened — two worktrees of different work sharing a generic
-basename in one repository's own `.git`, keyed on its path's basename.
-`repo` prevents a different collision, a *path* one rather than a `.git`
-one: two repositories each keep their own `.git/worktrees/<basename>`
-and cannot collide there, but the workers of one session share one
-scratchpad directory, so a session carrying one issue into several
-repositories computes the same target path for each of them, and `git
-worktree add` refuses a directory that already exists — or worse, a
-second worker reads the first one's tree. `role` covers the narrower
-case of a coder and its reviewer holding a worktree at once, which the
-ordinary sequence avoids by each removing its own.
-
-An issue of `btclib-org/.github`'s tracker, worked in `btclib` by a coder, names
-its worktree `wt-github-255-btclib-coder`. The environment is created in the
-worktree, not the checkout, by whatever that tree's own `CONTRIBUTING.md` names
-under *The environment and the gates*, and a session reads that section, not
-this one, for the command. The editing, the gates and the commits all happen in
-the worktree before the push.
 
 ```shell
-WT=<scratchpad>/wt-<tracker>-<issue>-<repo>-<role>
-git worktree add "$WT" origin/main -b <branch>
-git -C "$WT" push origin HEAD:refs/heads/<branch>
+git -C "${checkout:?}" pull --ff-only
 ```
 
-`-b <branch>` sits after the path and the commit-ish so that the placeholder
-ends the command, which is section 9 of `btclib-org/.github`'s rule. With the
-placeholder ahead of `"$WT"`, its `<` and its `>` are redirections performed
-left to right, so the `>` is reached only where the reader's own directory
-already holds the name `branch`: there the `<` succeeds, the line runs, and the
-`>` takes `"$WT"` as its target — a path with no directory at it is the file it
-creates. Ordinarily nothing holds that name, so the `<` fails first (`no such
-file or directory: branch`) and the line ends before the `>` opens anything.
+Read it only after that, once `git -C <checkout> rev-parse HEAD
+origin/main` prints one sha twice. A measurement that has to hold at a
+named revision reads `git -C <checkout> show <sha>:<path>` instead.
 
-The push names the worktree with `git -C "$WT"` because a `cd` binds the
-shell that runs it: a session that runs each line as its own command
-starts the next one in the directory it began in, the primary checkout,
-so a push after a `cd` offers that checkout's `HEAD` instead of the
-worktree's. `env -C <dir>` is the same binding for a command that takes
-no `-C` of its own. Neither binding rescues the assignment above it: a
-session that loses the `cd` loses `WT` with it, and `git -C ""` is
-documented to leave the working directory unchanged, so that push lands
-the same way, exit 0 and no diagnostic. That silence is `git`'s rather
-than the binding's: the BSD `env` macOS ships documents no case for an
-empty `-C` and refuses one — `cannot change directory to ''`, exit 125 —
-so a line bound with `env -C` stops there instead of running against the
-wrong tree. What the `-C` buys is a path that can be written out in
-full; write it out.
-
-Removing the worktree is part of finishing, and it stands in a block of
-its own: the block above ends in a placeholder, and a shell that
-discards that line as a parse error reads the next as a fresh command —
-which, in one block, is this line against whatever `$WT` already held.
-Standing alone it is a second fence, so `${WT:?}` is what it writes:
-with `$WT` unset or empty the expansion fails and the removal does not
-run. Those are the only cases it catches — a `$WT` an earlier session or
-command left holding a path expands, and the removal runs against
-whatever worktree that path names.
+Every session works in a worktree of its own, from its first edit, named
+`wt-<tracker>-<issue>-<repo>-<role>` — `wt-github-255-btclib-writer` for
+issue 255 of `btclib-org/.github`'s tracker, worked in `btclib` by a
+writer. The environment is created there, with the command `CONTRIBUTING.md`
+names under *The environment and the gates*. Every path is written out in
+full:
 
 ```shell
-git worktree remove --force "${WT:?}"
+git worktree add \
+  <scratchpad>/wt-<tracker>-<issue>-<repo>-<role> origin/main -b <branch>
 ```
 
-**Never `git stash` in a worktree either: `refs/stash` is shared.** A
-worktree isolates files, not refs, so `git stash push` pushes onto the
-same stack every other session pops from. Commit to your own branch
-instead.
+Removing it is part of finishing:
 
-**Do not rewrite `refs/heads/main`, and move it only onto
-`origin/main`.** That name is the local branch's, and no ruleset reaches
-it: a ruleset binds the forge's copy. The fast-forward above moves it
-onto `origin/main` and is inside that, where a merge, a commit on `main`
-or an `update-ref` to a branch tip leaves the ref somewhere
-`origin/main` is not. Your own branch is what you push, and the pull
-request is what moves `origin/main`.
+```shell
+git worktree remove --force <scratchpad>/wt-<tracker>-<issue>-<repo>-<role>
+```
+
+`refs/stash` and the local `main` are shared by every worktree: never
+`git stash`, and move `main` only by the fast-forward above.
 
 ## Model
 
-The default model for this repository is Sonnet. Switch to Opus only for
-a change that has to weigh an argument — what the material teaches, a
-convention this tree and the standard disagree about. Use `/model opus`
-for the session, then switch back.
-
-Do not use Fable unless explicitly instructed.
+Default model: Sonnet; Opus for design decisions with conflicting
+constraints. Do not use Fable unless instructed.
 
 ## Non-obvious facts that will otherwise waste a session
 
@@ -190,24 +111,11 @@ Do not use Fable unless explicitly instructed.
   --preview --statistics .`, with no `--select` override, reading
   `pyproject.toml`'s own `ignore`/`per-file-ignores` as it stands.
 - **The extended keys and the WIF in `pyproject.toml`'s `typos` table
-  cannot be traded for cleaner ones.** `py-scripts/bip32_testvector1.py`
-  and `bip32_testvector3.py` are named for the BIP32 vectors they walk,
-  their seeds are the ones the BIP publishes and every string they
-  assert is a key of that vector; the two WIF scripts start from the
-  private key the Bitcoin wiki page they cite works through. A
-  substitute leaves a script deriving what no published document
-  confirms. Nor is a cleaner vector on offer: extract the extended keys
-  of each test vector `bip-0032.mediawiki` publishes and run the binary
-  pre-commit installed for the hook's `additional_dependencies` pin over
-  them a vector at a time — every vector is reported. Run it
-  `--isolated`: `typos` reads
-  `pyproject.toml` from any parent directory, so an extraction written
-  in the worktree is checked with this tree's own suppressions in force,
-  and the vectors those suppressed keys come from answer clean. Re-take
-  that rather than believe it, the checker gaining and losing dictionary
-  entries between releases and its pin in `.pre-commit-config.yaml`
-  moving whenever a hand edit moves it — `autoupdate` cannot, a
-  `repo: local` hook being the one shape it skips.
+  cannot be swapped:** the keys are BIP32's published vectors, and the WIF
+  encodes the private key of the Bitcoin wiki's WIF example. `typos` flags
+  every BIP32 vector. Re-check with the hook's pinned binary, run
+  `--isolated` over each vector's keys from `bip-0032.mediawiki`, since
+  `typos` reads `pyproject.toml` from any parent directory.
 - **The gates are `uv run` commands over `pyproject.toml`'s groups, and
   only the hooks leave the project out.** They run under
   `--only-group lint`; the notebook gate, the scripts gate, the workbook
@@ -222,14 +130,11 @@ Do not use Fable unless explicitly instructed.
   the trap this tree fell into: the lock is tracked because the first
   documented command a session runs would otherwise leave the tree
   dirty.
-- **`codespell --version` names no release, and `typos --version` names
-  one — section 4's spelling bullet of the standard has the mechanism,**
-  pre-commit's own fetch strategy producing the mismatch rather than
-  anything this tree does. codespell's configuration is its `args:` in
-  `.pre-commit-config.yaml`, and the only spell checker configuration in
-  `pyproject.toml` is the `typos` tables. Both are this tree's own,
-  re-derived by running the checker rather than read off either version
-  string.
+- **`codespell --version` names no release and `typos --version` does:**
+  section 4's spelling bullet of the standard has the mechanism.
+  codespell's configuration is its `args:` in `.pre-commit-config.yaml`;
+  the only spell checker configuration in `pyproject.toml` is the
+  `typos` tables.
 - **A notebook carries its outputs, and three of the four are
   transcripts**: `DSA.ipynb`, `SSA.ipynb` and `field_table.ipynb` each
   reproduce every stored output byte for byte when executed, so a cell
@@ -264,12 +169,9 @@ Do not use Fable unless explicitly instructed.
 - **A rebase conflict on the one-line notebook is the whole file**, and
   markers inside a single line of JSON are not resolvable by anybody.
   Take the new base's copy and re-apply the change to it.
-- **`grep` does not measure `ipynb/`.** `grep -c` counts lines, so on a
-  notebook written on one line it answers at most 1 however many
-  occurrences there are, and cannot say that it could not. An unanchored
-  pattern matches the base64 of a committed image as readily as it
-  matches code, which is the half that has already produced a wrong
-  answer here. Parse the document.
+- **`grep` does not measure `ipynb/`**: `grep -c` answers at most 1 on the
+  one-line `SSA.ipynb`, and a pattern matches committed images' base64.
+  Parse the document.
 - **`excel/*.xlsx` are binaries, and a diff of one says nothing** -- but
   the source is `excel/generate.py`, not the workbook, and
   `.github/scripts/check_generated_workbooks.py` gates whether a
@@ -279,11 +181,6 @@ Do not use Fable unless explicitly instructed.
 - **The history is older than this repository**, so the contributor
   graph carries authors who never pushed here. `AUTHORS.md` says so,
   with the command that dates each.
-- **`CHANGELOG.md` carries no `markdownlint-disable` directive**, so
-  after a rebase that lands an entry under a heading `merge=union`
-  joined without a blank line, `markdownlint-cli2`'s `--fix` restores
-  the line itself. Nothing here needs the hand-restoration a tree
-  carrying the directive would.
 
 ## Conventions to match
 
