@@ -34,11 +34,12 @@ gh api repos/btclib-org/bbt/branches/main/protection \
 # {"checks":[{"app_id":15368,"context":"Lint"}],"strict":true}
 ```
 
-`lint.yml` is the workflow that gates, and its `Lint` job is the context
-the rule names — one job, so that job is the context, the [aggregate a
-required check needs][s10-check] being what a matrix needs. Renaming that
-job leaves the context reporting nothing, which blocks every pull
-request, so the name belongs to the rule as much as to the file.
+`lint.yml` is the workflow that gates, and its `Lint` job is the context the
+rule names. Renaming that job leaves the context reporting nothing, which blocks
+every pull request, so the name belongs to the rule as much as to the file.
+`lint.yml`'s second job, `Dependency review`, is not in the rule yet: requiring
+it is the maintainer's step once a pull request has produced its context
+(btclib-org/.github#1465).
 
 No other workflow here is a candidate, and each is out for a reason of
 its own. `claude-review.yml` is the ack of record and must not become a
@@ -330,7 +331,7 @@ not a drift this file's readback catches. Read at 2026-09-21T21:34:52Z.
 [GitHub's own table](https://docs.github.com/en/actions/reference/limits)
 turns that answer into a number, twenty concurrent jobs on the free
 plan, shared across every repository of the organization. `lint.yml`'s
-one job is what a pull request here spends against it, and
+jobs are what a pull request here spends against it, and
 `CONTRIBUTING.md`'s *The landing queue* is what points here for the
 figure.
 
@@ -452,7 +453,6 @@ repository document against this file rather than a command.
 [s2-root]: https://github.com/btclib-org/.github#root-files
 [s3]: https://github.com/btclib-org/.github#3-pyprojecttoml-is-the-configuration
 [s8]: https://github.com/btclib-org/.github#8-coverage-at-100
-[s10-check]: https://github.com/btclib-org/.github#the-aggregate-job-and-the-required-check
 [s10-carries]: https://github.com/btclib-org/.github#which-trees-carry-which-sentinel
 [s11]: https://github.com/btclib-org/.github#11-github-settings
 [s11-branch]: https://github.com/btclib-org/.github#branch-protection-and-rulesets
