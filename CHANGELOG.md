@@ -2327,3 +2327,9 @@ on it opens.
 - **`required-version` reads `>=0.12.19`, not `>=0.12.17`** (issue
   btclib-org/.github#1438): a floor below the pin admits a `uv` older
   than the one Dependabot writes `uv.lock` with.
+
+### `CONTRIBUTING.md` points a newcomer at `good first issue`
+
+- **An issue carrying the label is small and self-contained** (issue
+  btclib-org/.github#1362): *The issue tracker* says so, and links the
+  organization-wide search for the open ones.
