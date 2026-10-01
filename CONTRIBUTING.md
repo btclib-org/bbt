@@ -383,18 +383,16 @@ them here is what keeps a regenerated baseline the same baseline.
 
 ### What gates a merge, and what only reports
 
-`lint.yml`'s `Lint` job is `main`'s required check — which `REPOSITORY.md` reads
-back from the endpoint rather than restating here. `lint.yml`'s second job,
-`Dependency review`, reports on the dependencies a pull request adds and is not
-in the rule yet: requiring it is the maintainer's step once a pull request has
-produced its context (btclib-org/.github#1465). `claude-review.yml` runs beside
-them and reports: its verdict is the ack of record the section above names,
-posted as a pull request review of type `COMMENT`, and its check is red when no
-ack of the head was posted — which gates nothing, the check not being required.
-`links.yml` reaches a pull request only when that pull request touches the
-workflow or the ignore list beside it, and gates nothing either, for the reason
-its own header gives. There is no suite, no documentation build and no release,
-so nothing else is asked of a pull request.
+`lint.yml`'s `Lint` and `Dependency review` jobs are `main`'s required checks —
+which `REPOSITORY.md` reads back from the endpoint rather than restating here.
+`claude-review.yml` runs beside them and reports: its verdict is the ack of
+record the section above names, posted as a pull request review of type
+`COMMENT`, and its check is red when no ack of the head was posted — which
+gates nothing, the check not being required. `links.yml` reaches a pull
+request only when that pull request touches the workflow or the ignore list
+beside it, and gates nothing either, for the reason its own header gives.
+There is no suite, no documentation build and no release, so nothing else is
+asked of a pull request.
 
 ### A version, and no release
 

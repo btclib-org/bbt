@@ -58,11 +58,11 @@ concurrency:
 
 jobs:
   lint:
-    # this job is the context the branch rule names. The name is shorter
+    # this job is a context the branch rule names. The name is shorter
     # than the sibling repositories' "Lint and type-check" while the gate
     # type-checks too, and it stays that way because a rule already names
     # it: `gh api repos/btclib-org/bbt/branches/main/protection` answers
-    # with `Lint` as the required context, and a renamed job leaves that
+    # with `Lint` among the required contexts, and a renamed job leaves that
     # context reporting nothing, which blocks every pull request
     name: Lint
     # a draft pull request is work its author is not asking anyone to
@@ -135,10 +135,10 @@ jobs:
       # runs is the whole of the promise, and CONTRIBUTING.md's last
       # section documents the same command for an author to run first.
       #
-      # A step of this job and not a job of its own, because `Lint` is
-      # the required context -- REPOSITORY.md reads it back from the
-      # protection endpoint -- so a second job would report beside the
-      # rule rather than gate with it.
+      # A step of this job and not a job of its own, because a job gates
+      # only where the rule names it, and the rule names `Lint` and
+      # `Dependency review` -- REPOSITORY.md reads them back from the
+      # protection endpoint.
       #
       # And a step rather than a hook, because a hook would execute the
       # transcript notebooks at every commit where this runs them once
@@ -207,8 +207,8 @@ jobs:
     # file keeps its own lint job; section 11 of btclib-org/.github's
     # README.md states the rule. A job of its own rather than a step of the
     # one above: it reads the forge's dependency graph and not the checkout,
-    # so it takes no checkout and no hook environment. Its context is this
-    # name.
+    # so it takes no checkout and no hook environment. It is a required
+    # check, and its context is this name.
     name: Dependency review
     # the action compares a pull request's base and head, which only a
     # pull_request event carries: on a push or a dispatch it has no pair
