@@ -26,20 +26,19 @@ and there is more of that here than elsewhere.
 
 ## Required checks on main
 
-**`Lint`, and nothing else.**
+**`Lint` and `Dependency review`, and nothing else.**
 
 ```shell
 gh api repos/btclib-org/bbt/branches/main/protection \
   --jq '.required_status_checks | {strict, checks}'
-# {"checks":[{"app_id":15368,"context":"Lint"}],"strict":true}
+# {"checks":[{"app_id":15368,"context":"Lint"},
+#            {"app_id":15368,"context":"Dependency review"}],"strict":true}
 ```
 
-`lint.yml` is the workflow that gates, and its `Lint` job is the context the
-rule names. Renaming that job leaves the context reporting nothing, which blocks
-every pull request, so the name belongs to the rule as much as to the file.
-`lint.yml`'s second job, `Dependency review`, is not in the rule yet: requiring
-it is the maintainer's step once a pull request has produced its context
-(btclib-org/.github#1465).
+`lint.yml` is the workflow that gates, and its `Lint` and `Dependency review`
+jobs are the contexts the rule names. Renaming a job leaves its context
+reporting nothing, which blocks every pull request, so each name belongs to
+the rule as much as to the file.
 
 No other workflow here is a candidate, and each is out for a reason of
 its own. `claude-review.yml` is the ack of record and must not become a
@@ -51,10 +50,10 @@ tree and not one a landing should wait on.
 anything else. Changing the list is a `PATCH` of
 `/required_status_checks`, never a `PUT` of the protection object: a
 `PUT` sets every field it is given and clears every field it is not, and
-this check is the one rule here no ruleset carries a copy of. The
+these checks are the one rule here no ruleset carries a copy of. The
 signatures, the linear history and the approving review survive a partial
 `PUT` in `main-integrity` and `main-self-merge`, read back in the next
-section; `Lint` would not.
+section; the checks would not.
 
 ## Branch protection and the rulesets
 

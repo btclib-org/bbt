@@ -2345,3 +2345,8 @@ on it opens.
 - **The section is the shared text, byte for byte, and the *Model* section
   and some *Non-obvious facts* bullets are shorter or gone** (issue
   btclib-org/.github#1494).
+
+### `Dependency review` is a required check
+
+- **`REPOSITORY.md` and `CONTRIBUTING.md` name `Dependency review` as a
+  required check beside `Lint`** (issue btclib-org/.github#1465).
