@@ -2356,3 +2356,9 @@ on it opens.
 - **`required-version` reads `>=0.12.18`, not `>=0.12.19`** (issue
   btclib-org/.github#1482): the Dependabot service refused `0.12.19` with
   `tool_version_not_supported`.
+
+### A `Signed-off-by:` trailer on every commit of a pull request
+
+- **`lint.yml` carries `btclib-org/.github`'s `Sign-off` job, which refuses a
+  commit not signed off by its author** (issue btclib-org/.github#1467):
+  `CONTRIBUTING.md`'s shared half says how to sign off.
