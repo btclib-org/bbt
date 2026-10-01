@@ -2350,3 +2350,9 @@ on it opens.
 
 - **`REPOSITORY.md` and `CONTRIBUTING.md` name `Dependency review` as a
   required check beside `Lint`** (issue btclib-org/.github#1465).
+
+### `[tool.uv] required-version` is `>=0.12.18`
+
+- **`required-version` reads `>=0.12.18`, not `>=0.12.19`** (issue
+  btclib-org/.github#1482): the Dependabot service refused `0.12.19` with
+  `tool_version_not_supported`.
