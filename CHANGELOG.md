@@ -2394,6 +2394,6 @@ on it opens.
 
 ### `CONTRIBUTING.md` and this tree's prose say the bypass is for emergencies
 
-- **Every pull request lands with an approving review from an owner other
+- **Every pull request lands with an approving review from somebody other
   than its author; the maintainer's bypass is for emergencies only**
   (issue btclib-org/.github#1362).
