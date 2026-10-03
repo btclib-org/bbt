@@ -2385,3 +2385,9 @@ on it opens.
 
 - **A pull request whose commits lack the `Signed-off-by:` trailer cannot
   merge** (issue btclib-org/.github#1550): `Sign-off` is a required check.
+
+### `CONTRIBUTING.md` drops the paragraph saying the bot review is off
+
+- **The shared half says the maintainer lands their own pull requests
+  through the bypass and that the ack of record is a bot's** (issue
+  btclib-org/.github#452).
