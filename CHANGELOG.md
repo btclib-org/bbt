@@ -2391,3 +2391,15 @@ on it opens.
 - **The shared half says the maintainer lands their own pull requests
   through the bypass and that the ack of record is a bot's** (issue
   btclib-org/.github#452).
+
+### `CONTRIBUTING.md` and this tree's prose say the bypass is for emergencies
+
+- **`CONTRIBUTING.md` and `REVIEWING.md` say every pull request, the
+  maintainer's included, lands with an approving review from somebody other than
+  its author; the bypass is for emergencies** (issue btclib-org/.github#1362).
+
+### Earlier entries on how a pull request lands
+
+- Entries above that have the maintainer landing without another person's
+  approval describe the rule before issue btclib-org/.github#1362 (issue
+  btclib-org/.github#1569).
