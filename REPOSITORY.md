@@ -26,19 +26,20 @@ and there is more of that here than elsewhere.
 
 ## Required checks on main
 
-**`Lint` and `Dependency review`, and nothing else.**
+**`Lint`, `Dependency review` and `Sign-off`, and nothing else.**
 
 ```shell
 gh api repos/btclib-org/bbt/branches/main/protection \
   --jq '.required_status_checks | {strict, checks}'
 # {"checks":[{"app_id":15368,"context":"Lint"},
-#            {"app_id":15368,"context":"Dependency review"}],"strict":true}
+#            {"app_id":15368,"context":"Dependency review"},
+#            {"app_id":15368,"context":"Sign-off"}],"strict":true}
 ```
 
-`lint.yml` is the workflow that gates, and its `Lint` and `Dependency review`
-jobs are the contexts the rule names. Renaming a job leaves its context
-reporting nothing, which blocks every pull request, so each name belongs to
-the rule as much as to the file.
+`lint.yml` is the workflow that gates, and its `Lint`, `Dependency review`
+and `Sign-off` jobs are the contexts the rule names. Renaming a job leaves
+its context reporting nothing, which blocks every pull request, so each name
+belongs to the rule as much as to the file.
 
 No other workflow here is a candidate, and each is out for a reason of
 its own. `claude-review.yml` is the ack of record and must not become a
