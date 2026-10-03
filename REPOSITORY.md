@@ -83,9 +83,9 @@ gh api repos/btclib-org/bbt/branches/main/protection \
 #  "linear":true,"reviews":1,"signatures":false,"threads":true}
 ```
 
-`enforce_admins: false` is not a relaxation but what makes a solo merge
-possible at all, the ruleset bypass below reaching only the ruleset's own
-rule.
+`enforce_admins: false` is not a relaxation but what makes a merge
+through the bypass possible, the ruleset bypass below reaching only the
+ruleset's own rule.
 
 `signatures: false` is classic protection's own copy of the rule, and
 `main-integrity` below is what requires signatures: [the standard states
