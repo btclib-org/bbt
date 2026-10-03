@@ -269,6 +269,18 @@ The organization gives the same two answers, `sha_pinning_required`
 being set at that level: [section 11 has the reasons for both
 fields][s11-tokens].
 
+## Sign-off on web commits
+
+```shell
+gh api repos/btclib-org/bbt --jq .web_commit_signoff_required
+# true
+gh api orgs/btclib-org --jq .web_commit_signoff_required
+# true
+```
+
+Set at the organization level, [for the reason section 11
+gives][s11-sigs].
+
 ## Secret scanning and Dependabot
 
 ```shell
@@ -421,21 +433,20 @@ workflow needs one day arrives with the section that uses it.
 
 **A field the standard states no rule about, and no call above answers
 alongside one it does.** `allow_forking`, `has_discussions`,
-`has_downloads`, `is_template` and `web_commit_signoff_required` are in
-the repository document and in none of the `--jq` objects here:
+`has_downloads` and `is_template` are in the repository document and in
+none of the `--jq` objects here:
 
 ```shell
 std=$(gh api repos/btclib-org/.github/contents/README.md --jq .content \
   | base64 -d)
-for f in allow_forking has_discussions has_downloads is_template \
-         web_commit_signoff_required; do
+for f in allow_forking has_discussions has_downloads is_template; do
   printf '%s %s\n' "$f" "$(printf '%s' "$std" | grep -c "$f")"
 done
 printf '%s' "$std" | grep -c 'default branch'
 ```
 
 The last line is a positive control: `default branch` occurs in the
-same blob, so its count is not `0`, which is what says the five `0`s
+same blob, so its count is not `0`, which is what says the four `0`s
 above it are absences rather than a `grep` that matched nothing.
 
 Recording a field on no rule grows this file with GitHub's API rather
