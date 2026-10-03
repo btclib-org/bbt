@@ -59,7 +59,9 @@ exactly them, so a red run there is a local run that was not done.
 **Every commit of a pull request carries a `Signed-off-by:` trailer
 naming its author**, which certifies the [Developer Certificate of
 Origin][dco]. `git commit -s` adds it, and `git rebase --signoff <base>`
-adds it to commits already made. [The standard's *Signatures*][s-sigs]
+adds it to commits already made. The `Sign-off` check is required, so a
+pull request whose commits lack the trailer cannot merge; its failure
+prints the command that adds it. [The standard's *Signatures*][s-sigs]
 says why a signature does not replace it, and which commits the
 `Sign-off` job skips.
 
@@ -400,7 +402,8 @@ them here is what keeps a regenerated baseline the same baseline.
 
 ### What gates a merge, and what only reports
 
-`lint.yml`'s `Lint` and `Dependency review` jobs are `main`'s required checks —
+`lint.yml`'s `Lint`, `Dependency review` and `Sign-off` jobs are `main`'s
+required checks —
 which `REPOSITORY.md` reads back from the endpoint rather than restating here.
 `claude-review.yml` runs beside them and reports: its verdict is the ack of
 record the section above names, posted as a pull request review of type
@@ -408,8 +411,7 @@ record the section above names, posted as a pull request review of type
 gates nothing, the check not being required. `links.yml` reaches a pull
 request only when that pull request touches the workflow or the ignore list
 beside it, and gates nothing either, for the reason its own header gives.
-`lint.yml`'s `Sign-off` job reports too: it is red on a commit with no
-`Signed-off-by:` trailer, and gates nothing, not being required. There is no
+There is no
 suite, no documentation build and no release, so nothing else is asked of a
 pull request.
 
