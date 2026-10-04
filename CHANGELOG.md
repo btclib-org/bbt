@@ -2419,3 +2419,9 @@ on it opens.
 
 - Entries above on `.gitattributes` or `merge=union` predate their removal
   (issue btclib-org/.github#1582).
+
+### `--admin` waits for no required check
+
+- **`CONTRIBUTING.md`'s emergency paragraph says `--admin` skips the
+  required checks too** (issue btclib-org/.github#1597):
+  `REVIEWING.md`'s "hold the merge" excepts it.
