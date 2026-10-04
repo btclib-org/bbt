@@ -2409,3 +2409,8 @@ on it opens.
 - **`REPOSITORY.md` states only that no variable is set here for
   `CLAUDE_REVIEW_ENABLED` and points at the standard for the switch**
   (issue btclib-org/.github#1560).
+
+### The forms set a type, and the history files lose `merge=union`
+
+- **The issue forms set `type:` and no kind label; `.gitattributes` is
+  gone** (issue btclib-org/.github#1584, issue btclib-org/.github#1582).
