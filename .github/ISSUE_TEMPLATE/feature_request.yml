@@ -1,7 +1,7 @@
 ---
 name: Feature request
 description: Add material, or change how something here is taught
-labels: [enhancement]
+type: Feature
 
 body:
   - type: markdown

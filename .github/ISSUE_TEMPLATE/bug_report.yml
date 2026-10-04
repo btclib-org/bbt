@@ -1,7 +1,7 @@
 ---
 name: Bug report
 description: A page, a notebook, a spreadsheet or a script does not do what it says
-labels: [bug]
+type: Bug
 
 body:
   - type: markdown
