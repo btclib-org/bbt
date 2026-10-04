@@ -2414,3 +2414,8 @@ on it opens.
 
 - **The issue forms set `type:` and no kind label; `.gitattributes` is
   gone** (issue btclib-org/.github#1584, issue btclib-org/.github#1582).
+
+### Earlier entries on `.gitattributes`
+
+- Entries above on `.gitattributes` or `merge=union` predate their removal
+  (issue btclib-org/.github#1582).
