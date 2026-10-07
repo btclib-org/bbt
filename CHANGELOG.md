@@ -1,10 +1,9 @@
 # Changelog
 
-What changed in this repository, and why. Nothing here is released —
-`CONTRIBUTING.md`'s *A version, and no release* says what that means and
-what it costs — so the entries are grouped by subject rather than by
-version, and there are no release notes for this file to be the record
-behind.
+The history of this repository is `git log` of `main`. Nothing here is
+released — this repository ships by being read — so no entry is added. The
+entries below were written before that, grouped by subject rather than
+by version, and stay as they are.
 
 ## Unreleased
 
