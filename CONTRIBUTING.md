@@ -437,5 +437,5 @@ requires a signature on `refs/tags/v*` and has no bypass actor, and
 `REPOSITORY.md` carries the call that reads it back. There is no such
 tag, so it enforces nothing today, and that is not a defect to remove: it
 is the rule being in place before the first tag rather than after it.
-Whoever cuts a first tag here signs it — `git tag -s` — and finds that
-out from the push rather than from this section.
+Whoever cuts a first tag here signs it — `git tag -s` — and reads the
+signature back, the rule not checking the tag's own.
