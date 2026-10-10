@@ -10,7 +10,7 @@ The strategies come from curve_group.py and curve_group_2.py.
 import random
 import time
 
-from btclib.curves.curve import secp256k1 as ec
+from btclib_ecc.curves.curve import secp256k1 as ec
 from btclib_ecc.curves.curve_group import (
     _cached_multiples,
     _cached_multiples_fixwind,

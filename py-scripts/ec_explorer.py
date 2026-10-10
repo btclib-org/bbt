@@ -12,7 +12,7 @@ ellipticcurves.py writes.
 
 from math import isqrt
 
-from btclib.number_theory import mod_sqrt_var
+from btclib_ecc.number_theory import mod_sqrt_var
 
 
 def btclib_cofactor(p: int, n: int) -> int:

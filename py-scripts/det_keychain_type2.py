@@ -11,8 +11,8 @@ master public key alone, without the master private key.
 import secrets
 from hashlib import sha256 as hf
 
-from btclib.curves.curve import mult
-from btclib.curves.curve import secp256k1 as ec
+from btclib_ecc.curves.curve import mult
+from btclib_ecc.curves.curve import secp256k1 as ec
 from btclib.utils import int_from_bits
 
 # master prvkey in [1, n-1]

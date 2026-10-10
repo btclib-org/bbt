@@ -8,7 +8,8 @@ ECDSA, ECSSA and Bitcoin Message Signing, in turn.
 """
 
 from btclib.b58 import prv_key_data_from_wif
-from btclib.ecc import bms, dsa, ssa
+from btclib.ecc import bms
+from btclib_ecc.ecc import dsa, ssa
 
 msg = b"Hello, I'm Alice!"
 print("\n", msg.decode())

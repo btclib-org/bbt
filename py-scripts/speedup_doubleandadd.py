@@ -10,7 +10,7 @@ Compares both in affine and in Jacobian coordinates.
 import random
 import time
 
-from btclib.curves.curve import secp256k1 as ec
+from btclib_ecc.curves.curve import secp256k1 as ec
 from btclib_ecc.curves.curve_group import (
     _mult_aff_var,
     _mult_jac_var,

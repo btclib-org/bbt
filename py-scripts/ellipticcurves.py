@@ -9,7 +9,7 @@ enumerate by hand. ec_explorer.py searches the same primes and picks other
 curves for most of them.
 """
 
-from btclib.curves.curve import Curve
+from btclib_ecc.curves.curve import Curve
 
 # low cardinality curves p<100
 ec11_7 = Curve(11, 2, 7, (6, 9), 7, 2, False)
