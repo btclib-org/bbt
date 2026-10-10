@@ -11,9 +11,9 @@ body:
         or `regtest-lab/` that cannot be followed as written, a script
         that fails or prints something its page does not describe, a
         notebook whose committed outputs its own run does not reproduce,
-        a spreadsheet that computes something else. A defect in the
-        library the scripts import is
-        [btclib](https://github.com/btclib-org/btclib/issues)'s. If in
+        a spreadsheet that computes something else. A defect in a
+        btclib library the scripts import is reported in that library's
+        own repository under [btclib-org](https://github.com/btclib-org). If in
         doubt, report it here.
 
 
