@@ -10,9 +10,9 @@ ECDSA.
 
 from hashlib import sha256
 
+from btclib.utils import int_from_bits
 from btclib_ecc.curves.curve import double_mult_var, mult
 from btclib_ecc.curves.curve import secp256k1 as ec
-from btclib.utils import int_from_bits
 
 # the private key is recoverable from the two signatures below, and this
 # script stops short of doing it on purpose: ipynb/SSA.ipynb sets that as

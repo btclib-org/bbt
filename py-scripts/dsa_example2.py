@@ -11,11 +11,11 @@ ephemeral key across two messages exposes.
 
 from hashlib import sha256
 
+from btclib.utils import int_from_bits
 from btclib_ecc.curves.curve import mult
 from btclib_ecc.curves.curve import secp256k1 as ec
 from btclib_ecc.exceptions import BTClibEccValueError
 from btclib_ecc.number_theory import mod_inv
-from btclib.utils import int_from_bits
 
 # note: no import from btclib_ecc.ecc.dsa
 # the private key is recoverable from the two signatures below, and this

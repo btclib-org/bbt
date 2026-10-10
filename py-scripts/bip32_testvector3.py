@@ -11,10 +11,10 @@ key down to its one hardened child.
 import hmac
 
 from btclib import base58
+from btclib.hashes import hash160
 from btclib_ecc.curves.curve import mult
 from btclib_ecc.curves.curve import secp256k1 as ec
 from btclib_ecc.curves.sec_point import bytes_from_point
-from btclib.hashes import hash160
 
 # https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki
 

@@ -11,9 +11,9 @@ master public key alone, without the master private key.
 import secrets
 from hashlib import sha256 as hf
 
+from btclib.utils import int_from_bits
 from btclib_ecc.curves.curve import mult
 from btclib_ecc.curves.curve import secp256k1 as ec
-from btclib.utils import int_from_bits
 
 # master prvkey in [1, n-1]
 mprvkey = 1 + secrets.randbelow(ec.n - 1)
