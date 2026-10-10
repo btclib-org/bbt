@@ -2,7 +2,7 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
-"""Sign and verify ECDSA by hand, from btclib's number-theory primitives.
+"""Sign and verify ECDSA by hand, from btclib_ecc's number-theory primitives.
 
 Shows that the public key is recoverable from the signature alone, that a
 signature's s can be malleated into another valid one, and what reusing an

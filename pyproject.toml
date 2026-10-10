@@ -55,9 +55,8 @@ requires-python = ">=3.14"
 # jupyter pulling one in.
 dependencies = [
     "btclib",
-    # the speedup_*.py scripts import the private multiplication helpers
-    # they benchmark from here, btclib's own curve_group re-export
-    # carrying only the public names
+    # py-scripts/ and ipynb/ import curves, number_theory, kdf, dsa and
+    # ssa from here, btclib not carrying them (btclib-org/btclib#2404)
     "btclib-ecc",
     # py-scripts/mnemonic.py imports bip32 and mnemonic from here, btclib
     # itself no longer re-exporting either (btclib-org/btclib#2404)
