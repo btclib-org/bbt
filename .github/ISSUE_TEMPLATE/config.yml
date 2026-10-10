@@ -25,9 +25,9 @@ contact_links:
   - name: Bug in btclib itself
     url: https://github.com/btclib-org/btclib/issues
     about: >
-      A traceback ending inside btclib is reported here; one ending inside
-      another btclib package the scripts import is reported in that
-      package's own repository.
+      A traceback ending inside btclib is reported there; one ending inside
+      another btclib package the scripts import, in that package's own
+      repository.
   - name: The course slides
     url: http://www.ametrano.net/bbt/
     about: >
