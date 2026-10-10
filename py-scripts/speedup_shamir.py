@@ -11,7 +11,7 @@ them into one double-and-add pass over the bits of both scalars.
 import random
 import time
 
-from btclib.curves.curve import secp256k1 as ec
+from btclib_ecc.curves.curve import secp256k1 as ec
 from btclib_ecc.curves.curve_group import _double_mult_var, _mult_jac_var
 
 random.seed(42)

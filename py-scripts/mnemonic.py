@@ -9,12 +9,14 @@ Prints both phrases and the first hardened child key each one yields.
 
 import secrets
 
+import btclib_mnemonics.bip39
+import btclib_mnemonics.electrum
 from btclib_wallet import bip32
 from btclib_wallet.mnemonic import bip39, electrum
 
 entropy = secrets.randbits(256)
 
-bip39_mnemonic = bip39.mnemonic_from_entropy(entropy)
+bip39_mnemonic = btclib_mnemonics.bip39.mnemonic_from_entropy(entropy)
 print()
 print(bip39_mnemonic)
 rxprv = bip39.mxprv_from_mnemonic(bip39_mnemonic)
@@ -25,7 +27,7 @@ path = "m/0h"
 xprv = bip32.derive(rxprv, path)
 print(path + f" : {xprv!r}")
 
-electrum_mnemonic = electrum.mnemonic_from_entropy(entropy=entropy)
+electrum_mnemonic = btclib_mnemonics.electrum.mnemonic_from_entropy(entropy=entropy)
 print()
 print(electrum_mnemonic)
 mxprv = electrum.mxprv_from_mnemonic(electrum_mnemonic)

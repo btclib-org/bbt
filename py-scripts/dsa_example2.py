@@ -2,7 +2,7 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
-"""Sign and verify ECDSA by hand, from btclib's number-theory primitives.
+"""Sign and verify ECDSA by hand, from btclib_ecc's number-theory primitives.
 
 Shows that the public key is recoverable from the signature alone, that a
 signature's s can be malleated into another valid one, and what reusing an
@@ -11,13 +11,13 @@ ephemeral key across two messages exposes.
 
 from hashlib import sha256
 
-from btclib.curves.curve import mult
-from btclib.curves.curve import secp256k1 as ec
-from btclib.exceptions import BTClibEccValueError
-from btclib.number_theory import mod_inv
 from btclib.utils import int_from_bits
+from btclib_ecc.curves.curve import mult
+from btclib_ecc.curves.curve import secp256k1 as ec
+from btclib_ecc.exceptions import BTClibEccValueError
+from btclib_ecc.number_theory import mod_inv
 
-# note: no import from btclib.ecc.dsa
+# note: no import from btclib_ecc.ecc.dsa
 # the private key is recoverable from the two signatures below, and this
 # script stops short of doing it on purpose: ipynb/DSA.ipynb sets that as
 # the reader's exercise, and a script that answered it would spend it

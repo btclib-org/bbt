@@ -2,13 +2,11 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
-"""Sign and verify one message with each of btclib's three signature schemes.
-
-ECDSA, ECSSA and Bitcoin Message Signing, in turn.
-"""
+"""Sign and verify one message with ECDSA, ECSSA and Bitcoin Message Signing."""
 
 from btclib.b58 import prv_key_data_from_wif
-from btclib.ecc import bms, dsa, ssa
+from btclib.ecc import bms
+from btclib_ecc.ecc import dsa, ssa
 
 msg = b"Hello, I'm Alice!"
 print("\n", msg.decode())

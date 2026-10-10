@@ -10,7 +10,7 @@ The strategies come from curve_group.py and curve_group_2.py.
 import random
 import time
 
-from btclib.curves.curve import secp256k1 as ec
+from btclib_ecc.curves.curve import secp256k1 as ec
 from btclib_ecc.curves.curve_group import (
     _cached_multiples,
     _cached_multiples_fixwind,
@@ -27,7 +27,7 @@ from btclib_ecc.curves.curve_group_2 import (
     _mult_w_NAF_var,
 )
 
-# the windows btclib uses for itself: curve.py sets _ENDOMORPHISM_W to 4,
+# the windows btclib_ecc uses for itself: curve.py sets _ENDOMORPHISM_W to 4,
 # and _cached_multiples_fixwind's docstring says it is made for w=4. Each
 # of those functions takes the window as an argument, so a benchmark of
 # them has to name it

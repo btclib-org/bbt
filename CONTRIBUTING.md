@@ -373,8 +373,8 @@ uv run --locked --no-default-groups --group lint \
 The second line is the hook's own entry, and it is what to reach for
 while fixing an error, taking mypy's flags where the first takes
 pre-commit's. What neither is, is `mypy` off the PATH: the strictness
-here is only as good as the environment it reads btclib's types from,
-and that environment is the one `uv sync --locked` builds.
+here is only as good as the environment it reads the btclib packages'
+types from, and that environment is the one `uv sync --locked` builds.
 
 One command is not a gate and is here because nothing else names it. It
 regenerates the secret-scanning baseline after a finding has been read:

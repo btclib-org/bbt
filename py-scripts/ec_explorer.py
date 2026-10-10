@@ -12,11 +12,11 @@ ellipticcurves.py writes.
 
 from math import isqrt
 
-from btclib.number_theory import mod_sqrt_var
+from btclib_ecc.number_theory import mod_sqrt_var
 
 
 def btclib_cofactor(p: int, n: int) -> int:
-    """Return the cofactor btclib's Curve() accepts for order n over F_p.
+    """Return the cofactor btclib_ecc's Curve() accepts for order n over F_p.
 
     Curve() refuses any value but floor((p + 1 + 2 sqrt(p)) / n), which exceeds
     1 wherever n fits more than once below Hasse's upper bound, although every

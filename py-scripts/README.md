@@ -1,8 +1,8 @@
 # Running these scripts
 
-The Python scripts in this folder depend on the
-[btclib](https://github.com/btclib-org/btclib) library, and on the other
-packages `pyproject.toml` declares. `uv sync --locked`, run from the
+The Python scripts in this folder depend on the btclib
+libraries, [btclib](https://github.com/btclib-org/btclib) among them, and
+on the other packages `pyproject.toml` declares. `uv sync --locked`, run from the
 repository root, is what builds an environment holding all of them:
 
 ```shell

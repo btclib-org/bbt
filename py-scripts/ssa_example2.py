@@ -2,7 +2,7 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
-"""Sign and verify ECSSA by hand, from btclib's curve primitives.
+"""Sign and verify ECSSA by hand, from btclib_ecc's curve primitives.
 
 Reuses an ephemeral key across two messages, the way dsa_example2.py does for
 ECDSA.
@@ -10,9 +10,9 @@ ECDSA.
 
 from hashlib import sha256
 
-from btclib.curves.curve import double_mult_var, mult
-from btclib.curves.curve import secp256k1 as ec
 from btclib.utils import int_from_bits
+from btclib_ecc.curves.curve import double_mult_var, mult
+from btclib_ecc.curves.curve import secp256k1 as ec
 
 # the private key is recoverable from the two signatures below, and this
 # script stops short of doing it on purpose: ipynb/SSA.ipynb sets that as

@@ -13,8 +13,8 @@ without running anything is what they get when they run it.
 | `SSA.ipynb` | BIP340 Schnorr, the same way |
 | `field_table.ipynb` | opposites, inverses and square roots in Z/79Z |
 
-The first cell of `DSA.ipynb` and `SSA.ipynb` installs btclib and carries
-no output on purpose. `!pip install --upgrade btclib` answers one thing
+The first cell of `DSA.ipynb` and `SSA.ipynb` installs btclib-ecc and carries
+no output on purpose. `!pip install --upgrade btclib-ecc` answers one thing
 on Colab, another in an environment built with `pip`, and
 `command not found: pip` in the one `uv sync` builds, so anything stored
 there would describe the reader's machine rather than the material. That

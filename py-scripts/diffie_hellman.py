@@ -10,10 +10,10 @@ key, then a KDF hashes away the weak bits.
 
 from hashlib import sha256 as hf
 
-from btclib.curves.curve import mult
-from btclib.curves.curve import secp256k1 as ec
-from btclib.ecc import dsa
-from btclib.kdf import ansi_x9_63_kdf
+from btclib_ecc.curves.curve import mult
+from btclib_ecc.curves.curve import secp256k1 as ec
+from btclib_ecc.ecc import dsa
+from btclib_ecc.kdf import ansi_x9_63_kdf
 
 # Diffie-Hellman
 print("\n Diffie-Hellman")

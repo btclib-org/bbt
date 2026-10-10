@@ -11,7 +11,7 @@ and the exit code is what says so. Each script is run in the environment
 
 The `speedup_*.py` benchmarks are among them on purpose, and their
 timing output is ignored. What breaks a benchmark here is not becoming
-slow, it is the same `AttributeError` a renamed `btclib` gives any other
+slow, it is the `ImportError` a renamed import gives any other
 script, and that the benchmark still runs is what a shared runner can
 honestly answer.
 

@@ -11,10 +11,10 @@ private key down to its grand-grand-grand-grandchild.
 import hmac
 
 from btclib import base58
-from btclib.curves.curve import mult
-from btclib.curves.curve import secp256k1 as ec
-from btclib.curves.sec_point import bytes_from_point
 from btclib.hashes import hash160
+from btclib_ecc.curves.curve import mult
+from btclib_ecc.curves.curve import secp256k1 as ec
+from btclib_ecc.curves.sec_point import bytes_from_point
 
 # https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki
 

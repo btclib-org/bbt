@@ -139,13 +139,13 @@ class CurveSpec:
 CURVES = [
     # btclib-org/bbt#93: y^2 = x^3 + 2x + 5 over F101 has zero discriminant
     # and tabulates a node, not a group. This replacement keeps p = 101 and
-    # is checked against btclib 2026.9.24: Curve(101, 7, 4, (0, 2), 97, 1,
+    # is checked against btclib_ecc 2026.9.30: Curve(101, 7, 4, (0, 2), 97, 1,
     # False) is accepted, a brute-force count over F101 gives #E = 97, and
     # 97 is the smallest k with k*G at infinity -- so n below is measured
     # and not carried over from the curve it replaces.
     CurveSpec(a=7, b=4, prime=101, gx=0, gy=2, n=97, cofactor=1),
     # The other six curves this course also teaches, every parameter as
-    # their own tables give it. `btclib`'s `Curve` is not what checks n
+    # their own tables give it. `btclib_ecc`'s `Curve` is not what checks n
     # and cofactor here: its constructor refuses a composite n outright,
     # and 10, 270 and 280 below each factor beyond themselves and 1,
     # which a cryptographic curve never does but a teaching one may. n
