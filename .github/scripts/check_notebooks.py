@@ -42,7 +42,7 @@ ILLUSTRATIONS = ("PartialHashInversion.ipynb",)
 # compared, and one reason covers both, `ipynb/README.md` giving it:
 # what that line prints describes the reader's machine rather than the
 # material. Not running it also keeps the notebooks off the network, so
-# what they are compared against is the btclib `uv.lock` pins.
+# they run against what `uv.lock` pins.
 PROVISIONING = "!pip install"
 
 
