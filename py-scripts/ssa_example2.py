@@ -2,7 +2,7 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
-"""Sign and verify ECSSA by hand, from btclib's curve primitives.
+"""Sign and verify ECSSA by hand, from btclib_ecc's curve primitives.
 
 Reuses an ephemeral key across two messages, the way dsa_example2.py does for
 ECDSA.
