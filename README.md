@@ -93,9 +93,9 @@ would lose somebody money if they followed it, a key committed that was not
 meant to be published, a script that does something other than what its
 page says. A defect in what the scripts call belongs to the btclib package
 it is in, each with its own security policy, and a defect in a wallet, a
-key generator or a block explorer that `lab-tutorial/` walks through is its author's — though routing a report
-is the maintainers' job, not the reporter's, so report it wherever you
-found it.
+key generator or a block explorer that `lab-tutorial/` walks through is its
+author's — though routing a report is the maintainers' job, not the
+reporter's, so report it wherever you found it.
 
 Working here: [CONTRIBUTING.md](./CONTRIBUTING.md) for how to,
 [REVIEWING.md](./REVIEWING.md) for what a pull request is answered
