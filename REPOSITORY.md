@@ -41,6 +41,9 @@ and `Sign-off` jobs are the contexts the rule names. Renaming a job leaves
 its context reporting nothing, which blocks every pull request, so each name
 belongs to the rule as much as to the file.
 
+A merge through the maintainer's bypass waits for none of these
+checks, as `CONTRIBUTING.md`'s *Landing it* says.
+
 No other workflow here is a candidate, and each is out for a reason of
 its own. `claude-review.yml` is the ack of record and must not become a
 branch rule, for the reason its own header gives. `links.yml` reports
