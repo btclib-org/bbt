@@ -33,7 +33,7 @@ gh api repos/btclib-org/bbt/branches/main/protection \
   --jq '.required_status_checks | {strict, checks}'
 # {"checks":[{"app_id":15368,"context":"Lint"},
 #            {"app_id":15368,"context":"Dependency review"},
-#            {"app_id":15368,"context":"Sign-off"}],"strict":true}
+#            {"app_id":15368,"context":"Sign-off"}],"strict":false}
 ```
 
 `lint.yml` is the workflow that gates, and its `Lint`, `Dependency review`
@@ -42,7 +42,8 @@ its context reporting nothing, which blocks every pull request, so each name
 belongs to the rule as much as to the file.
 
 A merge through the maintainer's bypass waits for none of these
-checks, as `CONTRIBUTING.md`'s *Landing it* says.
+checks, as `CONTRIBUTING.md`'s *Landing it* says. `strict` is off for
+[the reason section 11 gives][s11-branch].
 
 No other workflow here is a candidate, and each is out for a reason of
 its own. `claude-review.yml` is the ack of record and must not become a
