@@ -16,15 +16,15 @@ ci:
   autofix_prs: false
   autoupdate_commit_msg: "Update the pinned pre-commit hook revisions"
   autoupdate_schedule: weekly
-  # mypy shells out to uv, which pre-commit.ci does not have.
-  # uv-lock needs the interpreter .python-version names, which the
-  # pre-commit.ci image does not carry and, with no network there, cannot
-  # download (btclib-org/.github#1348). actionlint-shellcheck runs past
+  # mypy shells out to uv, which is not installed there. uv-lock asks for
+  # the interpreter .python-version names, which the image does not carry,
+  # and pre-commit.ci has no network to download it
+  # (btclib-org/.github#1348). actionlint-shellcheck runs past
   # pre-commit.ci's time limit. Every other hook here runs on
   # pre-commit.ci, which is what the weekly revision bump needs.
   # What the skip costs is nothing that decides a merge -- lint.yml runs
-  # this file whole, with the command a developer runs, on every commit
-  # and every pull request, and installs the interpreter uv-lock asks for
+  # this file whole, with the command a developer runs, on every push to
+  # main and on every pull request that is not a draft
   skip: [mypy, uv-lock, actionlint-shellcheck]
 
 repos:
