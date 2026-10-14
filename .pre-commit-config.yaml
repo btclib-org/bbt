@@ -237,7 +237,7 @@ repos:
   # check-changelog runs ahead of markdownlint-cli2 below: that hook's
   # `--fix` repairs the very seam the third check exists to name.
   - repo: https://github.com/btclib-org/.github
-    rev: 70f5915abed3b982009996ae52254fbc68c00dfc
+    rev: 9e89a1daa5e9cc59bd22bd8664eb20b621e15fc5
     hooks:
       - id: check-changelog
         args: [--grandfathered, "90"]
@@ -311,7 +311,7 @@ repos:
         types: [markdown]
         exclude: ^(CHANGELOG|RELEASE_NOTES)\.md$
   - repo: https://github.com/rbubley/mirrors-prettier
-    rev: v3.9.9
+    rev: v3.9.10
     hooks:
       - id: prettier
         name: prettier (yaml and jsonc, in place fixes)
@@ -440,7 +440,7 @@ repos:
   # resolution is Dependabot's uv ecosystem, per .github/dependabot.yml;
   # this hook re-locks and does not upgrade
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.12.23
+    rev: 0.13.0
     hooks:
       - id: uv-lock
   # the selection is pyproject.toml's: select = ["ALL"], with every
@@ -451,7 +451,7 @@ repos:
   # taught from and not a lint fix. What that costs is recorded where
   # E501 is ignored
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.16.10
+    rev: v0.17.0
     hooks:
       - id: ruff-check
         name: ruff check (in place fixes)
