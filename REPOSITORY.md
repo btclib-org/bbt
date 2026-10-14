@@ -184,7 +184,7 @@ subject of the single commit where a branch has one. `COMMIT_MESSAGES`
 is the branch's own commit messages as the body.
 
 `allow_update_branch` is false, so the *Update branch* button is not
-offered; a stale branch is rebased from a checkout instead.
+offered; a branch is rebased from a checkout instead.
 
 ## Features
 
@@ -347,9 +347,7 @@ not a drift this file's readback catches. Read at 2026-09-21T21:34:52Z.
 [GitHub's own table](https://docs.github.com/en/actions/reference/limits)
 turns that answer into a number, twenty concurrent jobs on the free
 plan, shared across every repository of the organization. `lint.yml`'s
-jobs are what a pull request here spends against it, and
-`CONTRIBUTING.md`'s *The landing queue* is what points here for the
-figure.
+jobs are what a pull request here spends against it.
 
 The two secret-scanning settings that answer `disabled` under *Secret
 scanning and Dependabot* above are the other plan-gated pair, and that
