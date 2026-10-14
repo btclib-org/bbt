@@ -33,7 +33,7 @@ gh api repos/btclib-org/bbt/branches/main/protection \
   --jq '.required_status_checks | {strict, checks}'
 # {"checks":[{"app_id":15368,"context":"Lint"},
 #            {"app_id":15368,"context":"Dependency review"},
-#            {"app_id":15368,"context":"Sign-off"}],"strict":true}
+#            {"app_id":15368,"context":"Sign-off"}],"strict":false}
 ```
 
 `lint.yml` is the workflow that gates, and its `Lint`, `Dependency review`
@@ -42,7 +42,8 @@ its context reporting nothing, which blocks every pull request, so each name
 belongs to the rule as much as to the file.
 
 A merge through the maintainer's bypass waits for none of these
-checks, as `CONTRIBUTING.md`'s *Landing it* says.
+checks, as `CONTRIBUTING.md`'s *Landing it* says. `strict` is off for
+[the reason section 11 gives][s11-branch].
 
 No other workflow here is a candidate, and each is out for a reason of
 its own. `claude-review.yml` is the ack of record and must not become a
@@ -183,7 +184,7 @@ subject of the single commit where a branch has one. `COMMIT_MESSAGES`
 is the branch's own commit messages as the body.
 
 `allow_update_branch` is false, so the *Update branch* button is not
-offered; a stale branch is rebased from a checkout instead.
+offered; a branch is rebased from a checkout instead.
 
 ## Features
 
@@ -346,9 +347,7 @@ not a drift this file's readback catches. Read at 2026-09-21T21:34:52Z.
 [GitHub's own table](https://docs.github.com/en/actions/reference/limits)
 turns that answer into a number, twenty concurrent jobs on the free
 plan, shared across every repository of the organization. `lint.yml`'s
-jobs are what a pull request here spends against it, and
-`CONTRIBUTING.md`'s *The landing queue* is what points here for the
-figure.
+jobs are what a pull request here spends against it.
 
 The two secret-scanning settings that answer `disabled` under *Secret
 scanning and Dependabot* above are the other plan-gated pair, and that
