@@ -56,7 +56,7 @@ anything else. Changing the list is a `PATCH` of
 `/required_status_checks`, never a `PUT` of the protection object: a
 `PUT` sets every field it is given and clears every field it is not, and
 these checks are the one rule here no ruleset carries a copy of. The
-signatures, the linear history and the approving review survive a partial
+linear history and the approving review survive a partial
 `PUT` in `main-integrity` and `main-self-merge`, read back in the next
 section; the checks would not.
 
@@ -91,9 +91,9 @@ gh api repos/btclib-org/bbt/branches/main/protection \
 through the bypass possible, the ruleset bypass below reaching only the
 ruleset's own rule.
 
-`signatures: false` is classic protection's own copy of the rule, and
-`main-integrity` below is what requires signatures: [the standard states
-that value for every repository][s11-branch].
+`signatures: false` is classic protection's own copy of the rule, and no
+ruleset over `main` carries `required_signatures` either: [the standard
+states that value for every repository][s11-branch].
 
 ```shell
 gh api repos/btclib-org/bbt/rulesets --jq '.[].id' \
@@ -101,15 +101,15 @@ gh api repos/btclib-org/bbt/rulesets --jq '.[].id' \
     --jq '{name, target, enforcement, rules: [.rules[].type],
            bypass: [.bypass_actors[]?.bypass_mode]}'
 # {"bypass":[],"enforcement":"active","name":"main-integrity",
-#  "rules":["required_signatures","required_linear_history",
-#           "non_fast_forward","deletion"],"target":"branch"}
+#  "rules":["required_linear_history","non_fast_forward","deletion"],
+#  "target":"branch"}
 # {"bypass":["pull_request"],"enforcement":"active",
 #  "name":"main-self-merge","rules":["pull_request"],"target":"branch"}
 # {"bypass":[],"enforcement":"active","name":"tag-integrity",
 #  "rules":["required_signatures"],"target":"tag"}
 ```
 
-- `main-integrity` — required signatures, required linear history, no
+- `main-integrity` — required linear history, no
   force pushes, no deletions — with **no bypass actor at all**, which is
   what makes every one of those true of an administrator too.
 - `main-self-merge` — a pull request, an approving review, stale reviews
@@ -143,20 +143,24 @@ gh api repos/btclib-org/bbt/commits/main \
 # {"reason":"valid","verified":true}
 ```
 
-`required_signatures` refuses an unsigned commit at the push rather than
-noticing it afterwards, and with an empty bypass list it refuses one from
-everybody. What the call answers is the signature on whatever landed
-last, and [the rule asks for a valid signature and not for a particular
-signer][s11-sigs] — a squash composed by GitHub carries its web-flow key
-and satisfies it.
+No ruleset over `main` carries `required_signatures`, so nothing refuses
+an unsigned commit at the push. `verified-signatures.yml` checks after the
+push: for each commit pushed it reads the call above and fails naming any
+whose `verified` is not `true`. A red run is read in the Actions tab; the
+check is not a required one.
+
+What the call answers is the signature on whatever landed last, which for
+a pull request is the squash GitHub composed, made with its web-flow key.
+[The standard asks for a verified commit and not for a particular
+signer][s11-sigs].
 
 The call above answers for whichever commit is at the tip today, so it
 is a fact about a changing world rather than a setting: the next merge
 changes what it answers without anything here having decided
 differently, and [section 11's readback][s11] is not asked of it for
-that reason. Read at 2026-09-21T21:34:52Z.
+that reason. Read at 2026-10-15T16:47:41Z.
 
-What no rule covers is a commit before it is pushed:
+The call above does not see a commit before it is pushed:
 `git log -1 --format='%G? %GS'`, an `N` being a defect to fix rather than
 to explain.
 

@@ -24,7 +24,6 @@
 - [ ] the committed workbooks are generate.py's own output: `uv run
       --locked --group excel python
       .github/scripts/check_generated_workbooks.py`
-- [ ] every commit carries a verified signature
 
 ## Anything the reviewer should know
 

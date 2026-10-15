@@ -376,6 +376,9 @@ record the section above names, posted as a pull request review of type
 gates nothing, the check not being required. `links.yml` reaches a pull
 request only when that pull request touches the workflow or the ignore list
 beside it, and gates nothing either, for the reason its own header gives.
+`verified-signatures.yml` reports after each push to `main` whether every
+commit pushed is `verified`; [the standard's *Signatures*][s-sigs] has the
+rule.
 There is no
 suite, no documentation build and no release, so nothing else is asked of a
 pull request.
