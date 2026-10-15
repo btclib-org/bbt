@@ -81,6 +81,10 @@ concurrency:
 
 jobs:
   claude-review:
+    # the callee has no cache step, and `none` keeps it so: a run started
+    # by a comment gets no cache access, which is what actionlint's
+    # cache-call-unrestricted asks for
+    cache-mode: none
     uses: btclib-org/.github/.github/workflows/reusable-claude-review.yml@main
     with:
       # this tree's own paragraph, landing between the callee's verdict
