@@ -324,6 +324,16 @@ workbooks holding the same values and formulas can still differ in a
 relationship id or a shared string table's own order, neither a change
 to the material.
 
+The last step of `lint.yml`'s `Lint` job audits the whole lock, every
+group, against OSV with the script of a `btclib-org/.github` checkout:
+
+```shell
+uv run --no-project --python 3.15 \
+    <checkout>/.github/scripts/check_audit.py --all-groups
+```
+
+CI pins uv 0.12.19 for it, `uv audit` being a preview feature.
+
 `uv.lock` is tracked and the `uv-lock` hook keeps it in step with
 `pyproject.toml`. `--locked` above is what makes a mismatch a failure
 rather than a silent re-resolution; plain `uv sync` rewrites the lock,

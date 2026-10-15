@@ -3,10 +3,10 @@ name: lint
 
 # what this workflow runs is .pre-commit-config.yaml itself, never a
 # second list of the same tools: a commit and CI then enforce one thing,
-# and a hook added to that file needs no edit here. The three steps at
-# the foot of the job are what runs beside it, one for the notebooks,
-# one for the scripts and one for the generated workbooks, and each
-# one's own comment says why it is not a hook.
+# and a hook added to that file needs no edit here. The steps after the
+# hooks are what runs beside it -- the notebooks, the scripts, the
+# generated workbooks and the audit of the whole lock -- and each one's
+# own comment says why it is not a hook.
 #
 # It is the only workflow here that gates: claude-review.yml reports a
 # verdict rather than a check, and links.yml asks whether somebody
@@ -211,12 +211,53 @@ jobs:
       # every commit where this runs it once per push.
       #
       # `!cancelled()` so that one push answers for the hooks, the
-      # notebooks, the scripts and the workbooks alike
+      # notebooks, the scripts, the workbooks and the lock audit alike
       - name: Check that the committed workbooks are generate.py's own output
         if: ${{ !cancelled() }}
         run: >
           uv run --locked --group excel
           python .github/scripts/check_generated_workbooks.py
+
+      # btclib-org/.github's reusable-lint.yml steps, written out because
+      # this file keeps its own lint job. The whole lock, every group,
+      # against OSV: the malicious packages the dependency-review job
+      # never reads. A step of this job and not a job, so that its failure
+      # is under the `Lint` context the branch rule already names. Not a
+      # hook: it reads OSV over the network, which a commit-time hook
+      # would ask at every commit.
+      # Installed last so that the steps above run on the default uv; the
+      # version is reusable-audit.yml's, `audit` being a preview feature;
+      # no test compares this copy with it (btclib-org/.github#1751).
+      # `!cancelled()` on the three steps, as above
+      - name: Install the uv the audit is pinned to
+        if: ${{ !cancelled() }}
+        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          version: "0.12.19"
+          enable-cache: false
+
+      # `path:` puts it beside this tree's checkout instead of over it;
+      # sparse, so what lands is .github/scripts and that repository's root
+      # files. `ref: main` is the script served from btclib-org/.github, as
+      # the config file of `Dependency review` is
+      - name: Check out the audit script
+        if: ${{ !cancelled() }}
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: btclib-org/.github
+          ref: main
+          path: standard
+          persist-credentials: false
+          sparse-checkout: .github/scripts
+
+      # this tree has a uv.lock, the hooks step above running
+      # `uv run --locked`. --no-project and the interpreter named, the
+      # script being that repository's and not this tree's (section 10)
+      - name: Audit the whole lock
+        if: ${{ !cancelled() }}
+        run: |
+          uv run --no-project --python 3.15 \
+            standard/.github/scripts/check_audit.py --all-groups
 
   dependency-review:
     # btclib-org/.github's reusable-lint.yml job, written out because this
