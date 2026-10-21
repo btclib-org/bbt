@@ -239,7 +239,7 @@ repos:
   # check-changelog runs ahead of markdownlint-cli2 below: that hook's
   # `--fix` repairs the very seam the third check exists to name.
   - repo: https://github.com/btclib-org/.github
-    rev: 9e89a1daa5e9cc59bd22bd8664eb20b621e15fc5
+    rev: 0e359a9b5ae51cf1e17b8f59a650b2f2b58e38e9
     hooks:
       - id: check-changelog
         args: [--grandfathered, "90"]
@@ -410,7 +410,7 @@ repos:
       - id: actionlint-shellcheck
         name: actionlint (github workflows)
   - repo: https://github.com/zizmorcore/zizmor-pre-commit
-    rev: v1.30.1
+    rev: v1.31.1
     hooks:
       - id: zizmor
         args: [--offline, --no-progress, --persona=auditor]
@@ -463,7 +463,7 @@ repos:
   # resolution is Dependabot's uv ecosystem, per .github/dependabot.yml;
   # this hook re-locks and does not upgrade
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.13.0
+    rev: 0.13.1
     hooks:
       - id: uv-lock
   # the selection is pyproject.toml's: select = ["ALL"], with every
@@ -474,7 +474,7 @@ repos:
   # taught from and not a lint fix. What that costs is recorded where
   # E501 is ignored
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.17.0
+    rev: v0.17.1
     hooks:
       - id: ruff-check
         name: ruff check (in place fixes)
