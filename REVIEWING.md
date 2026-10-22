@@ -8,7 +8,7 @@ review is not about.
 This is the reviewer's half of [CONTRIBUTING.md](./CONTRIBUTING.md),
 which is the author's. It does not restate the rules a review cites —
 most are in the organization's standard, the rest in that file, in
-REPOSITORY.md and in CLAUDE.md — and a finding names the line that
+REPOSITORY.md and in AGENTS.md — and a finding names the line that
 states them rather than a copy kept here.
 
 **This file is the same in every repository of the organization**, and
@@ -79,8 +79,7 @@ directions:
    child, the author answers it twice and resolves it once.
 1. **The tree at that sha**, checked out and gated. `gh pr checkout <N>`,
    and whatever this repository's `CONTRIBUTING.md` says builds its
-   environment; `CLAUDE.md` has where a checkout may be made and where it
-   may not.
+   environment; `CONTRIBUTING.md` has the worktree procedure.
 
 Read the whole diff before writing the first comment. A comment on line
 5 that line 60 answers costs the author a reply and the reviewer their
@@ -517,8 +516,8 @@ because that document, and not this one, is where the rule lives.
   the one it cannot execute, and there the question is the reviewer's.
 - **Does each ruff `ignore` and `per-file-ignores` entry, and each site
   `# noqa`, carry its reason and, where the reason is that the tree
-  answers zero to the rule, the command that measures it?** `CLAUDE.md`'s
-  bullet on `pyproject.toml` is where that is stated, and why.
+  answers zero to the rule, the command that measures it?** The reason
+  and measuring command belong beside each exception.
 - **Does a step in `lab-tutorial/` still describe what the tool does?**
   Those pages walk a reader through somebody else's software — a wallet,
   a block explorer, Bitcoin Core — and a screenshot outlives the screen
