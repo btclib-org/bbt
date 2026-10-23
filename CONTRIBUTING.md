@@ -358,7 +358,7 @@ uv run --no-project --python 3.15 \
     <checkout>/.github/scripts/check_audit.py --all-groups
 ```
 
-CI pins uv 0.12.19 for it, `uv audit` being a preview feature.
+CI pins uv 0.13.5 for it, `uv audit` being a preview feature.
 
 `uv.lock` is tracked and the `uv-lock` hook keeps it in step with
 `pyproject.toml`. `--locked` above is what makes a mismatch a failure
