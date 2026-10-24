@@ -65,7 +65,7 @@ dependencies = [
     # py-scripts/mnemonic.py imports the bip39 and electrum entropy-to-mnemonic
     # functions from here, btclib-wallet's bip39 and electrum keeping
     # only key derivation
-    "btclib-mnemonics",
+    "bip39-slip39",
     # imported by nothing, and not a mistake: it is the kernel jupyter
     # starts a notebook in, so an environment without it opens ipynb/ and
     # cannot run a cell
