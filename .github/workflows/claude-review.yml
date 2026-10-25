@@ -103,9 +103,11 @@ jobs:
         lint.yml executes the transcript notebooks beside you and
         compares every output, and runs each script it does not
         exclude for its exit code alone, reading nothing the script
-        prints. CLAUDE.md says what a change to each is verified by,
-        and a review that reasons about what a script would do says
-        so in those words rather than reporting a trace as a run.
+        prints. The last sections of CONTRIBUTING.md and REVIEWING.md,
+        both headed "This repository in particular", say what
+        verifies a change to a notebook, a spreadsheet or a script.
+        A review that reasons about what a script would do says so
+        in those words rather than reporting a trace as a run.
     # named rather than `secrets: inherit`: inherit hands the callee
     # every secret this repository can see, and zizmor's
     # secrets-inherit audit fails on that, one finding per calling job
