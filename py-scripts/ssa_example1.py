@@ -2,16 +2,16 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
-"""Sign, verify and malleate an ECSSA signature with btclib_ecc.ecc.ssa.
+"""Sign, verify and malleate an ECSSA signature with ecc.ecc.ssa.
 
 Unlike ECDSA's, a malleated ECSSA signature does not verify.
 """
 
 from hashlib import sha256
 
-from btclib_ecc.curves.curve import mult
-from btclib_ecc.curves.curve import secp256k1 as ec
-from btclib_ecc.ecc.ssa import Sig, sign, verify
+from ecc.curves.curve import mult
+from ecc.curves.curve import secp256k1 as ec
+from ecc.ecc.ssa import Sig, sign, verify
 
 print("\n*** EC:")
 print(ec)
