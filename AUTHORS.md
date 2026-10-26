@@ -10,7 +10,5 @@ history it holds is older than the repository itself:
 `gh api repos/btclib-org/bbt --jq .created_at` dates the repository. So
 the graph carries authors who never pushed here.
 
-The screenshots under `lab-tutorial/image/` are of other people's
-software — a wallet, a key generator, a block explorer — and the
-interfaces in them belong to whoever wrote them. They are here because a
-walk-through of a tool is not a walk-through without them.
+The screenshots under `lab-tutorial/image/` are of bitaddress.org, a key
+generator other people wrote, and the interface in them is theirs.
