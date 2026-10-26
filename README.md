@@ -41,7 +41,7 @@ Other material available in this repo:
 - the *ipynb* folder includes Jupyter notebooks
 - the *py-scripts* folder includes Python scripts: most of them require
   [btclib](https://github.com/btclib-org/btclib) or
-  [btclib-ecc](https://github.com/btclib-org/btclib-ecc), and
+  [ecc](https://github.com/btclib-org/ecc), and
   `pyproject.toml` declares which interpreter and which packages the
   environment is built with
 - the *regtest-lab* folder includes information for a regtest session

@@ -6,7 +6,7 @@
 
 from btclib.b58 import prv_key_data_from_wif
 from btclib.ecc import bms
-from btclib_ecc.ecc import dsa, ssa
+from ecc.ecc import dsa, ssa
 
 msg = b"Hello, I'm Alice!"
 print("\n", msg.decode())

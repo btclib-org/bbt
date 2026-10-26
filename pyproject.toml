@@ -56,9 +56,9 @@ requires-python = ">=3.14"
 dependencies = [
     "btclib",
     # py-scripts/ and ipynb/ import curves, number_theory, kdf, dsa, ssa
-    # and BTClibEccValueError from here, btclib not carrying them
+    # and EccValueError from here, btclib not carrying them
     # (btclib-org/btclib#2404)
-    "btclib-ecc",
+    "ecc",
     # py-scripts/mnemonic.py imports bip32 and mnemonic from here, btclib
     # itself no longer re-exporting either (btclib-org/btclib#2404)
     "btclib-wallet",
