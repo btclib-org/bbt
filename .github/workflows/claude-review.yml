@@ -4,11 +4,10 @@ name: claude-review
 # Claude reading a pull request against REVIEWING.md, and answering an
 # @claude mention. The prompt, the credential guard, the action, the
 # verdict check and the mention job are all btclib-org/.github's own:
-# reusable-claude-review.yml, called at @main so a fix there reaches
-# this tree in one landing (issue btclib-org/.github#35). What stays
-# here is the trigger, the concurrency group, the workflow-level
-# permissions:, and this header saying why this repository runs a
-# review at all.
+# reusable-claude-review.yml, called at a tagged commit (section 10 of
+# btclib-org/.github's README.md). What stays here is the trigger, the
+# concurrency group, the workflow-level permissions:, and this header
+# saying why this repository runs a review at all.
 #
 # What it is here for is the ack of record. Section 11 of the
 # organization's standard says the author does not supply their own,
@@ -91,7 +90,7 @@ jobs:
     # by a comment gets no cache access, which is what actionlint's
     # cache-call-unrestricted asks for
     cache-mode: none
-    uses: btclib-org/.github/.github/workflows/reusable-claude-review.yml@main
+    uses: btclib-org/.github/.github/workflows/reusable-claude-review.yml@0f5684ab3d7bf310b0d7a2e4dd91a03522f75d67 # v2026.10.25
     with:
       # this tree's own paragraph, landing between the callee's verdict
       # paragraph and its instruction not to run the gates -- the one
