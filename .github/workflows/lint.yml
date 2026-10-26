@@ -226,8 +226,10 @@ jobs:
       # hook: it reads OSV over the network, which a commit-time hook
       # would ask at every commit.
       # Installed last so that the steps above run on the default uv; the
-      # version is reusable-audit.yml's, `audit` being a preview feature;
-      # no test compares this copy with it (btclib-org/.github#1751).
+      # version is reusable-audit.yml's, `audit` being a preview feature.
+      # btclib-org/.github's tests/check_audit_test.py checks this copy:
+      # the audit ends the job, and the uv step before it has that pin
+      # and the audit's condition.
       # `!cancelled()` on the three steps, as above
       - name: Install the uv the audit is pinned to
         if: ${{ !cancelled() }}
