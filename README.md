@@ -97,6 +97,13 @@ key generator or a block explorer that `lab-tutorial/` walks through is its
 author's — though routing a report is the maintainers' job, not the
 reporter's, so report it wherever you found it.
 
+## Contributing
+
+Development is LLM-based: humans are welcome, as long as they are
+comfortable with agentic development ;-). A contribution must have been
+read and understood by the person who submits it.
+[`CONTRIBUTING.md`](./CONTRIBUTING.md#working-with-an-llm) has the rules.
+
 Working here: [CONTRIBUTING.md](./CONTRIBUTING.md) for how to,
 [REVIEWING.md](./REVIEWING.md) for what a pull request is answered
 against. How the organization decides, and who holds which role, is its
