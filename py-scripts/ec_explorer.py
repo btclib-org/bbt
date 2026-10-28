@@ -8,21 +8,15 @@ For every prime p, scans a and b over range(200) in ascending order, and keeps
 the first curve of highest prime order below p and the first of highest prime
 order overall. Each is printed as the Curve() call that builds it, in the form
 ellipticcurves.py writes.
+
+The cofactor printed is 1: the search counts points, so the order printed is
+the curve's full point count. Curve() checks only that the cofactor times the
+order lies in Hasse's interval, so it accepts 1 here; it would also accept a
+larger cofactor whose product with the order stays in the interval, which is
+what the previous formula printed.
 """
 
-from math import isqrt
-
 from ecc.number_theory import mod_sqrt_var
-
-
-def btclib_cofactor(p: int, n: int) -> int:
-    """Return the cofactor ecc's Curve() accepts for order n over F_p.
-
-    Curve() refuses any value but floor((p + 1 + 2 sqrt(p)) / n), which exceeds
-    1 wherever n fits more than once below Hasse's upper bound, although every
-    curve kept here has exactly n points (btclib-org/ellipticcurves#19).
-    """
-    return (p + 1 + isqrt(4 * p)) // n
 
 
 def isprime(n: int) -> bool:
@@ -164,7 +158,7 @@ for prime in primes:
             f"ec{prime}_{maxorderlessthanprime} = Curve({prime}, "
             f"{maxorderlessthanprimea}, {maxorderlessthanprimeb}, ({gx}, {gy}), "
             f"{maxorderlessthanprime}, "
-            f"{btclib_cofactor(prime, maxorderlessthanprime)}, False)",
+            f"1, False)",
         )
     if maxordera != -1:
         gx = 0
@@ -179,5 +173,6 @@ for prime in primes:
                 gx += 1
         print(
             f"ec{prime}_{maxorder} = Curve({prime}, {maxordera}, {maxorderb}, "
-            f"({gx}, {gy}), {maxorder}, {btclib_cofactor(prime, maxorder)}, False)",
+            f"({gx}, {gy}), {maxorder}, "
+            f"1, False)",
         )
