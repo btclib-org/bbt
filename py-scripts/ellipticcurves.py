@@ -12,13 +12,13 @@ curves for most of them.
 from ecc.curves.curve import Curve
 
 # low cardinality curves p<100
-ec11_7 = Curve(11, 2, 7, (6, 9), 7, 2, False)
+ec11_7 = Curve(11, 2, 7, (6, 9), 7, 1, False)
 ec11_17 = Curve(11, 2, 4, (0, 9), 17, 1, False)
 ec13_11 = Curve(13, 7, 6, (1, 1), 11, 1, False)
 ec13_19 = Curve(13, 0, 2, (1, 9), 19, 1, False)
-ec17_13 = Curve(17, 6, 8, (0, 12), 13, 2, False)
+ec17_13 = Curve(17, 6, 8, (0, 12), 13, 1, False)
 ec17_23 = Curve(17, 3, 5, (1, 14), 23, 1, False)
-ec19_13 = Curve(19, 0, 2, (4, 16), 13, 2, False)
+ec19_13 = Curve(19, 0, 2, (4, 16), 13, 1, False)
 ec19_23 = Curve(19, 2, 9, (0, 16), 23, 1, False)
 ec23_19 = Curve(23, 9, 7, (5, 4), 19, 1, False)
 ec23_31 = Curve(23, 5, 1, (0, 1), 31, 1, False)
