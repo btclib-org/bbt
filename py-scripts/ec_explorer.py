@@ -11,9 +11,8 @@ ellipticcurves.py writes.
 
 The cofactor printed is 1: the search counts points, so the order printed is
 the curve's full point count. Curve() checks only that the cofactor times the
-order lies in Hasse's interval, so it accepts 1 here; it would also accept a
-larger cofactor whose product with the order stays in the interval, which is
-what the previous formula printed.
+order lies in Hasse's interval, so it accepts 1 here, and also any larger
+cofactor whose product with the order stays in the interval.
 """
 
 from ecc.number_theory import mod_sqrt_var
@@ -157,8 +156,7 @@ for prime in primes:
         print(
             f"ec{prime}_{maxorderlessthanprime} = Curve({prime}, "
             f"{maxorderlessthanprimea}, {maxorderlessthanprimeb}, ({gx}, {gy}), "
-            f"{maxorderlessthanprime}, "
-            f"1, False)",
+            f"{maxorderlessthanprime}, 1, False)",
         )
     if maxordera != -1:
         gx = 0
@@ -173,6 +171,5 @@ for prime in primes:
                 gx += 1
         print(
             f"ec{prime}_{maxorder} = Curve({prime}, {maxordera}, {maxorderb}, "
-            f"({gx}, {gy}), {maxorder}, "
-            f"1, False)",
+            f"({gx}, {gy}), {maxorder}, 1, False)",
         )
