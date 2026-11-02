@@ -2,18 +2,21 @@
 
 1. open terminal
 
-1. name the build for your machine — `arm64` for Apple silicon,
-   `x86_64` for an Intel Mac, which `uname -m` tells you:
+1. export convenience variables (for an easy installation), naming the
+   build for your machine — `arm64` for Apple silicon, `x86_64` for an
+   Intel Mac, which `uname -m` tells you:
 
    ```shell
+   export BITCOIN=bitcoin-core-32.1
+   export BITCOINPLAIN=`echo $BITCOIN | sed 's/bitcoin-core/bitcoin/'`
    export BITCOINARCH=arm64-apple-darwin
    ```
 
 1. download Bitcoin Core, and the checksums of its release
 
    ```shell
-   curl -O https://bitcoincore.org/bin/bitcoin-core-31.1/bitcoin-31.1-$BITCOINARCH.tar.gz
-   curl -O https://bitcoincore.org/bin/bitcoin-core-31.1/SHA256SUMS
+   curl -O https://bitcoincore.org/bin/$BITCOIN/$BITCOINPLAIN-$BITCOINARCH.tar.gz
+   curl -O https://bitcoincore.org/bin/$BITCOIN/SHA256SUMS
    ```
 
 1. check the archive against those checksums: the line printed must end
@@ -31,7 +34,7 @@
 1. extract the archive
 
    ```shell
-   tar -zxf bitcoin-31.1-$BITCOINARCH.tar.gz
+   tar -zxf $BITCOINPLAIN-$BITCOINARCH.tar.gz
    ```
 
 1. move executables into your default path to make bitcoin daemon
@@ -39,13 +42,13 @@
 
    ```shell
    sudo mkdir -p /usr/local/bin
-   sudo cp bitcoin-31.1/bin/bitcoin* /usr/local/bin/.
+   sudo cp $BITCOINPLAIN/bin/bitcoin* /usr/local/bin/.
    ```
 
 1. clean up the temporary directory
 
    ```shell
-   rm -rf bitcoin-31.1* SHA256SUMS
+   rm -rf "${BITCOINPLAIN:?}"* SHA256SUMS
    ```
 
 1. start the Bitcoin Core daemon in regtest mode, with a fallback fee —

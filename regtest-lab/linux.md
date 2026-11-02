@@ -5,7 +5,7 @@
 1. export convenience variables (for an easy installation)
 
    ```shell
-   export BITCOIN=bitcoin-core-31.1
+   export BITCOIN=bitcoin-core-32.1
    export BITCOINPLAIN=`echo $BITCOIN | sed 's/bitcoin-core/bitcoin/'`
    ```
 
@@ -37,7 +37,7 @@
    /bin/tar xzf ~username/$BITCOINPLAIN-x86_64-linux-gnu.tar.gz -C ~username
    sudo /usr/bin/install -m 0755 -o root -g root -t /usr/local/bin \
      ~username/$BITCOINPLAIN/bin/*
-   /bin/rm -rf ~username/$BITCOINPLAIN/
+   /bin/rm -rf ~username/"${BITCOINPLAIN:?}"/
    ```
 
 1. create the bitcoin working directory

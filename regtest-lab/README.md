@@ -145,13 +145,14 @@ e.g. `bitcoin-cli -regtest -datadir="%APPDATA%\Bitcoin\regtest_Alice" [...]`.
     "trusted": true,
     "txid": "...",
     "wtxid": "...",
+    "alternate_wtxids": [
+    ],
     "walletconflicts": [
     ],
     "mempoolconflicts": [
     ],
     "time": ...,
     "timereceived": ...,
-    "bip125-replaceable": "yes",
     "details": [
       {
         "address": "bcrt1qry4w50spgegfaemv7kl8q5efkfk3gpc5zvxnrd",
@@ -198,13 +199,14 @@ e.g. `bitcoin-cli -regtest -datadir="%APPDATA%\Bitcoin\regtest_Alice" [...]`.
     "blocktime": ...,
     "txid": "...",
     "wtxid": "...",
+    "alternate_wtxids": [
+    ],
     "walletconflicts": [
     ],
     "mempoolconflicts": [
     ],
     "time": ...,
     "timereceived": ...,
-    "bip125-replaceable": "no",
     "details": [
       {
         "address": "bcrt1qry4w50spgegfaemv7kl8q5efkfk3gpc5zvxnrd",
@@ -224,13 +226,11 @@ e.g. `bitcoin-cli -regtest -datadir="%APPDATA%\Bitcoin\regtest_Alice" [...]`.
   ```
 
   Four keys are new since the block before it — `blockhash`,
-  `blockheight`, `blockindex` and `blocktime` — and `bip125-replaceable`
-  has turned from `yes` to `no`: a transaction in a block can no longer
-  be replaced. `lastprocessedblock` now names the block that confirmed
-  it, which is the one `generatetoaddress` just printed. Its `height`
-  and `blockheight` are the same kind of number as before: these if
-  you generated exactly the blocks these pages ask for, larger if you
-  generated more.
+  `blockheight`, `blockindex` and `blocktime`. `lastprocessedblock` now
+  names the block that confirmed it, which is the one `generatetoaddress`
+  just printed. Its `height` and `blockheight` are the same kind of
+  number as before: these if you generated exactly the blocks these
+  pages ask for, larger if you generated more.
 
 - stop the daemon (and the GUI) with the command
 
@@ -240,15 +240,16 @@ e.g. `bitcoin-cli -regtest -datadir="%APPDATA%\Bitcoin\regtest_Alice" [...]`.
 
 ## Further Material
 
-For a [full command list](https://bitcoincore.org/en/doc/31.0.0/):
+The [RPC documentation](https://bitcoincore.org/en/doc/) lists the
+releases it covers, and the newest one opens on its full command list.
+Your node prints its own:
 
 ```shell
 bitcoin-cli -regtest help
 ```
 
-For help about a peculiar command (e.g. `generatetoaddress`, which the
-command list above does not carry, the site documenting no `generate`
-RPC):
+For help about a peculiar command (e.g. `generatetoaddress`, which
+neither list carries):
 
 ```shell
 bitcoin-cli -regtest help generatetoaddress
