@@ -1,16 +1,17 @@
 # Bitcoin Core Setup (Windows)
 
-1. Download Bitcoin Core's portable zip from
-   <https://bitcoincore.org/bin/bitcoin-core-31.1/bitcoin-31.1-win64.zip>
-   and unzip it in your favorite location; in the following
-   `C:\your\bitcoinfolder` is where the `bin`, `libexec` and `share`
-   folders are located.
+1. Open the release's folder,
+   <https://bitcoincore.org/bin/bitcoin-core-32.1/>, and download two
+   files from it: Bitcoin Core's portable zip, whose name ends in
+   `-win64.zip`, and `SHA256SUMS`.
 
-   Before unzipping, check it against the release's
-   [SHA256SUMS](https://bitcoincore.org/bin/bitcoin-core-31.1/SHA256SUMS)
-   as
+   Check the zip against `SHA256SUMS` as
    [Verify your download](https://bitcoincore.org/en/download/#verify-your-download)
    shows for Windows, and stop if the checksums differ.
+
+   Unzip it in your favorite location; in the following
+   `C:\your\bitcoinfolder` is where the `bin`, `libexec` and `share`
+   folders are located.
 
 1. add the `C:\your\bitcoinfolder\bin folder` (the one including the
    `bitcoin-qt`, `bitcoind` and `bitcoin-cli` executables) to your %PATH%
@@ -34,13 +35,13 @@
    > if not exist "%APPDATA%\Bitcoin\regtest_Alice" ^
        mkdir "%APPDATA%\Bitcoin\regtest_Alice"
    > bitcoin-qt -regtest -datadir="%APPDATA%\Bitcoin\regtest_Alice" ^
-       -addresstype=bech32 -walletrbf=1 -server -rpcallowip=127.0.0.1 ^
+       -addresstype=bech32 -server -rpcallowip=127.0.0.1 ^
        -fallbackfee=0.0002
    ```
 
-   Do not be scared by the alert about >160GB being required. This would
-   be true only if you launch Bitcoin Core for mainnet, as it would try
-   to download the whole blockchain. Be sure you are launching
+   Do not be scared by any alert about a large disk being required. That
+   would be true only if you launch Bitcoin Core for mainnet, as it would
+   try to download the whole blockchain. Be sure you are launching
    **regtest**: that one will require almost no space.
 
 1. in the GUI open the console (Window | Console) type
