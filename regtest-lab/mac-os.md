@@ -2,9 +2,7 @@
 
 1. open terminal
 
-1. export convenience variables (for an easy installation), naming the
-   build for your machine — `arm64` for Apple silicon, `x86_64` for an
-   Intel Mac, which `uname -m` tells you:
+1. export convenience variables (for an easy installation):
 
    ```shell
    export BITCOIN=bitcoin-core-32.1
