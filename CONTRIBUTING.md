@@ -441,11 +441,10 @@ beside it, and gates nothing either, for the reason its own header gives.
 `verified-signatures.yml` reports after each push to `main` whether every
 commit pushed is `verified`; [the standard's *Signatures*][s-sigs] has the
 rule.
-`sourcery.yml` reaches a pull request only when it touches Python,
-`.sourcery.yaml` or the workflow, and gates nothing either, for the reason
-[the standard's *The set, and its
+`sourcery.yml` runs on every pull request and is not a required check, so
+it gates nothing either; [the standard's *The set, and its
 cadence*](https://github.com/btclib-org/.github#the-set-and-its-cadence)
-gives.
+says when a tree requires it.
 There is no
 suite, no documentation build and no release, so nothing else is asked of a
 pull request.
