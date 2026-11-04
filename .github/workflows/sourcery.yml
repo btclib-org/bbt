@@ -7,9 +7,8 @@ name: sourcery
 # trigger.
 #
 # No paths filter on pull_request, for the reason section 10 of
-# btclib-org/.github's README.md gives: it makes this a required check
-# in a tree whose clean-up has landed (btclib-org/.github#2005).
-# REPOSITORY.md says whether main requires it.
+# btclib-org/.github's README.md gives: a required check that produces
+# no run blocks the merge. REPOSITORY.md says whether main requires it.
 #
 # No push trigger and no workflow_dispatch, departures that section's
 # paragraph on this job states: what it reads is a pull request's files
