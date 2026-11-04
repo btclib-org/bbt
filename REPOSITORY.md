@@ -45,13 +45,15 @@ A merge through the maintainer's bypass waits for none of these
 checks, as `CONTRIBUTING.md`'s *Landing it* says. `strict` is off for
 [the reason section 11 gives][s11-branch].
 
+`sourcery.yml` is a candidate the rule does not name yet: [section
+10][s10-sourcery] says when a tree's protection gains its `sourcery /
+Sourcery` context.
+
 No other workflow here is a candidate, and each is out for a reason of
 its own. `claude-review.yml` is the ack of record and must not become a
 branch rule, for the reason its own header gives. `links.yml` reports
 whether somebody else's host is answering, which is not a fact about this
 tree and not one a landing should wait on.
-`sourcery.yml` is out for the reason `CONTRIBUTING.md`'s last section
-points to.
 
 `15368` is the Actions app, and a check bound to it cannot be reported by
 anything else. Changing the list is a `PATCH` of
@@ -462,6 +464,7 @@ repository document against this file rather than a command.
 [s3]: https://github.com/btclib-org/.github#3-pyprojecttoml-is-the-configuration
 [s8]: https://github.com/btclib-org/.github#8-coverage-at-100
 [s10-carries]: https://github.com/btclib-org/.github#which-trees-carry-which-sentinel
+[s10-sourcery]: https://github.com/btclib-org/.github#the-set-and-its-cadence
 [s11]: https://github.com/btclib-org/.github#11-github-settings
 [s11-branch]: https://github.com/btclib-org/.github#branch-protection-and-rulesets
 [s11-deps]: https://github.com/btclib-org/.github#dependabot-and-pre-commitci
