@@ -12,8 +12,8 @@ name: links
 # answering 502 or throttling a runner would turn a red merge into a run
 # to repeat rather than a thing to fix. Weekly, on demand, and red in the
 # Actions tab is where this belongs, so it is not in main's required
-# checks and must not be: `Lint` is that check, and REPOSITORY.md's
-# *Required checks on main* is where it is written down.
+# checks and must not be: REPOSITORY.md's *Required checks on main* is
+# where they are written down.
 
 on:
   schedule:

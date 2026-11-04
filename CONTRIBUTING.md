@@ -429,9 +429,9 @@ them here is what keeps a regenerated baseline the same baseline.
 
 ### What gates a merge, and what only reports
 
-`lint.yml`'s `Lint`, `Dependency review` and `Sign-off` jobs are `main`'s
-required checks —
-which `REPOSITORY.md` reads back from the endpoint rather than restating here.
+`lint.yml`'s `Lint`, `Dependency review` and `Sign-off` jobs and
+`sourcery.yml`'s `sourcery / Sourcery` are `main`'s required checks, which
+`REPOSITORY.md`'s *Required checks on main* reads back from the endpoint.
 `claude-review.yml` runs beside them and reports: its verdict is the ack of
 record the section above names, posted as a pull request review of type
 `COMMENT`, and its check is red when no ack of the head was posted — which
@@ -441,9 +441,8 @@ beside it, and gates nothing either, for the reason its own header gives.
 `verified-signatures.yml` reports after each push to `main` whether every
 commit pushed is `verified`; [the standard's *Signatures*][s-sigs] has the
 rule.
-`sourcery.yml` runs on every pull request and is not a required check, so
-it gates nothing either; [the standard's *The set, and its
-cadence*](https://github.com/btclib-org/.github#the-set-and-its-cadence)
+`sourcery.yml` runs on every pull request; [the standard's *The set, and
+its cadence*](https://github.com/btclib-org/.github#the-set-and-its-cadence)
 says when a tree requires it.
 There is no
 suite, no documentation build and no release, so nothing else is asked of a

@@ -26,34 +26,39 @@ and there is more of that here than elsewhere.
 
 ## Required checks on main
 
-**`Lint`, `Dependency review` and `Sign-off`, and nothing else.**
+**`Lint`, `Dependency review`, `Sign-off` and `sourcery / Sourcery`, and
+nothing else.**
 
 ```shell
 gh api repos/btclib-org/bbt/branches/main/protection \
   --jq '.required_status_checks | {strict, checks}'
 # {"checks":[{"app_id":15368,"context":"Lint"},
 #            {"app_id":15368,"context":"Dependency review"},
-#            {"app_id":15368,"context":"Sign-off"}],"strict":false}
+#            {"app_id":15368,"context":"Sign-off"},
+#            {"app_id":15368,"context":"sourcery / Sourcery"}],
+#  "strict":false}
 ```
 
-`lint.yml` is the workflow that gates, and its `Lint`, `Dependency review`
-and `Sign-off` jobs are the contexts the rule names. Renaming a job leaves
-its context reporting nothing, which blocks every pull request, so each name
-belongs to the rule as much as to the file.
+The rule names `lint.yml`'s `Lint`, `Dependency review` and `Sign-off`
+jobs, and `sourcery.yml`'s job `sourcery`, whose context adds the name of
+the job it calls in `btclib-org/.github`'s `reusable-sourcery.yml`.
+Renaming a job leaves its context reporting nothing, which blocks every
+pull request, so each name belongs to the rule as much as to the file.
 
 A merge through the maintainer's bypass waits for none of these
 checks, as `CONTRIBUTING.md`'s *Landing it* says. `strict` is off for
 [the reason section 11 gives][s11-branch].
 
-`sourcery.yml` is a candidate the rule does not name yet: [section
-10][s10-sourcery] says when a tree's protection gains its `sourcery /
-Sourcery` context.
+`sourcery / Sourcery` is required for the reason [section
+10][s10-sourcery] gives.
 
-No other workflow here is a candidate, and each is out for a reason of
-its own. `claude-review.yml` is the ack of record and must not become a
+The other workflows here are out of the rule, each for a reason of its
+own. `claude-review.yml` is the ack of record and must not become a
 branch rule, for the reason its own header gives. `links.yml` reports
 whether somebody else's host is answering, which is not a fact about this
-tree and not one a landing should wait on.
+tree and not one a landing should wait on. `verified-signatures.yml` runs
+after a push, and its own header says why a pull request could never
+report it.
 
 `15368` is the Actions app, and a check bound to it cannot be reported by
 anything else. Changing the list is a `PATCH` of
