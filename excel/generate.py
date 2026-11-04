@@ -39,7 +39,7 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Literal
+from typing import TYPE_CHECKING, Literal
 
 import openpyxl
 from openpyxl.chart import ScatterChart, Series
@@ -48,6 +48,9 @@ from openpyxl.chart.shapes import GraphicalProperties
 from openpyxl.drawing.line import LineProperties
 from openpyxl.workbook.defined_name import DefinedName
 from openpyxl.worksheet.worksheet import Worksheet
+
+if TYPE_CHECKING:
+    from openpyxl.chart.series import XYSeries
 
 HERE = Path(__file__).resolve().parent
 
@@ -295,6 +298,46 @@ class SeriesSpec:
     dash: DashStyle | None = None
 
 
+def _scatter_series(ws: Worksheet, x_range: str, spec: SeriesSpec) -> XYSeries:
+    """Return the series `spec` draws, against its own x range or `x_range`."""
+    # Series() builds an XYSeries wherever it is given x values
+    series: XYSeries = Series(
+        openpyxl.chart.Reference(range_string=f"'{ws.title}'!{spec.y_range}"),
+        openpyxl.chart.Reference(
+            range_string=f"'{ws.title}'!{spec.x_range or x_range}",
+        ),
+        title=spec.name,
+        title_from_data=False,
+    )
+    series.smooth = spec.smooth
+    if spec.marker:
+        series.marker = Marker(symbol="circle", size=5)
+        if spec.color:
+            series.marker.graphicalProperties = GraphicalProperties(
+                solidFill=spec.color,
+                ln=LineProperties(solidFill=spec.color),
+            )
+    else:
+        series.marker = Marker(symbol="none")
+    if spec.line:
+        width = (
+            round(spec.line_width_pt * EMU_PER_POINT)
+            if spec.line_width_pt is not None
+            else None
+        )
+        if spec.color or width is not None or spec.dash is not None:
+            series.graphicalProperties = GraphicalProperties(
+                ln=LineProperties(
+                    solidFill=spec.color, w=width, prstDash=spec.dash,
+                ),
+            )
+    else:
+        series.graphicalProperties = GraphicalProperties(
+            ln=LineProperties(noFill=True),
+        )
+    return series
+
+
 def _add_scatter(  # noqa: PLR0913
     ws: Worksheet,
     anchor: str,
@@ -372,41 +415,7 @@ def _add_scatter(  # noqa: PLR0913
     else:
         chart.scatterStyle = "marker"
     for spec in series_specs:
-        series = Series(
-            openpyxl.chart.Reference(range_string=f"'{ws.title}'!{spec.y_range}"),
-            openpyxl.chart.Reference(
-                range_string=f"'{ws.title}'!{spec.x_range or x_range}",
-            ),
-            title=spec.name,
-            title_from_data=False,
-        )
-        series.smooth = spec.smooth
-        if spec.marker:
-            series.marker = Marker(symbol="circle", size=5)
-            if spec.color:
-                series.marker.graphicalProperties = GraphicalProperties(
-                    solidFill=spec.color,
-                    ln=LineProperties(solidFill=spec.color),
-                )
-        else:
-            series.marker = Marker(symbol="none")
-        if spec.line:
-            width = (
-                round(spec.line_width_pt * EMU_PER_POINT)
-                if spec.line_width_pt is not None
-                else None
-            )
-            if spec.color or width is not None or spec.dash is not None:
-                series.graphicalProperties = GraphicalProperties(
-                    ln=LineProperties(
-                        solidFill=spec.color, w=width, prstDash=spec.dash,
-                    ),
-                )
-        else:
-            series.graphicalProperties = GraphicalProperties(
-                ln=LineProperties(noFill=True),
-            )
-        chart.series.append(series)
+        chart.series.append(_scatter_series(ws, x_range, spec))
     ws.add_chart(chart, anchor)
 
 

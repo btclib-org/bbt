@@ -50,6 +50,8 @@ its own. `claude-review.yml` is the ack of record and must not become a
 branch rule, for the reason its own header gives. `links.yml` reports
 whether somebody else's host is answering, which is not a fact about this
 tree and not one a landing should wait on.
+`sourcery.yml` is out for the reason `CONTRIBUTING.md`'s last section
+points to.
 
 `15368` is the Actions app, and a check bound to it cannot be reported by
 anything else. Changing the list is a `PATCH` of
