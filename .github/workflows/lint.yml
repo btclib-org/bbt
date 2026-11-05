@@ -8,15 +8,16 @@ name: lint
 # generated workbooks and the audit of the whole lock -- and each one's
 # own comment says why it is not a hook.
 #
-# It is the only workflow here that gates: claude-review.yml reports a
-# verdict rather than a check, and links.yml asks whether somebody
-# else's host is answering. The reason this one gates is that without it
-# the hook config gates nothing at all: a contributor who does not run
-# the gate by hand is refused by nothing, and the tree this repository
-# ships is prose, notebooks and scripts, which nothing compiles and
-# nothing imports. What the standard would otherwise ask for -- a test
-# workflow, a docs build, a release -- has no subject here: there is no
-# suite, no documentation build and nothing published.
+# It and sourcery.yml are the workflows here that gate:
+# claude-review.yml reports a verdict rather than a check, and links.yml
+# asks whether somebody else's host is answering. The reason this one
+# gates is that without it the hook config gates nothing at all: a
+# contributor who does not run the gate by hand is refused by nothing,
+# and the tree this repository ships is prose, notebooks and scripts,
+# which nothing compiles and nothing imports. What the standard would
+# otherwise ask for -- a test workflow, a docs build, a release -- has
+# no subject here: there is no suite, no documentation build and nothing
+# published.
 
 on:
   push:
@@ -152,8 +153,8 @@ jobs:
       # section documents the same command for an author to run first.
       #
       # A step of this job and not a job of its own, because a job gates
-      # only where the rule names it, and the rule names `Lint`,
-      # `Dependency review` and `Sign-off` -- REPOSITORY.md reads them back
+      # only where the rule names it, and the rule names this one, `Lint`:
+      # REPOSITORY.md's *Required checks on main* reads back what it names
       # from the protection endpoint.
       #
       # And a step rather than a hook, because a hook would execute the
