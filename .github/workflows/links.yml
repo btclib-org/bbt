@@ -52,6 +52,6 @@ jobs:
   # (section 10 of btclib-org/.github's README.md); what stays here is the
   # trigger, the schedule and which files are this tree's documentation
   links:
-    uses: btclib-org/.github/.github/workflows/reusable-links.yml@52d77933d09c2e52b1340ffbdd3df40c0e5689aa # v2026.11.4
+    uses: btclib-org/.github/.github/workflows/reusable-links.yml@5be4b0fbb5231cff001a3ee0eaa8f7d82bffef11 # v2026.11.5
     with:
       targets: '"**/*.md" ".github/**/*.md" ".claude/**/*.md"'
