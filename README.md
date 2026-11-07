@@ -1,29 +1,5 @@
 # Bitcoin and Blockchain Technology
 
-<!-- The badges are what the reader decides with, one property of the
-tree per badge, in the three groups btclib-org/.github's README.md
-section 2 fixes: what the software is, whether it works, and what the
-OpenSSF makes of it. Inside the second the gates come in the order that
-section lists them -- pre-commit.ci, then the lint workflow -- and the
-sentinels follow in the order section 10's calendar schedules them,
-which is the order and not the instants: the day and the hour a
-sentinel owns are that section's and are not restated here. Which
-sentinels this tree carries is section 10's record rather than a choice
-made here, the badge and the workflow being one membership: `links` is
-every repository's and the record gives this tree no other, so there is
-no Scorecard badge and no `scorecard.yml` behind it. This tree
-publishes nothing (`package = false`, no `release.yml`), holds no suite
-(no `tests/`) and builds no documentation (no `docs/`), so the badges
-section 2 keys on publishing, on a suite and on a documentation build
--- the version, the downloads, the development status, the supported
-Python versions, wheel, implementation, github/v/release, the licence,
-test, docs and Read the Docs -- are not here. One badge per line keeps
-a change to one line and every line inside MD013, whose 80 columns bind
-only where a space follows them. -->
-[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/btclib-org/bbt/main.svg)](https://results.pre-commit.ci/latest/github/btclib-org/bbt/main)
-[![lint workflow status](https://github.com/btclib-org/bbt/actions/workflows/lint.yml/badge.svg?branch=main)](https://github.com/btclib-org/bbt/actions/workflows/lint.yml?query=branch%3Amain)
-[![links workflow status](https://github.com/btclib-org/bbt/actions/workflows/links.yml/badge.svg?branch=main)](https://github.com/btclib-org/bbt/actions/workflows/links.yml?query=branch%3Amain)
-
 The course is or has been taught at:
 
 - Università di Milano-Bicocca
@@ -110,3 +86,10 @@ against. How the organization decides, and who holds which role, is its
 [GOVERNANCE.md](https://github.com/btclib-org/.github/blob/main/GOVERNANCE.md);
 what it intends to do, and what it deliberately does not, is its
 [ROADMAP.md](https://github.com/btclib-org/.github/blob/main/ROADMAP.md).
+
+## Status
+
+<!-- Section 2 of btclib-org/.github's README.md says which badges sit here. -->
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/btclib-org/bbt/main.svg)](https://results.pre-commit.ci/latest/github/btclib-org/bbt/main)
+[![lint workflow status](https://github.com/btclib-org/bbt/actions/workflows/lint.yml/badge.svg?branch=main)](https://github.com/btclib-org/bbt/actions/workflows/lint.yml?query=branch%3Amain)
+[![links workflow status](https://github.com/btclib-org/bbt/actions/workflows/links.yml/badge.svg?branch=main)](https://github.com/btclib-org/bbt/actions/workflows/links.yml?query=branch%3Amain)
