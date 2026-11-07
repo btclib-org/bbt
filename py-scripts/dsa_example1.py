@@ -45,8 +45,8 @@ print(f"    sm:    {hex(sm).upper()}")
 # what tells the two apart is which half of the order the s falls in:
 # sign()'s lower_s argument defaults to True, and n - s is the other root
 # of the same signature
-print(f" s1 low:    {sig1.s < ec.n // 2}")
-print(f" sm low:    {sm < ec.n // 2}")
+print(f" s1 low:    {sig1.s <= ec.n // 2}")
+print(f" sm low:    {sm <= ec.n // 2}")
 
 print("** Verify malleated signature")
 # and it verifies: verify() has no low-s argument, that rule being a
