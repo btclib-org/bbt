@@ -130,8 +130,8 @@ dev = [{ include-group = "lint" }]
 # nothing is built here, so nothing installs this directory either
 package = false
 # the oldest uv that may read uv.lock, at most the uv a Dependabot run's
-# log names -- section 1 of the organization standard has the argument,
-# section 15 the commands that measure it
+# log names -- section 1 of the organization's standard has the
+# argument, section 15 the commands that measure it
 required-version = ">=0.13.4"
 
 [tool.ruff]
