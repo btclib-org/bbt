@@ -10,7 +10,7 @@ file defines.
 
 import hashlib
 
-from btclib import base58
+from base58_bech32 import base58
 from ecc.curves.curve import mult
 
 # https://en.bitcoin.it/wiki/Technical_background_of_version_1_Bitcoin_addresses
@@ -57,15 +57,15 @@ addr = vh160 + h4[:4]
 print(addr.hex())
 
 print("\n** [9] Base58 encoded address from uncompressed PubKey")
-# the private encoder alone, on purpose: base58.encode() bundles this step
-# with the checksum steps [5]-[8] above already walked, and calling it here
-# would retrace them rather than showing what step [9] alone does
-address = base58._b58encode(addr)  # noqa: SLF001
+# the encoder alone, on purpose: base58.b58encode_check() bundles this
+# step with the checksum steps [5]-[8] above already walked, and calling
+# it here would retrace them rather than showing what step [9] alone does
+address = base58.b58encode(addr)
 print(address)
 assert address == b"16UwLL9Risc3QfPqBUvKofHmBQ7wMtjvM"
-assert base58.encode(vh160) == b"16UwLL9Risc3QfPqBUvKofHmBQ7wMtjvM"
+assert base58.b58encode_check(vh160) == b"16UwLL9Risc3QfPqBUvKofHmBQ7wMtjvM"
 
-print("\n** steps [5]-[9] are also known as Base58Check b58encode")
+print("\n** steps [5]-[9] are also known as Base58Check b58encode_check")
 
 
 def hash_160_from_address(addr: bytes) -> bytes:
@@ -73,7 +73,7 @@ def hash_160_from_address(addr: bytes) -> bytes:
 
     Undoes the version byte and checksum steps [4]-[9] added.
     """
-    return base58.decode(addr)[1:21]
+    return base58.b58decode_check(addr)[1:21]
 
 
 print("\n*** HASH160 from address")
@@ -105,9 +105,9 @@ def hash160(inp: bytes) -> bytes:
 
 
 def address_from_pubkey_bytes(inp: bytes, version: bytes = b"\x00") -> bytes:
-    """Fold steps [4]-[9] above into the Base58Check base58.encode does."""
+    """Fold steps [4]-[9] above into the Base58Check b58encode_check does."""
     vh160 = version + hash160(inp)
-    return base58.encode(vh160)
+    return base58.b58encode_check(vh160)
 
 
 print("\n*** [9] base58 encoded address from compressed PubKey_bytes")

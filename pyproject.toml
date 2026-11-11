@@ -55,6 +55,9 @@ requires-python = ">=3.14"
 # jupyter pulling one in.
 dependencies = [
     "btclib",
+    # py-scripts/ imports the Base58Check codec from here, btclib having
+    # dropped its own (btclib-org/btclib#2712)
+    "base58-bech32",
     # py-scripts/ and ipynb/ import curves, number_theory, kdf, dsa, ssa
     # and EccValueError from here, btclib not carrying them
     # (btclib-org/btclib#2404)
