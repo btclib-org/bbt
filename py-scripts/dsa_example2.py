@@ -12,12 +12,13 @@ ephemeral key across two messages exposes.
 from hashlib import sha256
 
 from btclib.utils import int_from_bits
+from ecc.alias import Public
 from ecc.curves.curve import mult
 from ecc.curves.curve import secp256k1 as ec
 from ecc.exceptions import EccValueError
 from ecc.number_theory import mod_inv
 
-# note: no import from ecc.ecc.dsa
+# note: no import from ecc.dsa
 # the private key is recoverable from the two signatures below, and this
 # script stops short of doing it on purpose: ipynb/DSA.ipynb sets that as
 # the reader's exercise, and a script that answered it would spend it
@@ -92,7 +93,7 @@ cG = mult(c1, ec.G)
 i = 0
 for x_K in (r1, r1 + ec.n):
     try:
-        y_even = ec.y_even_var(x_K)
+        y_even = ec.y_even_var(Public(x_K))
     except EccValueError:
         # x_K is outside the field, or is no curve point's x-coordinate
         continue

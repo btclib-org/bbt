@@ -10,6 +10,7 @@ Compares both in affine and in Jacobian coordinates.
 import random
 import time
 
+from ecc.alias import Public
 from ecc.curves.curve import secp256k1 as ec
 from ecc.curves.curve_group import (
     _mult_aff_var,
@@ -20,7 +21,7 @@ from ecc.curves.curve_group import (
 
 # setup
 random.seed(42)
-qs = [random.getrandbits(ec.nlen) % ec.n for _ in range(100)]
+qs = [Public(random.getrandbits(ec.nlen) % ec.n) for _ in range(100)]
 
 start = time.time()
 for q in qs:

@@ -10,9 +10,9 @@ key, then a KDF hashes away the weak bits.
 
 from hashlib import sha256 as hf
 
+from ecc import dsa
 from ecc.curves.curve import mult
 from ecc.curves.curve import secp256k1 as ec
-from ecc.ecc import dsa
 from ecc.kdf import ansi_x9_63_kdf
 
 # Diffie-Hellman

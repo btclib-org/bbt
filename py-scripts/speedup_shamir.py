@@ -11,6 +11,7 @@ them into one double-and-add pass over the bits of both scalars.
 import random
 import time
 
+from ecc.alias import Public
 from ecc.curves.curve import secp256k1 as ec
 from ecc.curves.curve_group import _double_mult_var, _mult_jac_var
 
@@ -21,9 +22,9 @@ us = []
 vs = []
 QJs = []
 for _ in range(500):
-    us.append(random.getrandbits(ec.nlen) % ec.n)
-    vs.append(random.getrandbits(ec.nlen) % ec.n)
-    q = random.getrandbits(ec.nlen) % ec.n
+    us.append(Public(random.getrandbits(ec.nlen) % ec.n))
+    vs.append(Public(random.getrandbits(ec.nlen) % ec.n))
+    q = Public(random.getrandbits(ec.nlen) % ec.n)
     QJs.append(_mult_jac_var(q, ec.GJ, ec))
 
 # the two methods agree, checked outside the timed loops

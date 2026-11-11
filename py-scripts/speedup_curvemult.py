@@ -10,6 +10,7 @@ The strategies come from curve_group.py and curve_group_2.py.
 import random
 import time
 
+from ecc.alias import Public
 from ecc.curves.curve import secp256k1 as ec
 from ecc.curves.curve_group import (
     _cached_multiples,
@@ -36,7 +37,7 @@ W_FIXWIND = 4
 
 # setup
 random.seed(42)
-qs = [random.getrandbits(ec.nlen) % ec.n for _ in range(300)]
+qs = [Public(random.getrandbits(ec.nlen) % ec.n) for _ in range(300)]
 
 gen_only = True
 print("generator only") if gen_only else print("random points")

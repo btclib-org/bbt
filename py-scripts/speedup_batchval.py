@@ -13,7 +13,7 @@ from hashlib import sha256 as hf
 
 from ecc.curves.curve import mult
 from ecc.curves.curve import secp256k1 as ec
-from ecc.ecc.ssa import batch_verify_, sign_, verify_
+from ecc.ssa import batch_verify_, sign_, verify_
 
 random.seed(42)
 

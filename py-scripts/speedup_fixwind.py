@@ -7,6 +7,7 @@
 import random
 import time
 
+from ecc.alias import Public
 from ecc.curves.curve import secp256k1 as ec
 from ecc.curves.curve_group import (
     _mult_base_3_var,
@@ -23,7 +24,7 @@ CACHED = False
 
 # setup
 random.seed(42)
-qs = [random.getrandbits(ec.nlen) % ec.n for _ in range(300)]
+qs = [Public(random.getrandbits(ec.nlen) % ec.n) for _ in range(300)]
 
 
 T = ec.GJ

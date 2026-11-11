@@ -6,7 +6,7 @@
 
 from btclib.b32 import p2wpkh
 from btclib.b58 import p2pkh, p2wpkh_p2sh, prv_key_data_from_wif, wif_from_prv_key
-from btclib.ecc.bms import sign, verify
+from btclib.bms import sign, verify
 
 msg = b"Paolo is afraid of ephemeral random numbers"
 print("\n0. Message:", msg.decode())
