@@ -2,11 +2,11 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
-"""Sign and verify a message with ecc.ecc.dsa's ECDSA implementation."""
+"""Sign and verify a message with ecc.dsa's ECDSA implementation."""
 
 from ecc.curves.curve import mult
 from ecc.curves.curve import secp256k1 as ec
-from ecc.ecc.dsa import Sig, recover_pub_keys, sign, verify
+from ecc.dsa import Sig, recover_pub_keys, sign, verify
 
 print("\n*** EC:")
 print(ec)

@@ -11,6 +11,7 @@ ECDSA.
 from hashlib import sha256
 
 from btclib.utils import int_from_bits
+from ecc.alias import Public
 from ecc.curves.curve import double_mult_var, mult
 from ecc.curves.curve import secp256k1 as ec
 
@@ -90,7 +91,7 @@ print(f"   s1: {hex(s1).upper()}")
 
 
 print("3. Verify signature")
-K = double_mult_var(-c1, Q, s1, ec.G)
+K = double_mult_var(Public(-c1), Q, Public(s1), ec.G)
 # s*G - c*Q is K itself, and BIP340 names only its even-y root, so the
 # parity is as much of the check as the x coordinate is
 print(K[0] == r1 and K[1] % 2 == 0)
@@ -124,5 +125,5 @@ print(f"   s2: {hex(s2).upper()}")
 
 
 print("3. Verify signature")
-K = double_mult_var(-c2, Q, s2, ec.G)
+K = double_mult_var(Public(-c2), Q, Public(s2), ec.G)
 print(K[0] == r2 and K[1] % 2 == 0)

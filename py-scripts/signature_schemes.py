@@ -4,9 +4,9 @@
 
 """Sign and verify one message with ECDSA, ECSSA and Bitcoin Message Signing."""
 
+from btclib import bms
 from btclib.b58 import prv_key_data_from_wif
-from btclib.ecc import bms
-from ecc.ecc import dsa, ssa
+from ecc import dsa, ssa
 
 msg = b"Hello, I'm Alice!"
 print("\n", msg.decode())

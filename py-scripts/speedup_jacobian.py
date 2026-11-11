@@ -7,13 +7,14 @@
 import random
 import time
 
+from ecc.alias import Public
 from ecc.curves.curve import secp256k1 as ec
 from ecc.curves.curve_group import _mult_aff_var, _mult_jac_var
 
 random.seed(42)
 
 # setup
-qs = [random.getrandbits(ec.nlen) % ec.n for _ in range(50)]
+qs = [Public(random.getrandbits(ec.nlen) % ec.n) for _ in range(50)]
 start = time.time()
 for q in qs:
     _mult_aff_var(q, ec.G, ec)
