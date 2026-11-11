@@ -6,7 +6,7 @@
 
 from hashlib import sha256
 
-from btclib import base58
+from base58_bech32 import base58
 
 # https://en.bitcoin.it/wiki/Wallet_import_format
 print("\n****** Private ECDSA Key to WIF ******")
@@ -35,14 +35,15 @@ checksummed_payload = payload + h2[:4]
 print(checksummed_payload.hex())
 
 print("\n*** [7] Base58 encoding")
-# the private encoder alone, on purpose: base58.encode() bundles this step
-# with the checksum step [6] above already walked, and calling it here would
-# retrace step [6] rather than showing what step [7] alone does
-wif = base58._b58encode(checksummed_payload)  # noqa: SLF001
+# the encoder alone, on purpose: base58.b58encode_check() bundles this
+# step with the checksum step [6] above already walked, and calling it
+# here would retrace step [6] rather than showing what step [7] alone does
+wif = base58.b58encode(checksummed_payload)
 print(wif)
 assert wif == b"KwdMAjGmerYanjeui5SHS7JkmpZvVipYvB2LJGU1ZxJwYvP98617", "failure"
 assert (
-    base58.encode(payload) == b"KwdMAjGmerYanjeui5SHS7JkmpZvVipYvB2LJGU1ZxJwYvP98617"
+    base58.b58encode_check(payload)
+    == b"KwdMAjGmerYanjeui5SHS7JkmpZvVipYvB2LJGU1ZxJwYvP98617"
 ), "failure"
 
 print("\n****** WIF to private key ******")
@@ -53,17 +54,17 @@ compressed = len(wif) - 51
 print("compressed" if (compressed == 1) else "uncompressed")
 
 print("\n*** [2] Base58 decoding")
-# the private decoder alone, on the same grounds as _b58encode above: it
-# returns the payload before checksum verification, which step [3] below
-# walks separately
-checksummed_payload = base58._b58decode(wif)  # noqa: SLF001
+# the decoder alone, on the same grounds as b58encode above: it returns
+# the payload before checksum verification, which step [3] below walks
+# separately
+checksummed_payload = base58.b58decode(wif)
 print(checksummed_payload.hex())
 
 print("\n*** [3] payload (checksum verified)")
 payload, checksum = checksummed_payload[:-4], checksummed_payload[-4:]
 verified = sha256(sha256(payload).digest()).digest()[:4] == checksum
 print(payload.hex() + " (" + ("true" if verified else "false") + ")")
-print(base58.decode(wif).hex())
+print(base58.b58decode_check(wif).hex())
 
 print("\n*** [4] Private key")
 p2 = payload[1:-1].hex() if compressed else payload[1:].hex()
