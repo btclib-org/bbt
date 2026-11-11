@@ -61,7 +61,7 @@ print(checksummed_payload.hex())
 print("\n*** [3] payload (checksum verified)")
 payload, checksum = checksummed_payload[:-4], checksummed_payload[-4:]
 verified = sha256(sha256(payload).digest()).digest()[:4] == checksum
-print(payload.hex() + " (" + ("true" if verified else "false") + ")")
+print(f"{payload.hex()} ({'true' if verified else 'false'})")
 print(base58.b58decode_check(wif).hex())
 
 print("\n*** [4] Private key")

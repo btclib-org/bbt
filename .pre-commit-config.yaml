@@ -385,7 +385,7 @@ repos:
         name: a sourcery skip names rules, and no tag
         language: pygrep
         entry: |-
-          #\W*sourcery\W+skip(?!:)|#\W*sourcery\W+skip:[^#]*(?<![\w-])(?:default|refactoring|suggestion|comment)(?![\w-])
+          #\W*sourcery\W+skip\b(?!:[^#;\w]*\w)|#\W*sourcery\W+skip:[^#]*(?<![\w-])(?:default|refactoring|suggestion|comment)(?![\w-])
         types: [python]
   - repo: https://github.com/adrienverge/yamllint
     rev: v1.38.0

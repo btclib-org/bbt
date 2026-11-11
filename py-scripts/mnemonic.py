@@ -25,7 +25,7 @@ rxpub = bip32.xpub_from_xprv(rxprv)
 # or any (depth=1) child private key would compromise rxprv
 path = "m/0h"
 xprv = bip32.derive(rxprv, path)
-print(path + f" : {xprv!r}")
+print(f"{path} : {xprv!r}")
 
 electrum_mnemonic = bip39_slip39.electrum.mnemonic_from_entropy(entropy=entropy)
 print()
@@ -36,4 +36,4 @@ mxpub = bip32.xpub_from_xprv(mxprv)
 # or any (depth=1) child private key would compromise mxprv
 path = "m/0h"
 xprv = bip32.derive(mxprv, path)
-print(path + f" : {xprv!r}")
+print(f"{path} : {xprv!r}")
