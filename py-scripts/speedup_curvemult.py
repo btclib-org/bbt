@@ -2,8 +2,9 @@
 # Distributed under the MIT software license, see the accompanying
 # LICENSE file or https://opensource.org/license/mit for the full text.
 
-"""Benchmark every scalar-multiplication strategy against plain double-and-add.
+"""Benchmark scalar-multiplication strategies against curve_group's _mult.
 
+Each strategy's line prints its time as a percentage of _mult's time.
 The strategies come from curve_group.py and curve_group_2.py.
 """
 
