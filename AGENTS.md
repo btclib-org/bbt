@@ -1,8 +1,7 @@
 # Repository instructions
 
 Follow [CONTRIBUTING.md](./CONTRIBUTING.md) for issues, pull requests,
-local gates, and worktree setup and cleanup. Use
-[REVIEWING.md](./REVIEWING.md) for reviews and read
+local gates, and worktree setup and cleanup. Read
 [REPOSITORY.md](./REPOSITORY.md) before changing workflows or repository
 settings.
 
