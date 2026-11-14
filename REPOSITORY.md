@@ -183,7 +183,7 @@ gh api repos/btclib-org/bbt \
          delete_on_merge: .delete_branch_on_merge,
          title: .squash_merge_commit_title,
          message: .squash_merge_commit_message}'
-# {"auto":true,"delete_on_merge":true,"merge":false,
+# {"auto":false,"delete_on_merge":true,"merge":false,
 #  "message":"COMMIT_MESSAGES","rebase":false,"squash":true,
 #  "title":"COMMIT_OR_PR_TITLE","update_branch":false}
 ```
@@ -195,6 +195,9 @@ this repository setting is flipped back.
 `COMMIT_OR_PR_TITLE` is the subject — the pull request's title, or the
 subject of the single commit where a branch has one. `COMMIT_MESSAGES`
 is the branch's own commit messages as the body.
+
+`allow_auto_merge` is false, so no pull request can be armed and the
+merge is explicit.
 
 `allow_update_branch` is false, so the *Update branch* button is not
 offered; a branch is rebased from a checkout instead.
