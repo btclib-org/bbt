@@ -1,12 +1,14 @@
 # Repository instructions
 
 Follow [CONTRIBUTING.md](./CONTRIBUTING.md) for issues, pull requests,
-local gates, and worktree setup and cleanup. Read
+and local gates. Read
 [REPOSITORY.md](./REPOSITORY.md) before changing workflows or repository
 settings.
 
-Work in a worktree of your own, never in the primary checkout: it is the
-maintainer's. Follow CONTRIBUTING.md for setup and cleanup.
+When an agent works here, a separate worktree per task keeps your own
+checkout clean: hooks and agents change files where they run. For
+example, `git worktree add ../<name> origin/main -b <branch>`, and
+`git worktree remove ../<name>` when done.
 
 Choose the least capable model that can reliably complete the task: use a fast
 model for straightforward execution, a reasoning-focused model for multi-step
