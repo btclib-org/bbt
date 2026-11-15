@@ -32,11 +32,14 @@ nothing else.**
 ```shell
 gh api repos/btclib-org/bbt/branches/main/protection \
   --jq '.required_status_checks | {strict, checks}'
-# {"checks":[{"app_id":15368,"context":"Lint"},
-#            {"app_id":15368,"context":"Dependency review"},
-#            {"app_id":15368,"context":"Sign-off"},
-#            {"app_id":15368,"context":"sourcery / Sourcery"}],
-#  "strict":false}
+```
+
+```json
+{"checks":[{"app_id":15368,"context":"Lint"},
+           {"app_id":15368,"context":"Dependency review"},
+           {"app_id":15368,"context":"Sign-off"},
+           {"app_id":15368,"context":"sourcery / Sourcery"}],
+ "strict":false}
 ```
 
 The rule names `lint.yml`'s `Lint`, `Dependency review` and `Sign-off`
@@ -75,7 +78,10 @@ section; the checks would not.
 
 ```shell
 gh api repos/btclib-org/bbt --jq '.default_branch'
-# main
+```
+
+```text
+main
 ```
 
 Everything reaches it through a pull request. Rules aggregate rather
@@ -92,8 +98,11 @@ gh api repos/btclib-org/bbt/branches/main/protection \
          force: .allow_force_pushes.enabled,
          delete: .allow_deletions.enabled,
          threads: .required_conversation_resolution.enabled}'
-# {"admins":false,"delete":false,"dismiss":true,"force":false,
-#  "linear":true,"reviews":1,"signatures":false,"threads":true}
+```
+
+```json
+{"admins":false,"delete":false,"dismiss":true,"force":false,
+ "linear":true,"reviews":1,"signatures":false,"threads":true}
 ```
 
 `enforce_admins: false` is not a relaxation but what makes a merge
@@ -109,13 +118,16 @@ gh api repos/btclib-org/bbt/rulesets --jq '.[].id' \
   | xargs -I{} gh api repos/btclib-org/bbt/rulesets/{} \
     --jq '{name, target, enforcement, rules: [.rules[].type],
            bypass: [.bypass_actors[]?.bypass_mode]}'
-# {"bypass":[],"enforcement":"active","name":"main-integrity",
-#  "rules":["required_linear_history","non_fast_forward","deletion"],
-#  "target":"branch"}
-# {"bypass":["pull_request"],"enforcement":"active",
-#  "name":"main-self-merge","rules":["pull_request"],"target":"branch"}
-# {"bypass":[],"enforcement":"active","name":"tag-integrity",
-#  "rules":["required_signatures"],"target":"tag"}
+```
+
+```text
+{"bypass":[],"enforcement":"active","name":"main-integrity",
+ "rules":["required_linear_history","non_fast_forward","deletion"],
+ "target":"branch"}
+{"bypass":["pull_request"],"enforcement":"active",
+ "name":"main-self-merge","rules":["pull_request"],"target":"branch"}
+{"bypass":[],"enforcement":"active","name":"tag-integrity",
+ "rules":["required_signatures"],"target":"tag"}
 ```
 
 - `main-integrity` — required linear history, no
@@ -135,13 +147,16 @@ gh api repos/btclib-org/bbt/rulesets --jq '.[].id' \
 gh api repos/btclib-org/bbt/rulesets --jq '.[].id' \
   | xargs -I{} gh api repos/btclib-org/bbt/rulesets/{} \
     --jq '.rules[] | select(.type=="pull_request") | .parameters'
-# {"allowed_merge_methods":["squash"],
-#  "dismiss_stale_reviews_on_push":true,
-#  "dismissal_restriction":{"allowed_actors":[],"enabled":false},
-#  "require_code_owner_review":false,
-#  "require_extra_approval_for_unattributed_changes":true,
-#  "require_last_push_approval":false,"required_approving_review_count":1,
-#  "required_review_thread_resolution":true,"required_reviewers":[]}
+```
+
+```json
+{"allowed_merge_methods":["squash"],
+ "dismiss_stale_reviews_on_push":true,
+ "dismissal_restriction":{"allowed_actors":[],"enabled":false},
+ "require_code_owner_review":false,
+ "require_extra_approval_for_unattributed_changes":true,
+ "require_last_push_approval":false,"required_approving_review_count":1,
+ "required_review_thread_resolution":true,"required_reviewers":[]}
 ```
 
 ## Signed commits
@@ -149,7 +164,10 @@ gh api repos/btclib-org/bbt/rulesets --jq '.[].id' \
 ```shell
 gh api repos/btclib-org/bbt/commits/main \
   --jq '.commit.verification | {verified, reason}'
-# {"reason":"valid","verified":true}
+```
+
+```json
+{"reason":"valid","verified":true}
 ```
 
 No ruleset over `main` carries `required_signatures`, so nothing refuses
@@ -183,9 +201,12 @@ gh api repos/btclib-org/bbt \
          delete_on_merge: .delete_branch_on_merge,
          title: .squash_merge_commit_title,
          message: .squash_merge_commit_message}'
-# {"auto":false,"delete_on_merge":true,"merge":false,
-#  "message":"COMMIT_MESSAGES","rebase":false,"squash":true,
-#  "title":"COMMIT_OR_PR_TITLE","update_branch":false}
+```
+
+```json
+{"auto":false,"delete_on_merge":true,"merge":false,
+ "message":"COMMIT_MESSAGES","rebase":false,"squash":true,
+ "title":"COMMIT_OR_PR_TITLE","update_branch":false}
 ```
 
 [Squash is the only method the standard enables][s11-merge], and the
@@ -196,8 +217,8 @@ this repository setting is flipped back.
 subject of the single commit where a branch has one. `COMMIT_MESSAGES`
 is the branch's own commit messages as the body.
 
-`allow_auto_merge` is false, so no pull request can be armed and the
-merge is explicit.
+`allow_auto_merge` is false, [for the reason section 11
+gives][s11-merge].
 
 `allow_update_branch` is false, so the *Update branch* button is not
 offered; a branch is rebased from a checkout instead.
@@ -208,12 +229,15 @@ offered; a branch is rebased from a checkout instead.
 gh api repos/btclib-org/bbt \
   --jq '{issues: .has_issues, visibility: .visibility,
          wiki: .has_wiki, projects: .has_projects, topics: .topics}'
-# {"issues":true,"projects":false,
-#  "topics":["bitcoin","bitcoin-core","blockchain","course-materials",
-#            "cryptography","digital-signatures","elliptic-curves",
-#            "jupyter-notebook","lecture-notes","regtest","spreadsheet",
-#            "teaching"],
-#  "visibility":"public","wiki":false}
+```
+
+```json
+{"issues":true,"projects":false,
+ "topics":["bitcoin","bitcoin-core","blockchain","course-materials",
+           "cryptography","digital-signatures","elliptic-curves",
+           "jupyter-notebook","lecture-notes","regtest","spreadsheet",
+           "teaching"],
+ "visibility":"public","wiki":false}
 ```
 
 `has_issues` is what `CONTRIBUTING.md`'s *The issue tracker* rests on:
@@ -256,8 +280,11 @@ sequence is not drift.
 
 ```shell
 gh api repos/btclib-org/bbt/actions/permissions/workflow
-# {"default_workflow_permissions":"read",
-#  "can_approve_pull_request_reviews":false}
+```
+
+```json
+{"default_workflow_permissions":"read",
+ "can_approve_pull_request_reviews":false}
 ```
 
 `read`, which is what `lint.yml` needs: it checks the tree out and runs
@@ -277,13 +304,19 @@ knowing there is none.
 
 ```shell
 gh api repos/btclib-org/bbt/actions/permissions
-# {"enabled":true,"allowed_actions":"all","sha_pinning_required":true}
+```
+
+```json
+{"enabled":true,"allowed_actions":"all","sha_pinning_required":true}
 ```
 
 ```shell
 gh api orgs/btclib-org/actions/permissions \
   --jq '{allowed_actions, sha_pinning_required}'
-# {"allowed_actions":"all","sha_pinning_required":true}
+```
+
+```json
+{"allowed_actions":"all","sha_pinning_required":true}
 ```
 
 The organization gives the same two answers, `sha_pinning_required`
@@ -294,9 +327,18 @@ fields][s11-tokens].
 
 ```shell
 gh api repos/btclib-org/bbt --jq .web_commit_signoff_required
-# true
+```
+
+```text
+true
+```
+
+```shell
 gh api orgs/btclib-org --jq .web_commit_signoff_required
-# true
+```
+
+```text
+true
 ```
 
 Set at the organization level, [for the reason section 11
@@ -306,11 +348,14 @@ gives][s11-sigs].
 
 ```shell
 gh api repos/btclib-org/bbt --jq '.security_and_analysis'
-# {"dependabot_security_updates":{"status":"enabled"},
-#  "secret_scanning":{"status":"enabled"},
-#  "secret_scanning_non_provider_patterns":{"status":"disabled"},
-#  "secret_scanning_push_protection":{"status":"enabled"},
-#  "secret_scanning_validity_checks":{"status":"disabled"}}
+```
+
+```json
+{"dependabot_security_updates":{"status":"enabled"},
+ "secret_scanning":{"status":"enabled"},
+ "secret_scanning_non_provider_patterns":{"status":"disabled"},
+ "secret_scanning_push_protection":{"status":"enabled"},
+ "secret_scanning_validity_checks":{"status":"disabled"}}
 ```
 
 [The standard asks for secret scanning, its push protection and
@@ -334,7 +379,10 @@ yaml and not as what it is.
 
 ```shell
 gh api repos/btclib-org/bbt/private-vulnerability-reporting
-# {"enabled":true}
+```
+
+```json
+{"enabled":true}
 ```
 
 **Private vulnerability reporting is on**, so *Report a vulnerability* on
@@ -353,7 +401,10 @@ re-derives it:
 
 ```shell
 gh api orgs/btclib-org --jq .plan.name
-# free
+```
+
+```text
+free
 ```
 
 The plan is a fact about a changing world rather than a setting this
@@ -405,15 +456,36 @@ secret stores here answer empty for it:
 
 ```shell
 gh api repos/btclib-org/bbt/actions/secrets --jq .total_count
-# 0
+```
+
+```text
+0
+```
+
+```shell
 gh api repos/btclib-org/bbt/dependabot/secrets --jq .total_count
-# 0
+```
+
+```text
+0
+```
+
+```shell
 gh api orgs/btclib-org/actions/secrets \
   --jq '.secrets[] | [.name, .visibility]'
-# ["CLAUDE_CODE_OAUTH_TOKEN","all"]
+```
+
+```json
+["CLAUDE_CODE_OAUTH_TOKEN","all"]
+```
+
+```shell
 gh api orgs/btclib-org/dependabot/secrets \
   --jq '.secrets[] | [.name, .visibility]'
-# ["CLAUDE_CODE_OAUTH_TOKEN","all"]
+```
+
+```json
+["CLAUDE_CODE_OAUTH_TOKEN","all"]
 ```
 
 Those two zeros record a decision, and it is [the standard's][s11-tokens]:
@@ -429,7 +501,10 @@ store is read too:
 
 ```shell
 gh api repos/btclib-org/bbt/actions/variables --jq .total_count
-# 0
+```
+
+```text
+0
 ```
 
 [Section 11][s11] has the switch itself.
