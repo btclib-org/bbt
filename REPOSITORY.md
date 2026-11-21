@@ -61,7 +61,8 @@ branch rule, for the reason its own header gives. `links.yml` reports
 whether somebody else's host is answering, which is not a fact about this
 tree and not one a landing should wait on. `verified-signatures.yml` runs
 after a push, and its own header says why a pull request could never
-report it.
+report it. `sign-off-comment.yml` runs on a completed run of `lint` and
+only writes a comment: the `Sign-off` job is what gates.
 
 `15368` is the Actions app, and a check bound to it cannot be reported by
 anything else. Changing the list is a `PATCH` of
@@ -291,11 +292,13 @@ gh api repos/btclib-org/bbt/actions/permissions/workflow
 hooks over it, and pushes nothing back.
 
 A job that needs more elevates there and not in this default.
-`claude-review.yml` is the only workflow here whose job does. That job
-calls `btclib-org/.github`'s `reusable-claude-review.yml`, and takes
-`pull-requests: write` to post the review or the mention reply and
-`id-token: write` for the OIDC token minted at startup by the action
-that workflow runs.
+`claude-review.yml` and `sign-off-comment.yml` are the workflows here
+whose job does. `claude-review.yml`'s job calls `btclib-org/.github`'s
+`reusable-claude-review.yml`, and takes `pull-requests: write` to post
+the review, its reactions and the mention reply, and `id-token: write`
+for the OIDC token minted at startup by the action that workflow runs.
+`sign-off-comment.yml`'s job calls `reusable-sign-off-comment.yml`, and
+takes `pull-requests: write` to post its one comment.
 
 **What the call above cannot say is whether its answers are this
 repository's own or the organization's**, there being no endpoint that
@@ -494,10 +497,11 @@ so a repository adopting the workflow configures nothing for it, and a
 copy of it in a store here would be that decision undone.
 
 **A switch this repository does not set.** `claude-review.yml` calls
-`btclib-org/.github`'s `reusable-claude-review.yml`, whose jobs guard on
-`vars.CLAUDE_REVIEW_ENABLED`; a variable set here would take precedence
-over one of the same name on the organization, so the repository's own
-store is read too:
+`btclib-org/.github`'s `reusable-claude-review.yml`, whose review and
+mention jobs guard on `vars.CLAUDE_REVIEW_ENABLED`; the job that clears
+a new head's reactions runs whatever it says. A variable set here would
+take precedence over one of the same name on the organization, so the
+repository's own store is read too:
 
 ```shell
 gh api repos/btclib-org/bbt/actions/variables --jq .total_count

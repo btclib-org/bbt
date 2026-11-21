@@ -25,8 +25,10 @@ Other material available in this repo:
 
 There is no release: nothing here is published to an index or cut as a
 GitHub release, the material ships by being read here and by being
-cloned, and [CONTRIBUTING.md](./CONTRIBUTING.md)'s *A version, and no
-release* is what the placeholder version in `pyproject.toml` is for.
+cloned, and
+[CONTRIBUTING.md](https://github.com/btclib-org/bbt/blob/main/CONTRIBUTING.md)'s
+*A version, and no release* is what the placeholder version in
+`pyproject.toml` is for.
 
 ## Limitations, not vulnerabilities
 
@@ -81,9 +83,12 @@ understood by the person who submits it.
 [`CONTRIBUTING.md`](https://github.com/btclib-org/bbt/blob/main/CONTRIBUTING.md#working-with-an-llm)
 has the rules.
 
-Working here: [CONTRIBUTING.md](./CONTRIBUTING.md) for how to,
-[REVIEWING.md](./REVIEWING.md) for what a pull request is answered
-against. How the organization decides, and who holds which role, is its
+Working here:
+[CONTRIBUTING.md](https://github.com/btclib-org/bbt/blob/main/CONTRIBUTING.md)
+for how to,
+[REVIEWING.md](https://github.com/btclib-org/bbt/blob/main/REVIEWING.md)
+for what a pull request is answered against. How the organization
+decides, and who holds which role, is its
 [GOVERNANCE.md](https://github.com/btclib-org/.github/blob/main/GOVERNANCE.md);
 what it intends to do, and what it deliberately does not, is its
 [ROADMAP.md](https://github.com/btclib-org/.github/blob/main/ROADMAP.md).

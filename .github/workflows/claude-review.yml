@@ -20,11 +20,11 @@ name: claude-review
 # rule.
 #
 # One calling job, not two. The callee's own header says "a calling job
-# reaches both jobs below" -- singular -- and that is a structural fact
+# reaches every job below" -- singular -- and that is a structural fact
 # about a `uses:` call, not a stylistic choice: a `uses:` invokes the
 # whole of the called workflow, every job in it, each governed by its
 # own `if:`. Two calling jobs each doing `uses:` of the same file would
-# each invoke both of the callee's jobs, so on a pull_request event both
+# each invoke all of the callee's jobs, so on a pull_request event both
 # invocations would satisfy the callee's own `review` job condition and
 # a review would post twice. The same sentence is why this job carries
 # no `if:` of its own: the callee's `review` job answers a pull_request
@@ -90,7 +90,7 @@ jobs:
     # by a comment gets no cache access, which is what actionlint's
     # cache-call-unrestricted asks for
     cache-mode: none
-    uses: btclib-org/.github/.github/workflows/reusable-claude-review.yml@cb5a79443399980ba717df2dea23dbedf6bdbc3a # v2026.11.12
+    uses: btclib-org/.github/.github/workflows/reusable-claude-review.yml@a96ab77e0b59880c6412f62da26d3f62dfc31e0c # v2026.11.20
     with:
       # this tree's own paragraph, landing between the callee's verdict
       # paragraph and its instruction not to run the gates -- the one
@@ -115,8 +115,8 @@ jobs:
     permissions:
       # restated, a job's permissions replacing the workflow's
       contents: read
-      # what posting the review or the mention reply takes
-      pull-requests: write # posting the review, and the reply to a mention
+      # what posting the review, its reactions or the reply takes
+      pull-requests: write # the review, its reactions, the reply to a mention
       # not for workload identity federation, which this does not use:
       # the action mints a GitHub OIDC token during its own startup.
       # Measured by leaving it out -- the run died before reaching

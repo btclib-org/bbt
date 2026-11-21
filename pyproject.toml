@@ -108,7 +108,12 @@ keywords = [
 #
 # pre-commit is here so that uv.lock pins the tool that decides what the
 # gate calls clean, as .pre-commit-config.yaml pins every hook's rev
+#
+# markdown-it-py is what .github/scripts/check_link_destinations.py
+# parses with, so the mypy hook reads its types here; the link hooks
+# that run the script install it at the pin of their own stanza
 lint = [
+    "markdown-it-py",
     "mypy",
     "pre-commit",
     "ruff",
@@ -247,6 +252,11 @@ ignore = [
 # 5 already makes for a JSON loader's own return: the caller's contract
 # to narrow, not the loader's to fake with a cast it cannot check
 ".github/scripts/check_notebooks.py" = ["ANN401"]
+# section 14 of the standard copies this script byte for byte from
+# btclib-org/.github, where ruff-format writes it and COM812 is off as
+# a rule that formatter undoes; this tree runs no Python formatter, so
+# the rule stays on everywhere else
+".github/scripts/check_link_destinations.py" = ["COM812"]
 
 [tool.ruff.lint.flake8-copyright]
 # COPYRIGHT is the one place the notice text is written down; this is
